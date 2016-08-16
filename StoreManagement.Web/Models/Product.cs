@@ -7,10 +7,9 @@ using System.Web;
 
 namespace StoreManagement.Web.Models
 {
-    public class Product
+    public class Product: BaseEntity
     {
         #region Properties
-        public long Id { get; set; }
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }

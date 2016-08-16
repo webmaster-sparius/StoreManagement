@@ -6,10 +6,9 @@ using System.Web;
 
 namespace StoreManagement.Web.Models
 {
-    public class InvoiceItem
+    public class InvoiceItem: BaseEntity
     {
         #region Properties
-        public long Id { get; set; }
         [Required]
         public decimal Quantity { get; set; }
         [Required]

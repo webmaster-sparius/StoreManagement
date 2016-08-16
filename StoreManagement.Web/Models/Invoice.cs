@@ -6,10 +6,9 @@ using System.Web;
 
 namespace StoreManagement.Web.Models
 {
-    public class Invoice
+    public class Invoice: BaseEntity
     {
         #region Properties
-        public long Id { get; set; }
         [Required]
         [MaxLength(50)]
         public string Number { get; set; }

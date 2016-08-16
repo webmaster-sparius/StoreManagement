@@ -15,6 +15,9 @@ namespace StoreManagement.Web.Models
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             // Add custom user claims here
             return userIdentity;
+
+
+
         }
     }
 
@@ -29,5 +32,11 @@ namespace StoreManagement.Web.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<InvoiceItem> InvoiceItems { get; set; }
     }
 }

@@ -6,12 +6,17 @@ using System.Web;
 
 namespace StoreManagement.Web.Models
 {
-    public class Customer
+    public class Customer: BaseEntity
     {
         #region Properties
-        public long Id { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
+        [Required]
+        [MaxLength(20)]
         public string PhoneNumber { get; set; }
         [Timestamp]
         public byte[] Version { get; set; }
