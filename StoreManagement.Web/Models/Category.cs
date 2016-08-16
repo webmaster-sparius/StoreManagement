@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace StoreManagement.Web.Models
+{
+    public class Category
+    {
+        #region Properties
+        public long Id { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Title { get; set; }
+        [Timestamp]
+        public byte[] Version { get; set; }
+        #endregion
+
+        #region NavigationProperties
+        public virtual ICollection<Product> Products { get; set; }
+        #endregion
+    }
+}

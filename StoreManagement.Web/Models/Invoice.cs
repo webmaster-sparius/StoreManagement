@@ -1,0 +1,28 @@
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Web;
+
+namespace StoreManagement.Web.Models
+{
+    public class Invoice
+    {
+        #region Properties
+        public long Id { get; set; }
+        [Required]
+        [MaxLength(50)]
+        public string Number { get; set; }
+        public DateTime CreatedOn { get; set; }
+
+        [Timestamp]
+        public byte[] Version { get; set; }
+        #endregion
+
+        #region NavigationProperties
+        public Customer Customer { get; set; }
+        public long CustomerId { get; set; }
+        public ICollection<InvoiceItem> Items { get; set; }
+        #endregion
+    }
+}
