@@ -190,6 +190,9 @@
     <Compile Include="ViewModels\Category\AddCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Product\AddFormProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\EditProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
