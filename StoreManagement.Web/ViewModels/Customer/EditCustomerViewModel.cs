@@ -8,7 +8,7 @@ namespace StoreManagement.Web.ViewModels.Customer
 {
     public class EditCustomerViewModel
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
 
         [Required]
         [MaxLength(50)]

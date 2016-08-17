@@ -1,5 +1,6 @@
 ﻿using StoreManagement.Web.Models;
 using StoreManagement.Web.Services;
+using StoreManagement.Web.ViewModels.Customer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,22 +36,63 @@ namespace StoreManagement.Web.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var customers = db.Customers.Select(customer => new CustomerViewModel { })
+                var customers = db.Customers.Select(customer => new CustomerViewModel {FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber  })
                     .ToList();
+                return View(customers);
             }
 
-            return View(customers);
         }
         #endregion
 
         #region Create
+        [HttpGet]
         public ActionResult Create()
         {
             return View();
         }
-        public ActionResult Index()
+        [HttpPost]
+        public ActionResult Create(AddCustomerViewModel viewModel)
         {
-            return View();
+            /// to do : add checking when CustomerService implement
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
+                    return View(viewModel);
+            }
+            using (var db = new ApplicationDbContext())
+            {
+                var customer = new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber };
+                db.Customers.Add(customer);
+                db.SaveChanges();
+            }
+            return RedirectToAction("List");
         }
+        #endregion
+
+        #region Edit
+        public ActionResult Edit(EditCustomerViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
+                return View(viewModel);
+            }
+            var db = new ApplicationDbContext();
+            try
+            {
+                var customer = new Customer
+                {
+                    FirstName = viewModel.FirstName, 
+                    LastName = viewModel.LastName,
+                    PhoneNumber = viewModel.PhoneNumber,
+                    Id = viewModel.Id,
+                    Version = viewModel.Version
+
+                }
+            }
+
+        }
+
+
     }
 }
