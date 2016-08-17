@@ -35,7 +35,7 @@ namespace StoreManagement.Web.Controllers
                 // now turn into a tag
 
                 res += "<p>";
-                res += "youhoo";
+                res += "start of results";
                 res += "</p>";
                 res += " ";
 
@@ -48,7 +48,7 @@ namespace StoreManagement.Web.Controllers
                 }
 
                 res += "<p>";
-                res += "youhoo again";
+                res += "end of results";
                 res += "</p>";
                 res += " ";
             }
