@@ -10,19 +10,26 @@ namespace StoreManagement.Web.Models
     public class Product: BaseEntity
     {
         #region Properties
+
         [Required]
         [MaxLength(100)]
         public string Name { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string Code { get; set; }
+
         [Required]
         public decimal Price { get; set; }
+
         public bool IsDeleted { get; set; }
+
         [MaxLength(255)]
         public string Description { get; set; }
+
         [Required]
         public DateTime CreatedOn { get; set; }
+
         [Timestamp]
         public byte[] Version { get; set; }
 

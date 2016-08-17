@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+
+<h2> Search Products </h2>
+
+<br />
+<p><b><font color="005577">Search for whatever you want :)</font></b></p>
+<br />
+
+
+
+<text>Searach for :</text>
+<form>
+    <input type="text" name="prTitle" id="PrTitleID" value="some title" />
+    <button class="my_btn" onclick="search_for_pr(); event.preventDefault() ;"> Search </button>
+</form>
+
+
+<hr />
+
+<div class="result_div">
+
+</div>
+
+<script type="text/javascript" src="../jquery-1.11.1.js"></script>
+<script type="text/javascript">
+    function search_for_pr() {
+        $.ajax({
+            type: 'post',
+            url: '/search/returnres',
+            data: {
+                title: $("#PrTitleID").val(),
+            },
+            success: function (result) {    // this result must be an html tag
+                $(".result_div").append($(result));
+            }
+        });
+    }
+</script>
