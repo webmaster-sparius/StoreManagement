@@ -25,12 +25,35 @@ namespace StoreManagement.Web.Controllers
 
             // using default EF model for Product
 
+            IQueryable<Product> products;
+
             using (var db = new ApplicationDbContext())
             {
-                var products = db.Products.Where(p => p.Name == title);
+                products = db.Products.Where(p => p.Name == title);
+
+
+                // now turn into a tag
+
+                res += "<p>";
+                res += "youhoo";
+                res += "</p>";
+                res += " ";
+
+                foreach (var elem in products)
+                {
+                    res += "<p>";
+                    res += elem.Name;
+                    res += "</p>";
+                    res += " ";
+                }
+
+                res += "<p>";
+                res += "youhoo again";
+                res += "</p>";
+                res += " ";
             }
 
-
+            //          return res;
             return res;
         }
 
