@@ -190,6 +190,11 @@
     <Compile Include="ViewModels\Category\AddCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
+    <Compile Include="ViewModels\Customer\AddCustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
