@@ -1,19 +1,16 @@
-﻿@{
-    Layout = null;
-}
-
-<h2> Search Products </h2>
+﻿
+<h2> جستجو ی کالا </h2>
 
 <br />
-<p><b><font color="005577">Search for whatever you want :)</font></b></p>
+<p><b><font color="005577"> کالای مورد نظر خود را جستجو کنید :)</font></b></p>
 <br />
 
 
 
-<text>Searach for :</text>
+<text> جستجو برای :</text>
 <form>
     <input type="text" name="prTitle" id="PrTitleID" value="some title" />
-    <button class="my_btn" onclick="search_for_pr(); event.preventDefault() ;"> Search </button>
+    <button class="my_btn" type="button" onclick="search_for_pr()"> جستجو </button>
 </form>
 
 
@@ -23,12 +20,13 @@
 
 </div>
 
-<script type="text/javascript" src="../jquery-1.11.1.js"></script>
+@section scripts{
+
 <script type="text/javascript">
     function search_for_pr() {
         $.ajax({
             type: 'post',
-            url: '/search/returnres',
+            url: '/search/returnRes',
             data: {
                 title: $("#PrTitleID").val(),
             },
@@ -38,3 +36,4 @@
         });
     }
 </script>
+    }

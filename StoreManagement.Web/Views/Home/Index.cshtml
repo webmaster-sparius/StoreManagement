@@ -3,17 +3,33 @@
 }
 
 <h2>store management home page</h2>
-
+<br />
 <!-- no login -->
 
+<p><b><font>categories :</font></b></p>
 
-<button class="my_btn" onclick="go_to_search(); event.preventDefault() ;"> Search Products </button>
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">
+        Categories
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        <li><a href="#">HTML</a></li>
+        <li><a href="#">CSS</a></li>
+        <li><a href="#">JavaScript</a></li>
+    </ul>
+
+    <br />
+    <br />
+    <hr />
+
+    <button class="my_btn" onclick="go_to_search(); event.preventDefault() ;"> Search Products </button>
 
 
 
-<script type="text/javascript" src="../jquery-1.11.1.js"></script>
-<script type="text/javascript">
-    function go_to_search() {
-          document.location = '/search/index';
-    }
-</script>
+    <script type="text/javascript" src="../jquery-1.11.1.js"></script>
+    <script type="text/javascript">
+        function go_to_search() {
+            document.location = '/search/index';
+        }
+    </script>
