@@ -13,7 +13,7 @@ namespace StoreManagement.Web.ViewModels.Category
         public long Id { get; set; }
         [Required(ErrorMessage = "عنوان را وارد کنید.")]
         [StringLength(50, ErrorMessage = "عنوان نباید بیشتر از 50 کاراکتر باشد.")]
-        [Remote("UniqueCategoryTitle",AdditionalFields ="Id",ErrorMessage ="یک گروه با این عنوان قبلا در سیستم ثبت شده است.")]
+        [Remote("UniqueCategoryTitle",AdditionalFields ="Id",ErrorMessage ="یک گروه با این عنوان قبلا در سیستم ثبت شده است.",HttpMethod ="POST")]
         public string Title { get; set; }
         [Required]
         public byte[] Version { get; set; }

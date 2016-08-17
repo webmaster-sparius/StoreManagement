@@ -13,6 +13,8 @@ namespace StoreManagement.Web
     {
         protected void Application_Start()
         {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
+
             using (var db=new ApplicationDbContext())
             {
                 db.Database.Initialize(force: true);
