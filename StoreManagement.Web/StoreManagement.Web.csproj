@@ -195,6 +195,9 @@
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
+    <Compile Include="ViewModels\Product\AddFormProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\EditProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-rtl.css" />
