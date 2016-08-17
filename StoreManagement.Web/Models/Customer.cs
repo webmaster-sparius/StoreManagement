@@ -23,7 +23,7 @@ namespace StoreManagement.Web.Models
         #endregion
 
         #region NavigationProperties
-
+        public ICollection<Invoice> Invoices { get; set; }
         #endregion
     }
 }
