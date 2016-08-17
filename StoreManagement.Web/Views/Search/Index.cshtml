@@ -1,0 +1,39 @@
+﻿
+<h2> جستجو ی کالا </h2>
+
+<br />
+<p><b><font color="005577"> کالای مورد نظر خود را جستجو کنید :)</font></b></p>
+<br />
+
+
+
+<text> جستجو برای :</text>
+<form>
+    <input type="text" name="prTitle" id="PrTitleID" value="some title" />
+    <button class="my_btn" type="button" onclick="search_for_pr()"> جستجو </button>
+</form>
+
+
+<hr />
+
+<div class="result_div">
+
+</div>
+
+@section scripts{
+
+<script type="text/javascript">
+    function search_for_pr() {
+        $.ajax({
+            type: 'post',
+            url: '/search/returnRes',
+            data: {
+                title: $("#PrTitleID").val(),
+            },
+            success: function (result) {    // this result must be an html tag
+                $(".result_div").append($(result));
+            }
+        });
+    }
+</script>
+    }
