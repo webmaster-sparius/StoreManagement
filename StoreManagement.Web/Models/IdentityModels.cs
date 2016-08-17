@@ -3,7 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-
+using System.Data.Entity;
 namespace StoreManagement.Web.Models
 {
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit http://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
@@ -31,6 +31,29 @@ namespace StoreManagement.Web.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Product>()
+                .HasRequired(a => a.Category)
+                .WithMany(a => a.Products)
+                .HasForeignKey(a => a.CategoryId)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<InvoiceItem>()
+             .HasRequired(a => a.Product)
+             .WithMany()
+             .HasForeignKey(a => a.ProductId)
+             .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<Invoice>()
+              .HasRequired(a => a.Customer)
+               .WithMany(a => a.Invoices)
+               .HasForeignKey(a => a.CustomerId)
+               .WillCascadeOnDelete(false);
         }
 
         public DbSet<Customer> Customers { get; set; }
