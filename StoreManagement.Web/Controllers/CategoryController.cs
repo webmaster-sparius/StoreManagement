@@ -45,7 +45,7 @@ namespace StoreManagement.Web.Controllers
                 var categories = db.Categories
                     .Select(category => new CategoryViewModel { Title = category.Title,Id=category.Id })
                     .ToList();
-
+                    
                 return View(categories);
             }
 
@@ -110,7 +110,13 @@ namespace StoreManagement.Web.Controllers
             if (new CategoryService().CheckTitleExist(viewModel.Title, viewModel.Id))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
 
-            if(!ModelState.IsValid)
+
+
+
+
+
+
+            if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "آخرین بارت باشه.");
                 return View(viewModel);
