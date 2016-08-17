@@ -3,6 +3,7 @@ using StoreManagement.Web.Services;
 using StoreManagement.Web.ViewModels.Customer;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -82,17 +83,27 @@ namespace StoreManagement.Web.Controllers
             {
                 var customer = new Customer
                 {
-                    FirstName = viewModel.FirstName, 
+                    FirstName = viewModel.FirstName,
                     LastName = viewModel.LastName,
                     PhoneNumber = viewModel.PhoneNumber,
                     Id = viewModel.Id,
                     Version = viewModel.Version
-
-                }
+                };
+                db.Entry<Customer>(customer).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Edit", new { id = viewModel.Id });
             }
-
+            catch (DbUpdateConcurrencyException)
+            {
+                ModelState.AddModelError("", "گروه مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
+                return View(viewModel);
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
-
-
+        #endregion
+        
     }
 }
