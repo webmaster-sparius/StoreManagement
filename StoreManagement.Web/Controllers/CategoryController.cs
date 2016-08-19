@@ -109,13 +109,6 @@ namespace StoreManagement.Web.Controllers
         {
             if (new CategoryService().CheckTitleExist(viewModel.Title, viewModel.Id))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
-
-
-
-
-
-
-
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "آخرین بارت باشه.");
