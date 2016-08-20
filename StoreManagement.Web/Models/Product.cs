@@ -9,6 +9,10 @@ namespace StoreManagement.Web.Models
 {
     public class Product: BaseEntity
     {
+        public Product()
+        {
+            CreatedOn = DateTime.Now;
+        }
         #region Properties
 
         [Required]

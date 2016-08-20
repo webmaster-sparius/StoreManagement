@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
@@ -189,6 +190,8 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ICustomerService.cs" />
     <Compile Include="Services\ICategoryService.cs" />
+    <Compile Include="Services\IProductService.cs" />
+    <Compile Include="Services\ProductService.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\Category\AddCategoryViewModel.cs" />
     <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
@@ -198,7 +201,7 @@
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
-    <Compile Include="ViewModels\Product\AddFormProductViewModel.cs" />
+    <Compile Include="ViewModels\Product\AddProductViewModel.cs" />
     <Compile Include="ViewModels\Product\EditProductViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
   </ItemGroup>
@@ -229,7 +232,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -266,6 +271,9 @@
     <Content Include="Views\Category\Create.cshtml" />
     <Content Include="Views\Category\List.cshtml" />
     <Content Include="Views\Category\Edit.cshtml" />
+    <Content Include="Views\Product\List.cshtml" />
+    <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Product\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
