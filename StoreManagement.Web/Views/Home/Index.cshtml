@@ -4,30 +4,9 @@
 
 
 
-
-
-<h2>مدیریت فروشگاه</h2>
+<h1>مدیریت فروشگاه</h1>
 <br />
-<!-- no login -->
 
-<p><b><font>گروه ها :</font></b></p>
-
-<select class="form-control">
-    <option value="دیجیتال">دیجیتال</option>
-    <option value="خانگی">خانگی</option>
-    <option value="غذایی">غذایی</option>
-    <option value="بهداشتی">بهداشتی</option>
-</select> 
-
-    <br />
-    <br />
-    <hr />
-
-
-
-    <button class="my_btn" onclick="search_for_pr(); event.preventDefault() ;"> Search Products </button>
-
-<!-- search -->
 
 <h2> جستجو ی کالا </h2>
 
@@ -36,10 +15,23 @@
 <br />
 
 
+<p><b><font>گروه ها :</font></b></p>
+
+<select class="form-control">
+    <option value="همه">همه</option>
+    <option value="دیجیتال">دیجیتال</option>
+    <option value="خانگی">خانگی</option>
+    <option value="غذایی">غذایی</option>
+    <option value="بهداشتی">بهداشتی</option>
+</select>
+
+<br />
+<br />
+
 
 <text> جستجو برای :</text>
 <form>
-    <input type="text" name="prTitle" id="PrTitleID" value="some title" />
+    <input type="text" name="prTitle" id="PrTitleID" placeholder="نام کالا" />
     <button class="my_btn" type="button" onclick="search_for_pr()"> جستجو </button>
 </form>
 
