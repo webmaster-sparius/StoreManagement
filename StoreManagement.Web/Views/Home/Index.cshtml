@@ -2,13 +2,17 @@
     ViewBag.Title = "Home Page";
 }
 
-<h2>store management home page</h2>
+
+
+
+
+<h2>مدیریت فروشگاه</h2>
 <br />
 <!-- no login -->
 
-<p><b><font>categories :</font></b></p>
+<p><b><font>گروه ها :</font></b></p>
 
-<select>
+<select class="form-control">
     <option value="دیجیتال">دیجیتال</option>
     <option value="خانگی">خانگی</option>
     <option value="غذایی">غذایی</option>
@@ -19,15 +23,48 @@
     <br />
     <hr />
 
-    <button class="my_btn" onclick="go_to_search(); event.preventDefault() ;"> Search Products </button>
+
+
+    <button class="my_btn" onclick="search_for_pr(); event.preventDefault() ;"> Search Products </button>
+
+<!-- search -->
+
+<h2> جستجو ی کالا </h2>
+
+<br />
+<p><b><font color="005577"> کالای مورد نظر خود را جستجو کنید :)</font></b></p>
+<br />
 
 
 
-    <script type="text/javascript" src="../jquery-1.11.1.js"></script>
-    <script type="text/javascript">
-        function go_to_search() {
-            document.location = '/home/index';
-        }
-    </script>
+<text> جستجو برای :</text>
+<form>
+    <input type="text" name="prTitle" id="PrTitleID" value="some title" />
+    <button class="my_btn" type="button" onclick="search_for_pr()"> جستجو </button>
+</form>
+
+
+<hr />
+
+<div class="result_div">
+
+</div>
+
+<!-- end of search -->
+
+<script type="text/javascript">
+    function search_for_pr() {
+        $.ajax({
+            type: 'post',
+            url: '/home/searchfor',
+            data: {
+                title: $("#PrTitleID").val(),
+            },
+            success: function (result) {    // this result must be an html tag
+                $(".result_div").append($(result));
+            }
+        });
+    }
+</script>
 
 

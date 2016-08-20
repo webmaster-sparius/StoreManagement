@@ -25,9 +25,8 @@ namespace StoreManagement.Web
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap-rtl.css",
-                      "~/Content/bootstrap-theme-rtl.css",
-                      "~/Content/site.css"));
+                      "~/Content/bootstrap.rtl.min.css",
+                      "~/Content/Site.css"));
         }
     }
 }
