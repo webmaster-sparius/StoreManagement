@@ -4,10 +4,10 @@
     ViewBag.Title = "نمایش کالا";
 }
 
-<h2>List</h2>
+<h2> لیست کالا ها </h2>
 
 <p>
-    @Html.ActionLink("کالای جدید", "Create")
+    <a href="/product/create" class="btn btn-success btn-sm"> کالای جدید </a>
 </p>
 <table class="table">
     <tr>
@@ -21,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Price)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category.Title)
+            @Html.DisplayNameFor(model => model.Category)
         </th>
         <th></th>
     </tr>
@@ -38,14 +38,29 @@
             @Html.DisplayFor(modelItem => item.Price)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Category.Title)
+            @Html.DisplayFor(modelItem => item.Category)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            
+            <div>
+                @Html.ActionLink("جزئیات", MVC.Product.Details(item.Id), new { @class = "btn btn-info btn-xs" })
+                @Html.ActionLink("ویرایش", MVC.Product.Edit(item.Id),  new {@class="btn btn-warning btn-xs"})
+                @Html.ActionLink("حذف", MVC.Product.Delete(item.Id), new { @class = "btn btn-danger btn-xs" })
+                <!--
+                <a href="/product/details" class="btn btn-info btn-xs"> جزئیات </a>
+                <a href="/product/edit" class="btn btn-warning btn-xs"> ویرایش </a>
+                <a href="/product/delete" class="btn btn-danger btn-xs"> حذف </a>
+                    -->
+            </div>
         </td>
     </tr>
 }
 
 </table>
+
+@{ 
+    //   Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+    //  Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+    // Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+    //@Html.ActionLink("کالای جدید", "Create")
+}

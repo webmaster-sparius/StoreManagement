@@ -6,20 +6,20 @@ using System.Web.Mvc;
 
 namespace StoreManagement.Web.Controllers
 {
-    public class InvoiceController : Controller
+    public partial class InvoiceController : Controller
     {
         // GET: Invoice
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult Add()
+        public virtual ActionResult Add()
         {
             return View("Add");
         }
 
-        public PartialViewResult get_item_group(string name)
+        public virtual PartialViewResult get_item_group(string name)
         {
             return PartialView("_ItemGroup");
         }
