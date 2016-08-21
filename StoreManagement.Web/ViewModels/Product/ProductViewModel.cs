@@ -21,6 +21,6 @@ namespace StoreManagement.Web.ViewModels.Product
         public string Description { get; set; }
 
         [DisplayName("گروه کالا")]
-        public Models.Category Category { get; set; }
+        public string Category { get; set; }
     }
 }

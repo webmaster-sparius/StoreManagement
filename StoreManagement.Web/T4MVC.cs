@@ -31,9 +31,9 @@ public static partial class MVC
     public static StoreManagement.Web.Controllers.CategoryController Category = new StoreManagement.Web.Controllers.T4MVC_CategoryController();
     public static StoreManagement.Web.Controllers.CustomerController Customer = new StoreManagement.Web.Controllers.T4MVC_CustomerController();
     public static StoreManagement.Web.Controllers.HomeController Home = new StoreManagement.Web.Controllers.T4MVC_HomeController();
+    public static StoreManagement.Web.Controllers.InvoiceController Invoice = new StoreManagement.Web.Controllers.T4MVC_InvoiceController();
     public static StoreManagement.Web.Controllers.ManageController Manage = new StoreManagement.Web.Controllers.T4MVC_ManageController();
     public static StoreManagement.Web.Controllers.ProductController Product = new StoreManagement.Web.Controllers.T4MVC_ProductController();
-    public static T4MVC.CategoryDefaultController CategoryDefault = new T4MVC.CategoryDefaultController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
@@ -79,6 +79,19 @@ internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResu
     public string Protocol { get; set; }
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
+[GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+{
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    {
+        this.InitMVCT4Result(area, controller, action, protocol);
+    }
+    
+    public string Controller { get; set; }
+    public string Action { get; set; }
+    public string Protocol { get; set; }
+    public RouteValueDictionary RouteValueDictionary { get; set; }
+}
 
 
 
@@ -90,9 +103,8 @@ namespace Links
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
         public static readonly string _references_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/_references.min.js") ? Url("_references.min.js") : Url("_references.js");
-        public static readonly string bootstrap_rtl_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-rtl.min.js") ? Url("bootstrap-rtl.min.js") : Url("bootstrap-rtl.js");
-        public static readonly string bootstrap_rtl_min_js = Url("bootstrap-rtl.min.js");
         public static readonly string bootstrap_min_js = Url("bootstrap.min.js");
+        public static readonly string bootstrap_rtl_min_js = Url("bootstrap.rtl.min.js");
         public static readonly string jquery_1_10_2_intellisense_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.10.2.intellisense.min.js") ? Url("jquery-1.10.2.intellisense.min.js") : Url("jquery-1.10.2.intellisense.js");
         public static readonly string jquery_1_10_2_js = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/jquery-1.10.2.min.js") ? Url("jquery-1.10.2.min.js") : Url("jquery-1.10.2.js");
         public static readonly string jquery_1_10_2_min_js = Url("jquery-1.10.2.min.js");
@@ -114,10 +126,7 @@ namespace Links
         public const string UrlPath = "~/Content";
         public static string Url() { return T4MVCHelpers.ProcessVirtualPath(UrlPath); }
         public static string Url(string fileName) { return T4MVCHelpers.ProcessVirtualPath(UrlPath + "/" + fileName); }
-        public static readonly string bootstrap_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-rtl.min.css") ? Url("bootstrap-rtl.min.css") : Url("bootstrap-rtl.css");
-        public static readonly string bootstrap_rtl_min_css = Url("bootstrap-rtl.min.css");
-        public static readonly string bootstrap_theme_rtl_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/bootstrap-theme-rtl.min.css") ? Url("bootstrap-theme-rtl.min.css") : Url("bootstrap-theme-rtl.css");
-        public static readonly string bootstrap_theme_rtl_min_css = Url("bootstrap-theme-rtl.min.css");
+        public static readonly string bootstrap_rtl_min_css = Url("bootstrap.rtl.min.css");
         public static readonly string Site_css = T4MVCHelpers.IsProduction() && T4Extensions.FileExists(UrlPath + "/Site.min.css") ? Url("Site.min.css") : Url("Site.css");
     }
 
@@ -130,9 +139,8 @@ namespace Links
             public static class Assets
             {
                 public const string _references_js = "~/Scripts/_references.js"; 
-                public const string bootstrap_rtl_js = "~/Scripts/bootstrap-rtl.js"; 
-                public const string bootstrap_rtl_min_js = "~/Scripts/bootstrap-rtl.min.js"; 
                 public const string bootstrap_min_js = "~/Scripts/bootstrap.min.js"; 
+                public const string bootstrap_rtl_min_js = "~/Scripts/bootstrap.rtl.min.js"; 
                 public const string jquery_1_10_2_intellisense_js = "~/Scripts/jquery-1.10.2.intellisense.js"; 
                 public const string jquery_1_10_2_js = "~/Scripts/jquery-1.10.2.js"; 
                 public const string jquery_1_10_2_min_js = "~/Scripts/jquery-1.10.2.min.js"; 
@@ -151,10 +159,7 @@ namespace Links
         {
             public static class Assets
             {
-                public const string bootstrap_rtl_css = "~/Content/bootstrap-rtl.css";
-                public const string bootstrap_rtl_min_css = "~/Content/bootstrap-rtl.min.css";
-                public const string bootstrap_theme_rtl_css = "~/Content/bootstrap-theme-rtl.css";
-                public const string bootstrap_theme_rtl_min_css = "~/Content/bootstrap-theme-rtl.min.css";
+                public const string bootstrap_rtl_min_css = "~/Content/bootstrap.rtl.min.css";
                 public const string Site_css = "~/Content/Site.css";
             }
         }

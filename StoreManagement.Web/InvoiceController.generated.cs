@@ -25,13 +25,13 @@ using System.Web.Routing;
 using T4MVC;
 namespace StoreManagement.Web.Controllers
 {
-    public partial class HomeController
+    public partial class InvoiceController
     {
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController() { }
+        public InvoiceController() { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        protected HomeController(Dummy d) { }
+        protected InvoiceController(Dummy d) { }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         protected RedirectToRouteResult RedirectToAction(ActionResult result)
@@ -61,19 +61,19 @@ namespace StoreManagement.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Search()
+        public virtual System.Web.Mvc.PartialViewResult get_item_group()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Search);
+            return new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.get_item_group);
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public HomeController Actions { get { return MVC.Home; } }
+        public InvoiceController Actions { get { return MVC.Invoice; } }
         [GeneratedCode("T4MVC", "2.0")]
         public readonly string Area = "";
         [GeneratedCode("T4MVC", "2.0")]
-        public readonly string Name = "Home";
+        public readonly string Name = "Invoice";
         [GeneratedCode("T4MVC", "2.0")]
-        public const string NameConst = "Home";
+        public const string NameConst = "Invoice";
         [GeneratedCode("T4MVC", "2.0")]
         static readonly ActionNamesClass s_actions = new ActionNamesClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -82,28 +82,26 @@ namespace StoreManagement.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
-            public readonly string About = "About";
-            public readonly string Contact = "Contact";
-            public readonly string Search = "Search";
+            public readonly string Add = "Add";
+            public readonly string get_item_group = "get_item_group";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public class ActionNameConstants
         {
             public const string Index = "Index";
-            public const string About = "About";
-            public const string Contact = "Contact";
-            public const string Search = "Search";
+            public const string Add = "Add";
+            public const string get_item_group = "get_item_group";
         }
 
 
-        static readonly ActionParamsClass_Search s_params_Search = new ActionParamsClass_Search();
+        static readonly ActionParamsClass_get_item_group s_params_get_item_group = new ActionParamsClass_get_item_group();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Search SearchParams { get { return s_params_Search; } }
+        public ActionParamsClass_get_item_group get_item_groupParams { get { return s_params_get_item_group; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Search
+        public class ActionParamsClass_get_item_group
         {
-            public readonly string param = "param";
+            public readonly string name = "name";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -115,22 +113,18 @@ namespace StoreManagement.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
-                public readonly string About = "About";
-                public readonly string Contact = "Contact";
-                public readonly string Index = "Index";
-                public readonly string Search = "Search";
+                public readonly string _ItemGroup = "_ItemGroup";
+                public readonly string Add = "Add";
             }
-            public readonly string About = "~/Views/Home/About.cshtml";
-            public readonly string Contact = "~/Views/Home/Contact.cshtml";
-            public readonly string Index = "~/Views/Home/Index.cshtml";
-            public readonly string Search = "~/Views/Home/Search.cshtml";
+            public readonly string _ItemGroup = "~/Views/Invoice/_ItemGroup.cshtml";
+            public readonly string Add = "~/Views/Invoice/Add.cshtml";
         }
     }
 
     [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-    public partial class T4MVC_HomeController : StoreManagement.Web.Controllers.HomeController
+    public partial class T4MVC_InvoiceController : StoreManagement.Web.Controllers.InvoiceController
     {
-        public T4MVC_HomeController() : base(Dummy.Instance) { }
+        public T4MVC_InvoiceController() : base(Dummy.Instance) { }
 
         [NonAction]
         partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
@@ -144,36 +138,25 @@ namespace StoreManagement.Web.Controllers
         }
 
         [NonAction]
-        partial void AboutOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void AddOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult About()
+        public override System.Web.Mvc.ActionResult Add()
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.About);
-            AboutOverride(callInfo);
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Add);
+            AddOverride(callInfo);
             return callInfo;
         }
 
         [NonAction]
-        partial void ContactOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
+        partial void get_item_groupOverride(T4MVC_System_Web_Mvc_PartialViewResult callInfo, string name);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Contact()
+        public override System.Web.Mvc.PartialViewResult get_item_group(string name)
         {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Contact);
-            ContactOverride(callInfo);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void SearchOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string param);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Search(string param)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Search);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "param", param);
-            SearchOverride(callInfo, param);
+            var callInfo = new T4MVC_System_Web_Mvc_PartialViewResult(Area, Name, ActionNames.get_item_group);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "name", name);
+            get_item_groupOverride(callInfo, name);
             return callInfo;
         }
 

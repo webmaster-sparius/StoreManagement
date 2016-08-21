@@ -7,9 +7,11 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
+using System.Data.Entity;
 namespace StoreManagement.Web.Controllers
 {
+    [RoutePrefix("Product")]
+    [Route("{action}")]
     public partial class ProductController : Controller
     {
         #region List
@@ -17,8 +19,10 @@ namespace StoreManagement.Web.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var products = db.Products.Where(p => p.IsDeleted == false)
-                    .Select(p => new ProductViewModel { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category, Id = p.Id })
+                var products = db.Products.Include(a => a.Category)
+                    .Where(p => p.IsDeleted == false)
+                    .Select(p => new ProductViewModel
+                    { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
                     .ToList();
                 return View(products);
             }
@@ -65,7 +69,52 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Edit
+        [Route("Edit/{id}")]
         public virtual ActionResult Edit(long id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Products
+                    .Select(p => new EditProductViewModel
+                    {
+                        Name = p.Name,
+                        Code = p.Code,
+                        Price = p.Price,
+                        Description = p.Description,
+                        Id = p.Id,
+                        CategoryId = p.CategoryId,
+                        Version = p.Version
+                    }).FirstOrDefault(p => p.Id == id);
+                if (viewModel == null)
+                    return HttpNotFound();
+                return View(viewModel);
+            }
+        }
+
+        [Route("Details/{id}")]
+        public virtual ActionResult Details(long id)        // this is not the real implemetation
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Products
+                    .Select(p => new EditProductViewModel
+                    {
+                        Name = p.Name,
+                        Code = p.Code,
+                        Price = p.Price,
+                        Description = p.Description,
+                        Id = p.Id,
+                        CategoryId = p.CategoryId,
+                        Version = p.Version
+                    }).FirstOrDefault(p => p.Id == id);
+                if (viewModel == null)
+                    return HttpNotFound();
+                return View(viewModel);
+            }
+        }
+
+        [Route("Delete/{id}")]
+        public virtual ActionResult Delete(long id)         // this is not the real implemetation
         {
             using (var db = new ApplicationDbContext())
             {

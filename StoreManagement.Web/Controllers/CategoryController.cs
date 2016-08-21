@@ -37,7 +37,7 @@ namespace StoreManagement.Web.Controllers
         }
         #endregion
 
-        #region List   
+        #region List
         public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())

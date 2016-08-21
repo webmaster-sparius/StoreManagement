@@ -1,12 +1,6 @@
 ﻿@{
-    ViewBag.Title = "Home Page";
+    
 }
-
-
-
-<h1>مدیریت فروشگاه</h1>
-<br />
-
 
 <h2> جستجو ی کالا </h2>
 
@@ -45,6 +39,7 @@
 <!-- end of search -->
 
 <script type="text/javascript">
+
     function search_for_pr() {
         $.ajax({
             type: 'post',
@@ -57,6 +52,10 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        $("#PrTitleID").val(@ViewData["searched"]);
+        search_for_pr();
+    });
+
 </script>
-
-
