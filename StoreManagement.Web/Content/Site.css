@@ -3,7 +3,7 @@
     padding-bottom: 20px;
     direction:rtl;
     margin-top:100px;
-    font-family: Tahoma;
+    font-family: Tahoma !important;
     font-size: 10pt;
 }
 
