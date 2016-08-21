@@ -168,6 +168,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -200,6 +201,7 @@
     <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\AddInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\Product\AddProductViewModel.cs" />
     <Compile Include="ViewModels\Product\EditProductViewModel.cs" />
@@ -272,6 +274,9 @@
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Views\Home\Search.cshtml" />
+    <Content Include="Views\Invoice\Add.cshtml" />
+    <Content Include="Views\Invoice\_ItemGroup.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

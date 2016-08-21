@@ -71,5 +71,13 @@ namespace StoreManagement.Web.Controllers
             return res;
         }
 
+        // loading home page with search already done
+
+        public ActionResult SearchRes(string param)
+        {
+            ViewData["searched"] = param;
+            return View("Search");
+        }
+
     }
 }
