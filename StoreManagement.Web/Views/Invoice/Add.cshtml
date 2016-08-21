@@ -1,0 +1,68 @@
+﻿@{
+    ViewBag.Title = "Add Invoice";
+}
+
+<h2> ثبت فاکتور جدید </h2>
+
+<br />
+<hr />
+
+<div class="input-group">
+    <span class="input-group-addon"> نام </span>
+    <input type="text" class="form-control" placeholder="نام مشتری">
+</div>
+<hr />
+<div class="input-group">
+    <span class="input-group-addon"> نام خانوادگی </span>
+    <input type="text" class="form-control" placeholder="نام خانوادگی مشتری">
+</div>
+<hr />
+<div class="input-group">
+    <span class="input-group-addon"> تاریخ </span>
+    <input type="text" class="form-control" placeholder="تاریخ صدور">
+</div>
+<hr />
+<h3><b> اقلام : </b></h3>
+
+<br /><br />
+
+<div class="input-group" id="itemsId">
+
+    <div class="input-group">
+        <input type="text" class="form-control" placeholder="نام کالا">
+        <input type="text" class="form-control" placeholder="تعداد">
+        <input type="text" class="form-control" placeholder="قیمت واحد">
+    </div>
+    <hr />
+
+</div>
+
+
+<div>
+    <button class="btn btn-success" style="margin-right: 70px" type="button" onclick="new_item_input();"> بیشتر </button>
+    <button class="btn btn-primary" style="margin-right: 70px" type="button" > ثبت </button>
+</div>
+
+
+
+@section scripts{
+
+<script type="text/javascript">
+
+    function new_item_input()
+    {
+        $.ajax({
+            type: 'post',
+            url: '/invoice/get_item_group',
+            data: {
+                name: 'youhoo'
+            },
+            success: function(result) {
+
+                $('#itemsId').append($(result));
+
+            }
+        });
+    }
+</script>
+    }

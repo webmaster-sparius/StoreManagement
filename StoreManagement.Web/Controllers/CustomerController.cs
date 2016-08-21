@@ -12,7 +12,7 @@ namespace StoreManagement.Web.Controllers
 {
     [RoutePrefix("Customer")]
     [Route("{action}")]
-    public class CustomerController : Controller
+    public partial class CustomerController : Controller
     {
         #region Fields
         /// <summary>
@@ -33,11 +33,11 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region List
-        public ActionResult List()
+        public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())
             {
-                var customers = db.Customers.Select(customer => new CustomerViewModel {FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber  })
+                var customers = db.Customers.Select(customer => new CustomerViewModel { FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
                     .ToList();
                 return View(customers);
             }
@@ -47,18 +47,18 @@ namespace StoreManagement.Web.Controllers
 
         #region Create
         [HttpGet]
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Create(AddCustomerViewModel viewModel)
+        public virtual ActionResult Create(AddCustomerViewModel viewModel)
         {
             /// to do : add checking when CustomerService implement
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
-                    return View(viewModel);
+                return View(viewModel);
             }
             using (var db = new ApplicationDbContext())
             {
@@ -71,7 +71,7 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Edit
-        public ActionResult Edit(EditCustomerViewModel viewModel)
+        public virtual ActionResult Edit(EditCustomerViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -104,6 +104,6 @@ namespace StoreManagement.Web.Controllers
             }
         }
         #endregion
-        
+
     }
 }

@@ -7,21 +7,21 @@ using StoreManagement.Web.Models;
 
 namespace StoreManagement.Web.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
-        public ActionResult Index()
+        public virtual ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        public virtual ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
 
             return View();
         }
 
-        public ActionResult Contact()
+        public virtual ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
@@ -47,7 +47,7 @@ namespace StoreManagement.Web.Controllers
                 // now turn into a tag
 
                 res += "<p>";
-                res += "begin results for "+title;
+                res += "begin results for " + title;
                 res += "</p>";
                 res += " ";
 
@@ -69,6 +69,14 @@ namespace StoreManagement.Web.Controllers
 
             //          return res;
             return res;
+        }
+
+        // loading home page with search already done
+
+        public virtual ActionResult Search(string param)
+        {
+            ViewData["searched"] = param;
+            return View("Search");
         }
 
     }

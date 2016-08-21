@@ -1,0 +1,61 @@
+﻿@{
+    
+}
+
+<h2> جستجو ی کالا </h2>
+
+<br />
+<p><b><font color="005577"> کالای مورد نظر خود را جستجو کنید :)</font></b></p>
+<br />
+
+
+<p><b><font>گروه ها :</font></b></p>
+
+<select class="form-control">
+    <option value="همه">همه</option>
+    <option value="دیجیتال">دیجیتال</option>
+    <option value="خانگی">خانگی</option>
+    <option value="غذایی">غذایی</option>
+    <option value="بهداشتی">بهداشتی</option>
+</select>
+
+<br />
+<br />
+
+
+<text> جستجو برای :</text>
+<form>
+    <input type="text" name="prTitle" id="PrTitleID" placeholder="نام کالا" />
+    <button class="my_btn" type="button" onclick="search_for_pr()"> جستجو </button>
+</form>
+
+
+<hr />
+
+<div class="result_div">
+
+</div>
+
+<!-- end of search -->
+
+<script type="text/javascript">
+
+    function search_for_pr() {
+        $.ajax({
+            type: 'post',
+            url: '/home/searchfor',
+            data: {
+                title: $("#PrTitleID").val(),
+            },
+            success: function (result) {    // this result must be an html tag
+                $(".result_div").append($(result));
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        $("#PrTitleID").val(@ViewData["searched"]);
+        search_for_pr();
+    });
+
+</script>

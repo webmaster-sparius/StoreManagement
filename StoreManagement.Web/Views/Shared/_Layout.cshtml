@@ -38,9 +38,9 @@
             <!--  -->
             <form class="navbar-form navbar-left" role="search">
                 <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input type="text" id="navbartb" class="form-control" placeholder="Search">
                 </div>
-                <button type="submit" class="btn btn-primary"> جستجو </button>
+                <button type="button" class="btn btn-primary" onclick="search_for_navbar();"> جستجو </button>
             </form>
             <!--  -->
         </div>
@@ -61,3 +61,9 @@
     @RenderSection("scripts", required: false)
 </body>
 </html>
+
+<script type="text/javascript">
+    function search_for_navbar() {
+        document.location = "/home/search?param=" + $("#navbartb").val();    //*/
+    }
+</script>
