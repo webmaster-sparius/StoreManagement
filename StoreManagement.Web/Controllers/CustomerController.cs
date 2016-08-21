@@ -37,7 +37,7 @@ namespace StoreManagement.Web.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var customers = db.Customers.Select(customer => new CustomerViewModel {FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber  })
+                var customers = db.Customers.Select(customer => new CustomerViewModel {Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber  })
                     .ToList();
                 return View(customers);
             }
@@ -54,6 +54,8 @@ namespace StoreManagement.Web.Controllers
         [HttpPost]
         public ActionResult Create(AddCustomerViewModel viewModel)
         {
+            if (new CustomerService().CheckCustomerExist(viewModel.FirstName, viewModel.LastName, null))
+                ModelState.AddModelError("", "یک کاربر با این نام و نام خانوادگی ثبت شده است");
             /// to do : add checking when CustomerService implement
             if (!ModelState.IsValid)
             {
@@ -71,6 +73,8 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Edit
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(EditCustomerViewModel viewModel)
         {
             if (!ModelState.IsValid)
@@ -95,7 +99,7 @@ namespace StoreManagement.Web.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                ModelState.AddModelError("", "گروه مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
+                ModelState.AddModelError("", "اطلاعات کاریر مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
                 return View(viewModel);
             }
             finally
@@ -103,7 +107,35 @@ namespace StoreManagement.Web.Controllers
                 db.Dispose();
             }
         }
+        [HttpGet]
+        public ActionResult Edit(long id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Customers.Select(
+                    a => new EditCustomerViewModel
+                    {
+                        Id = a.Id,
+                        FirstName = a.FirstName,
+                        LastName = a.LastName,
+                        PhoneNumber = a.PhoneNumber,
+                        Version = a.Version
+                    }).FirstOrDefault(a => a.Id == id);
+                if (viewModel == null)
+                    return HttpNotFound();
+                return View(viewModel);
+            }
+        }
         #endregion
-        
+
+        #region RemoteValidation
+        [Route(Name = "UniqueCustomer")]
+        [HttpPost]
+        public JsonResult CustomerExist(string firstName, string lastName, long? Id)
+        {
+            var exist = new CustomerService().CheckCustomerExist(firstName, lastName, Id);
+            return Json(!exist);
+        }
+        #endregion
     }
 }

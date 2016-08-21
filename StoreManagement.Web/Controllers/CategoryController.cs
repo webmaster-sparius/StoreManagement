@@ -37,7 +37,7 @@ namespace StoreManagement.Web.Controllers
         }
         #endregion
 
-        #region List
+        #region List   
         public ActionResult List()
         {
             using (var db = new ApplicationDbContext())
@@ -63,7 +63,7 @@ namespace StoreManagement.Web.Controllers
         public ActionResult Create(AddCategoryViewModel viewModel)
         {
             // best practice 
-            if (new CategoryService().CheckTitleExist(viewModel.Title, null))
+            if (new CategoryService().  CheckTitleExist(viewModel.Title, null))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
 
             if (!ModelState.IsValid)
