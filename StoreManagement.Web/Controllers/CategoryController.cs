@@ -12,7 +12,7 @@ namespace StoreManagement.Web.Controllers
 {
     [RoutePrefix("Category")]
     [Route("{action}")]
-    public class CategoryController : Controller
+    public partial class CategoryController : Controller
     {
         #region Fields
         /// <summary>
@@ -38,14 +38,14 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region List   
-        public ActionResult List()
+        public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())
             {
                 var categories = db.Categories
-                    .Select(category => new CategoryViewModel { Title = category.Title,Id=category.Id })
+                    .Select(category => new CategoryViewModel { Title = category.Title, Id = category.Id })
                     .ToList();
-                    
+
                 return View(categories);
             }
 
@@ -54,16 +54,16 @@ namespace StoreManagement.Web.Controllers
 
         #region Create
         [HttpGet]
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Create(AddCategoryViewModel viewModel)
+        public virtual ActionResult Create(AddCategoryViewModel viewModel)
         {
             // best practice 
-            if (new CategoryService().  CheckTitleExist(viewModel.Title, null))
+            if (new CategoryService().CheckTitleExist(viewModel.Title, null))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
 
             if (!ModelState.IsValid)
@@ -85,16 +85,17 @@ namespace StoreManagement.Web.Controllers
 
         #region Edit
         [HttpGet]
-        public ActionResult Edit(long id)
+        public virtual ActionResult Edit(long id)
         {
-            using (var db=new ApplicationDbContext())
+            using (var db = new ApplicationDbContext())
             {
                 var viewModel = db.Categories
-                    .Select(a=>new EditCategoryViewModel {
-                        Id =a.Id,
-                        Title =a.Title,
-                        Version =a.Version
-                    }).FirstOrDefault(a=>a.Id==id);
+                    .Select(a => new EditCategoryViewModel
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Version = a.Version
+                    }).FirstOrDefault(a => a.Id == id);
 
                 if (viewModel == null)
                     return HttpNotFound();
@@ -105,7 +106,7 @@ namespace StoreManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditCategoryViewModel viewModel)
+        public virtual ActionResult Edit(EditCategoryViewModel viewModel)
         {
             if (new CategoryService().CheckTitleExist(viewModel.Title, viewModel.Id))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
@@ -145,7 +146,7 @@ namespace StoreManagement.Web.Controllers
         #region RemoteValidations
         [Route(Name = "UniqueCategoryTitle")]
         [HttpPost]
-        public JsonResult TitleExist(string title, long? id)
+        public virtual JsonResult TitleExist(string title, long? id)
         {
             var exist = new CategoryService().CheckTitleExist(title, id);
             return Json(!exist);

@@ -10,10 +10,10 @@ using System.Web.Mvc;
 
 namespace StoreManagement.Web.Controllers
 {
-    public class ProductController : Controller
+    public partial class ProductController : Controller
     {
         #region List
-        public ActionResult List()
+        public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())
             {
@@ -26,7 +26,7 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Create
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             AddProductViewModel product = new AddProductViewModel();
             return View(product);
@@ -34,7 +34,7 @@ namespace StoreManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AddProductViewModel viewModel)
+        public virtual ActionResult Create(AddProductViewModel viewModel)
         {
             var productService = new ProductService();
             if (productService.CheckCodeExist(viewModel.Code, null))
@@ -46,9 +46,10 @@ namespace StoreManagement.Web.Controllers
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-            using(var db = new ApplicationDbContext())
+            using (var db = new ApplicationDbContext())
             {
-                var product = new Product {
+                var product = new Product
+                {
                     Code = viewModel.Code,
                     CategoryId = viewModel.CategoryId,
                     Category = db.Categories.Find(viewModel.CategoryId),
@@ -64,7 +65,7 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Edit
-        public ActionResult Edit(long id)
+        public virtual ActionResult Edit(long id)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -87,7 +88,7 @@ namespace StoreManagement.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditProductViewModel viewModel)
+        public virtual ActionResult Edit(EditProductViewModel viewModel)
         {
             var productService = new ProductService();
             if (productService.CheckCodeExist(viewModel.Code, viewModel.Id))

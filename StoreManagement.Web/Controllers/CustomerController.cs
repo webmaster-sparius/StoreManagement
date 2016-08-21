@@ -12,7 +12,7 @@ namespace StoreManagement.Web.Controllers
 {
     [RoutePrefix("Customer")]
     [Route("{action}")]
-    public class CustomerController : Controller
+    public partial class CustomerController : Controller
     {
         #region Fields
         /// <summary>
@@ -33,11 +33,11 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region List
-        public ActionResult List()
+        public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())
             {
-                var customers = db.Customers.Select(customer => new CustomerViewModel {Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber  })
+                var customers = db.Customers.Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
                     .ToList();
                 return View(customers);
             }
@@ -47,12 +47,12 @@ namespace StoreManagement.Web.Controllers
 
         #region Create
         [HttpGet]
-        public ActionResult Create()
+        public virtual ActionResult Create()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Create(AddCustomerViewModel viewModel)
+        public virtual ActionResult Create(AddCustomerViewModel viewModel)
         {
             if (new CustomerService().CheckCustomerExist(viewModel.FirstName, viewModel.LastName, null))
                 ModelState.AddModelError("", "یک کاربر با این نام و نام خانوادگی ثبت شده است");
@@ -60,7 +60,7 @@ namespace StoreManagement.Web.Controllers
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
-                    return View(viewModel);
+                return View(viewModel);
             }
             using (var db = new ApplicationDbContext())
             {
@@ -75,7 +75,7 @@ namespace StoreManagement.Web.Controllers
         #region Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(EditCustomerViewModel viewModel)
+        public virtual ActionResult Edit(EditCustomerViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace StoreManagement.Web.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Edit(long id)
+        public virtual ActionResult Edit(long id)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -131,7 +131,7 @@ namespace StoreManagement.Web.Controllers
         #region RemoteValidation
         [Route(Name = "UniqueCustomer")]
         [HttpPost]
-        public JsonResult CustomerExist(string firstName, string lastName, long? Id)
+        public virtual JsonResult CustomerExist(string firstName, string lastName, long? Id)
         {
             var exist = new CustomerService().CheckCustomerExist(firstName, lastName, Id);
             return Json(!exist);
