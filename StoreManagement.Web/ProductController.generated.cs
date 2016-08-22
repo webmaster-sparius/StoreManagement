@@ -155,10 +155,12 @@ namespace StoreManagement.Web.Controllers
             public class _ViewNamesClass
             {
                 public readonly string Create = "Create";
+                public readonly string Details = "Details";
                 public readonly string Edit = "Edit";
                 public readonly string List = "List";
             }
             public readonly string Create = "~/Views/Product/Create.cshtml";
+            public readonly string Details = "~/Views/Product/Details.cshtml";
             public readonly string Edit = "~/Views/Product/Edit.cshtml";
             public readonly string List = "~/Views/Product/List.cshtml";
         }
@@ -204,10 +206,10 @@ namespace StoreManagement.Web.Controllers
         }
 
         [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, long id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, long? id);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(long id)
+        public override System.Web.Mvc.ActionResult Edit(long? id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -216,10 +218,22 @@ namespace StoreManagement.Web.Controllers
         }
 
         [NonAction]
-        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, long id);
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, StoreManagement.Web.ViewModels.Product.EditProductViewModel viewModel);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Details(long id)
+        public override System.Web.Mvc.ActionResult Edit(StoreManagement.Web.ViewModels.Product.EditProductViewModel viewModel)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
+            EditOverride(callInfo, viewModel);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void DetailsOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, long? id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Details(long? id)
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Details);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
@@ -236,18 +250,6 @@ namespace StoreManagement.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Delete);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
             DeleteOverride(callInfo, id);
-            return callInfo;
-        }
-
-        [NonAction]
-        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, StoreManagement.Web.ViewModels.Product.EditProductViewModel viewModel);
-
-        [NonAction]
-        public override System.Web.Mvc.ActionResult Edit(StoreManagement.Web.ViewModels.Product.EditProductViewModel viewModel)
-        {
-            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
-            EditOverride(callInfo, viewModel);
             return callInfo;
         }
 

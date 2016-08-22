@@ -8,6 +8,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
+using System.Net;
+
 namespace StoreManagement.Web.Controllers
 {
     [RoutePrefix("Product")]
@@ -70,52 +72,11 @@ namespace StoreManagement.Web.Controllers
 
         #region Edit
         [Route("Edit/{id}")]
-        public virtual ActionResult Edit(long id)
+        public virtual ActionResult Edit(long? id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Products
-                    .Select(p => new EditProductViewModel
-                    {
-                        Name = p.Name,
-                        Code = p.Code,
-                        Price = p.Price,
-                        Description = p.Description,
-                        Id = p.Id,
-                        CategoryId = p.CategoryId,
-                        Version = p.Version
-                    }).FirstOrDefault(p => p.Id == id);
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
-            }
-        }
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        [Route("Details/{id}")]
-        public virtual ActionResult Details(long id)        // this is not the real implemetation
-        {
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Products
-                    .Select(p => new EditProductViewModel
-                    {
-                        Name = p.Name,
-                        Code = p.Code,
-                        Price = p.Price,
-                        Description = p.Description,
-                        Id = p.Id,
-                        CategoryId = p.CategoryId,
-                        Version = p.Version
-                    }).FirstOrDefault(p => p.Id == id);
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
-            }
-        }
-
-        [Route("Delete/{id}")]
-        public virtual ActionResult Delete(long id)         // this is not the real implemetation
-        {
             using (var db = new ApplicationDbContext())
             {
                 var viewModel = db.Products
@@ -174,6 +135,57 @@ namespace StoreManagement.Web.Controllers
             finally
             {
                 db.Dispose();
+            }
+        }
+        #endregion
+
+        #region Details
+        [Route("Details/{id}")]
+        public virtual ActionResult Details(long? id)        
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Products
+                    .Select(p => new ProductViewModel
+                    {
+                        Id = p.Id,
+                        Code = p.Code,
+                        Name = p.Name,
+                        Price = p.Price,
+                        Category = p.Category.Title,
+                        Description = p.Description
+                    })
+                    .FirstOrDefault(p => p.Id == id);
+                if (viewModel == null)
+                    return HttpNotFound();
+                return View(viewModel);
+            }
+        }
+        #endregion
+
+        #region Delete
+        [Route("Delete/{id}")]
+        public virtual ActionResult Delete(long id)         // this is not the real implemetation
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Products
+                    .Select(p => new EditProductViewModel
+                    {
+                        Name = p.Name,
+                        Code = p.Code,
+                        Price = p.Price,
+                        Description = p.Description,
+                        Id = p.Id,
+                        CategoryId = p.CategoryId,
+                        Version = p.Version
+                    }).FirstOrDefault(p => p.Id == id);
+                if (viewModel == null)
+                    return HttpNotFound();
+                return View(viewModel);
             }
         }
         #endregion

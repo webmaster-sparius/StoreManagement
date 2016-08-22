@@ -18,6 +18,7 @@ namespace StoreManagement.Web.ViewModels.Product
         [DisplayName("قیمت")]
         public decimal Price { get; set; }
         [DisplayName("توضیحات")]
+        [DataType(DataType.MultilineText)]
         public string Description { get; set; }
 
         [DisplayName("گروه کالا")]
