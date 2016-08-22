@@ -317,6 +317,7 @@
     <Content Include="Views\Invoice\_ItemGroup.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Home\_ResultPView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
