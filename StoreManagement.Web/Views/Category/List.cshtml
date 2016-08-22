@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<StoreManagement.Web.ViewModels.Category.CategoryViewModel>
 
 @{
-    ViewBag.Title = "List";
+    ViewBag.Title = "نمایش گروه";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -25,7 +25,13 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                    @using (Html.BeginForm("Delete", "Category", FormMethod.Post))
+                    {
+                        @Html.Hidden("id", item.Id)
+                        @Html.Hidden("version", item.Version)
+                        <input type="submit" value="حذف" class="btn btn-xs btn-danger" />
+                    }
             </td>
         </tr>
     }
