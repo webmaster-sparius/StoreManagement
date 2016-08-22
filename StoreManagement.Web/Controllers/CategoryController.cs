@@ -129,7 +129,7 @@ namespace StoreManagement.Web.Controllers
                 db.Entry<Category>(category).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction("Edit", new { id = viewModel.Id });
+                return RedirectToAction(MVC.Category.List());
             }
             catch (DbUpdateConcurrencyException)
             {

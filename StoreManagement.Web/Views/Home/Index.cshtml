@@ -53,6 +53,7 @@
                 title: $("#PrTitleID").val(),
             },
             success: function (result) {    // this result must be an html tag
+                $(".result_div").empty();
                 $(".result_div").append($(result));
             }
         });

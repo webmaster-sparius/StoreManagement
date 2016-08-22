@@ -5,43 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<h2> لیست گروه ها </h2>
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        @Html.ActionLink("جدید", "Create", "Category", null, new { @class = "btn btn-success" })
-    </div>
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th></th>
-            </tr>
+<p>
+    @Html.ActionLink("گروه جدید", "Create", "Category", null, new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
 
-            @foreach (var item in Model)
+    @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
-                        @* @Html.ActionLink("حذف", "Delete", new { id = item.Id , version =Convert.ToBase64String( item.Version)}, new { @class = "btn btn-sm btn-danger"})
-                        *@
-                        @using (Html.BeginForm("Delete", "Category", FormMethod.Post))
-                        {
-                            @Html.Hidden("id", item.Id)
-                            @Html.Hidden("version", item.Version)    
-                            @* <input type = "hidden" value = "@item.Id" name="id"/> *@
-                            <input type="submit" value="حذف" class="btn btn-sm btn-danger"/>
-                        }
-                    </td>
-                </tr>
-            }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+            </td>
+        </tr>
+    }
+</table>
 
-        </table>
-
-    </div>
-</div>
 
