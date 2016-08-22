@@ -28,50 +28,6 @@ namespace StoreManagement.Web.Controllers
             return View();
         }
 
-        /*
-        public string SearchFor(string title)
-        {
-            string res = "";
-
-            // a query using EF returns a strongly typed result
-            // we have to turn that into an html tag
-
-            // using default EF model for Product
-
-            IQueryable<Product> products;
-
-            using (var db = new ApplicationDbContext())
-            {
-                products = db.Products.Where(p => p.Name == title);
-
-
-                // now turn into a tag
-
-                res += "<p>";
-                res += "begin results for " + title;
-                res += "</p>";
-                res += " ";
-
-                foreach (var elem in products)
-                {
-                    res += "<p>";
-                    res += elem.Name;
-                    res += "</p>";
-                    res += " ";
-                }
-
-                res += "<p>";
-                res += "end of results";
-                res += "</p>";
-                res += " ";
-
-                res += "<hr /> ";
-            }
-
-            //          return res;
-            return res;
-        }
-        //*/
 
         public PartialViewResult SearchFor(string title)
         {
