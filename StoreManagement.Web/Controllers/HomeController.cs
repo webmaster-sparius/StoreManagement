@@ -28,6 +28,7 @@ namespace StoreManagement.Web.Controllers
             return View();
         }
 
+        /*
         public string SearchFor(string title)
         {
             string res = "";
@@ -70,6 +71,23 @@ namespace StoreManagement.Web.Controllers
             //          return res;
             return res;
         }
+        //*/
+
+        public PartialViewResult SearchFor(string title)
+        {
+
+            IQueryable<Product> products;
+
+            using (var db = new ApplicationDbContext())
+            {
+                products = db.Products.Where(p => p.Name == title);
+
+                ViewData["search_result"] = products.ToList();
+            }
+
+            return PartialView("_ResultPView");
+        }
+        
 
         // loading home page with search already done
 
