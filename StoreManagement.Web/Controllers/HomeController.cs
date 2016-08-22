@@ -35,7 +35,13 @@ namespace StoreManagement.Web.Controllers
             }
 
             ViewData["categories"] = categories;
-            ViewData["searched"] = param;
+            if (string.IsNullOrEmpty(param))
+            {
+                ViewData["searched"] = "";
+            }
+            else {
+                ViewData["searched"] = param;
+            }
             return View();
         }
 
