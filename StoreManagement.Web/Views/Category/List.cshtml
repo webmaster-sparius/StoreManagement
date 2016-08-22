@@ -5,33 +5,30 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading">
-        @Html.ActionLink("جدید","Create", "Category", null, new { @class = "btn btn-success" })
-    </div>
-    <div class="panel-body">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Title)
-                </th>
-                <th></th>
-            </tr>
+<h2> لیست گروه ها </h2>
 
-            @foreach (var item in Model)
+<p>
+    @Html.ActionLink("گروه جدید", "Create", "Category", null, new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </td>
-                    <td>
-                        @Html.ActionLink("ویرایش", "Edit", new {  id=item.Id},new { @class = "btn btn-sm btn-info" })
-                    </td>
-                </tr>
-            }
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+            </td>
+        </tr>
+    }
+</table>
 
-        </table>
-
-    </div>
-</div>
 
