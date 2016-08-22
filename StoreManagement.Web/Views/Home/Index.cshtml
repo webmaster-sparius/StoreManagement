@@ -22,10 +22,9 @@
     @{var categs = (List<StoreManagement.Web.Models.Category>)ViewData["categories"]; }
     @foreach (var elem in categs)
     {
-
         <option value="@elem.Title"> @elem.Title </option>
     }
-</select>
+</select>s
 
 <br />
 <br />
@@ -67,7 +66,7 @@
     }
 
 
-    @if (true) {
+    @if (!ViewData["searched"].Equals("")) {
         <text>
         $(document).ready(function() {
             $("#PrTitleID").val("@ViewData["searched"]");
