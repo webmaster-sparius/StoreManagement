@@ -12,8 +12,6 @@ using System.Net;
 
 namespace StoreManagement.Web.Controllers
 {
-    [RoutePrefix("Product")]
-    [Route("{action}")]
     public partial class ProductController : Controller
     {
         #region List
@@ -71,7 +69,8 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Edit
-        [Route("Edit/{id}")]
+
+        [HttpGet]
         public virtual ActionResult Edit(long? id)
         {
             if (id == null)
@@ -125,7 +124,7 @@ namespace StoreManagement.Web.Controllers
                 };
                 db.Entry<Product>(product).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit", new { id = viewModel.Id });
+                return RedirectToAction("List");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -140,7 +139,7 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Details
-        [Route("Details/{id}")]
+        
         public virtual ActionResult Details(long? id)        
         {
             if (id == null)
@@ -167,7 +166,7 @@ namespace StoreManagement.Web.Controllers
         #endregion
 
         #region Delete
-        [Route("Delete/{id}")]
+        
         public virtual ActionResult Delete(long id)         // this is not the real implemetation
         {
             using (var db = new ApplicationDbContext())
