@@ -19,7 +19,7 @@
 
 <select class="form-control">
     <option value="همه">همه</option>
-    @{var categs = (List<StoreManagement.Web.Models.Category>) ViewData["categories"]; }
+    @{var categs = (List<StoreManagement.Web.Models.Category>)ViewData["categories"]; }
     @foreach (var elem in categs)
     {
 
@@ -46,8 +46,11 @@
 
 <!-- end of search -->
 
+@section scripts{
 <script type="text/javascript">
     function search_for_pr() {
+        //$("#PrTitleID").val("youhoo");
+        
         $.ajax({
             type: 'post',
             url: '/home/searchfor',
@@ -58,14 +61,22 @@
                 $(".result_div").empty();
                 $(".result_div").append($(result));
             }
+          
         });
+        //*/
     }
 
-    $(document).ready(function () {
-        $("#PrTitleID").val(@ViewData["searched"]);
-        search_for_pr();
-    });
+
+    @if (true) {
+        <text>
+        $(document).ready(function() {
+            $("#PrTitleID").val("@ViewData["searched"]");
+                search_for_pr();
+        });
+        </text>
+    }
 
 </script>
-
+                         
+}
 
