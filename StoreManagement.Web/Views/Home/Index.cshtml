@@ -19,10 +19,12 @@
 
 <select class="form-control">
     <option value="همه">همه</option>
-    <option value="دیجیتال">دیجیتال</option>
-    <option value="خانگی">خانگی</option>
-    <option value="غذایی">غذایی</option>
-    <option value="بهداشتی">بهداشتی</option>
+    @{var categs = (List<StoreManagement.Web.Models.Category>) ViewData["categories"]; }
+    @foreach (var elem in categs)
+    {
+
+        <option value="@elem.Title"> @elem.Title </option>
+    }
 </select>
 
 <br />
@@ -58,6 +60,12 @@
             }
         });
     }
+
+    $(document).ready(function () {
+        $("#PrTitleID").val(@ViewData["searched"]);
+        search_for_pr();
+    });
+
 </script>
 
 
