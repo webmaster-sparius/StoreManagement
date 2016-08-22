@@ -62,6 +62,12 @@ namespace StoreManagement.Web.Controllers
         {
             return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
         }
+        [NonAction]
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public virtual System.Web.Mvc.JsonResult CustomerExist()
+        {
+            return new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.CustomerExist);
+        }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
         public CustomerController Actions { get { return MVC.Customer; } }
@@ -81,6 +87,7 @@ namespace StoreManagement.Web.Controllers
             public readonly string List = "List";
             public readonly string Create = "Create";
             public readonly string Edit = "Edit";
+            public readonly string CustomerExist = "CustomerExist";
         }
 
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -89,6 +96,7 @@ namespace StoreManagement.Web.Controllers
             public const string List = "List";
             public const string Create = "Create";
             public const string Edit = "Edit";
+            public const string CustomerExist = "CustomerExist";
         }
 
 
@@ -107,6 +115,17 @@ namespace StoreManagement.Web.Controllers
         public class ActionParamsClass_Edit
         {
             public readonly string viewModel = "viewModel";
+            public readonly string id = "id";
+        }
+        static readonly ActionParamsClass_CustomerExist s_params_CustomerExist = new ActionParamsClass_CustomerExist();
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public ActionParamsClass_CustomerExist CustomerExistParams { get { return s_params_CustomerExist; } }
+        [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+        public class ActionParamsClass_CustomerExist
+        {
+            public readonly string firstName = "firstName";
+            public readonly string lastName = "lastName";
+            public readonly string Id = "Id";
         }
         static readonly ViewsClass s_views = new ViewsClass();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -118,7 +137,13 @@ namespace StoreManagement.Web.Controllers
             public _ViewNamesClass ViewNames { get { return s_ViewNames; } }
             public class _ViewNamesClass
             {
+                public readonly string Create = "Create";
+                public readonly string Edit = "Edit";
+                public readonly string List = "List";
             }
+            public readonly string Create = "~/Views/Customer/Create.cshtml";
+            public readonly string Edit = "~/Views/Customer/Edit.cshtml";
+            public readonly string List = "~/Views/Customer/List.cshtml";
         }
     }
 
@@ -170,6 +195,32 @@ namespace StoreManagement.Web.Controllers
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
             ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "viewModel", viewModel);
             EditOverride(callInfo, viewModel);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void EditOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, long id);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Edit(long id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Edit);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "id", id);
+            EditOverride(callInfo, id);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void CustomerExistOverride(T4MVC_System_Web_Mvc_JsonResult callInfo, string firstName, string lastName, long? Id);
+
+        [NonAction]
+        public override System.Web.Mvc.JsonResult CustomerExist(string firstName, string lastName, long? Id)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_JsonResult(Area, Name, ActionNames.CustomerExist);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "firstName", firstName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "lastName", lastName);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "Id", Id);
+            CustomerExistOverride(callInfo, firstName, lastName, Id);
             return callInfo;
         }
 

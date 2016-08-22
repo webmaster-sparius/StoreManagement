@@ -8,6 +8,8 @@ namespace StoreManagement.Web.ViewModels.Customer
 {
     public class CustomerViewModel
     {
+        public long Id { get; set; }
+
         [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }

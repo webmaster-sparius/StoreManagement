@@ -5,7 +5,8 @@ using System.Web;
 
 namespace StoreManagement.Web.Services
 {
-    public class ICustomerService
+    public interface ICustomerService
     {
+        bool CheckCustomerExist(string firstName, string lastName, long? id);
     }
 }
