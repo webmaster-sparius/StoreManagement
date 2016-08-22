@@ -5,9 +5,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
 <div class="panel panel-default">
     <div class="panel-heading">
-        @Html.ActionLink("جدید","Create", "Category", null, new { @class = "btn btn-success" })
+        @Html.ActionLink("جدید", "Create", "Category", null, new { @class = "btn btn-success" })
     </div>
     <div class="panel-body">
         <table class="table">
@@ -25,7 +26,16 @@
                         @Html.DisplayFor(modelItem => item.Title)
                     </td>
                     <td>
-                        @Html.ActionLink("ویرایش", "Edit", new {  id=item.Id},new { @class = "btn btn-sm btn-info" })
+                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-info" })
+                        @* @Html.ActionLink("حذف", "Delete", new { id = item.Id , version =Convert.ToBase64String( item.Version)}, new { @class = "btn btn-sm btn-danger"})
+                        *@
+                        @using (Html.BeginForm("Delete", "Category", FormMethod.Post))
+                        {
+                            @Html.Hidden("id", item.Id)
+                            @Html.Hidden("version", item.Version)    
+                            @* <input type = "hidden" value = "@item.Id" name="id"/> *@
+                            <input type="submit" value="حذف" class="btn btn-sm btn-danger"/>
+                        }
                     </td>
                 </tr>
             }

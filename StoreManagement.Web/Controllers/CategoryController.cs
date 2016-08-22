@@ -43,7 +43,7 @@ namespace StoreManagement.Web.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var categories = db.Categories
-                    .Select(category => new CategoryViewModel { Title = category.Title, Id = category.Id })
+                    .Select(category => new CategoryViewModel { Title = category.Title, Id = category.Id , Version = category.Version })
                     .ToList();
 
                 return View(categories);
@@ -140,6 +140,20 @@ namespace StoreManagement.Web.Controllers
             {
                 db.Dispose();
             }
+        }
+        #endregion
+
+        #region Delete
+        [HttpPost]
+        public ActionResult Delete(long id, byte[] version)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var category = new Category { Id = id, Version = version};
+                db.Entry<Category>(category).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
+            }
+            return RedirectToAction("List");
         }
         #endregion
 
