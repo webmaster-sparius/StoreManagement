@@ -23,6 +23,7 @@ namespace StoreManagement.Web.ViewModels.Product
         [DisplayName("کد")]
         public string Code { get; set; }
         [Required(ErrorMessage = "قیمت کالا را وارد کنید.")]
+        [DataType(DataType.Currency,ErrorMessage ="عدد وارد کنید.")]
         [DisplayName("قیمت")]
         public decimal Price { get; set; }
         [DisplayName("توضیحات")]
