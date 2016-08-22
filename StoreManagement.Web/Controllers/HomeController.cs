@@ -9,10 +9,36 @@ namespace StoreManagement.Web.Controllers
 {
     public partial class HomeController : Controller
     {
+        /*
         public virtual ActionResult Index()
         {
+            List<Category> categories;
+            using (var db = new ApplicationDbContext())
+            {
+                categories = db.Categories.ToList();
+            }
+
+            ViewData["categories"] = categories;
             return View();
         }
+        //*/
+
+
+        // loading home page with search already done
+
+        public virtual ActionResult Index(string param)
+        {
+            List<Category> categories;
+            using (var db = new ApplicationDbContext())
+            {
+                categories = db.Categories.ToList();
+            }
+
+            ViewData["categories"] = categories;
+            ViewData["searched"] = param;
+            return View();
+        }
+
 
         public virtual ActionResult About()
         {
@@ -29,7 +55,7 @@ namespace StoreManagement.Web.Controllers
         }
 
 
-        public PartialViewResult SearchFor(string title)
+        public virtual PartialViewResult SearchFor(string title)
         {
 
             IQueryable<Product> products;
@@ -43,15 +69,9 @@ namespace StoreManagement.Web.Controllers
 
             return PartialView("_ResultPView");
         }
-        
 
-        // loading home page with search already done
 
-        public virtual ActionResult Search(string param)
-        {
-            ViewData["searched"] = param;
-            return View("Search");
-        }
+
 
     }
 }
