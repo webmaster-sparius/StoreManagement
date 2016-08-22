@@ -11,5 +11,7 @@ namespace StoreManagement.Web.ViewModels.Category
         [DisplayName("عنوان")]
         public string Title { get; set; }
         public long Id { get; set; }
+
+        public byte[] Version { get; set; }
     }
 }
