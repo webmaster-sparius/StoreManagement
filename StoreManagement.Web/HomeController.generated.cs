@@ -61,9 +61,9 @@ namespace StoreManagement.Web.Controllers
 
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public virtual System.Web.Mvc.ActionResult Index()
+        public virtual System.Web.Mvc.ActionResult Search()
         {
-            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
+            return new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Search);
         }
         [NonAction]
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -88,6 +88,7 @@ namespace StoreManagement.Web.Controllers
         public class ActionNamesClass
         {
             public readonly string Index = "Index";
+            public readonly string Search = "Search";
             public readonly string About = "About";
             public readonly string Contact = "Contact";
             public readonly string SearchFor = "SearchFor";
@@ -97,19 +98,20 @@ namespace StoreManagement.Web.Controllers
         public class ActionNameConstants
         {
             public const string Index = "Index";
+            public const string Search = "Search";
             public const string About = "About";
             public const string Contact = "Contact";
             public const string SearchFor = "SearchFor";
         }
 
 
-        static readonly ActionParamsClass_Index s_params_Index = new ActionParamsClass_Index();
+        static readonly ActionParamsClass_Search s_params_Search = new ActionParamsClass_Search();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public ActionParamsClass_Index IndexParams { get { return s_params_Index; } }
+        public ActionParamsClass_Search SearchParams { get { return s_params_Search; } }
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-        public class ActionParamsClass_Index
+        public class ActionParamsClass_Search
         {
-            public readonly string param = "param";
+            public readonly string text = "text";
         }
         static readonly ActionParamsClass_SearchFor s_params_SearchFor = new ActionParamsClass_SearchFor();
         [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
@@ -149,14 +151,25 @@ namespace StoreManagement.Web.Controllers
         public T4MVC_HomeController() : base(Dummy.Instance) { }
 
         [NonAction]
-        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string param);
+        partial void IndexOverride(T4MVC_System_Web_Mvc_ActionResult callInfo);
 
         [NonAction]
-        public override System.Web.Mvc.ActionResult Index(string param)
+        public override System.Web.Mvc.ActionResult Index()
         {
             var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Index);
-            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "param", param);
-            IndexOverride(callInfo, param);
+            IndexOverride(callInfo);
+            return callInfo;
+        }
+
+        [NonAction]
+        partial void SearchOverride(T4MVC_System_Web_Mvc_ActionResult callInfo, string text);
+
+        [NonAction]
+        public override System.Web.Mvc.ActionResult Search(string text)
+        {
+            var callInfo = new T4MVC_System_Web_Mvc_ActionResult(Area, Name, ActionNames.Search);
+            ModelUnbinderHelpers.AddRouteValues(callInfo.RouteValueDictionary, "text", text);
+            SearchOverride(callInfo, text);
             return callInfo;
         }
 

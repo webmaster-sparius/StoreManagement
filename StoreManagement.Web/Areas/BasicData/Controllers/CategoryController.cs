@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
+    [RouteArea("BasicData")]
     public partial class CategoryController : Controller
     {
         #region Fields
