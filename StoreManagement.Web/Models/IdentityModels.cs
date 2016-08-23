@@ -3,8 +3,6 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
-using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Configuration;
 
 namespace StoreManagement.Web.Models

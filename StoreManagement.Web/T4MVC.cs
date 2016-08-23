@@ -27,18 +27,26 @@ using T4MVC;
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
 public static partial class MVC
 {
+    static readonly BasicDataClass s_BasicData = new BasicDataClass();
+    public static BasicDataClass BasicData { get { return s_BasicData; } }
     public static StoreManagement.Web.Controllers.AccountController Account = new StoreManagement.Web.Controllers.T4MVC_AccountController();
-    public static StoreManagement.Web.Controllers.CategoryController Category = new StoreManagement.Web.Controllers.T4MVC_CategoryController();
-    public static StoreManagement.Web.Controllers.CustomerController Customer = new StoreManagement.Web.Controllers.T4MVC_CustomerController();
     public static StoreManagement.Web.Controllers.HomeController Home = new StoreManagement.Web.Controllers.T4MVC_HomeController();
     public static StoreManagement.Web.Controllers.InvoiceController Invoice = new StoreManagement.Web.Controllers.T4MVC_InvoiceController();
     public static StoreManagement.Web.Controllers.ManageController Manage = new StoreManagement.Web.Controllers.T4MVC_ManageController();
-    public static StoreManagement.Web.Controllers.ProductController Product = new StoreManagement.Web.Controllers.T4MVC_ProductController();
     public static T4MVC.SharedController Shared = new T4MVC.SharedController();
 }
 
 namespace T4MVC
 {
+    [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
+    public class BasicDataClass
+    {
+        public readonly string Name = "BasicData";
+        public StoreManagement.Web.Areas.BasicData.Controllers.CategoryController Category = new StoreManagement.Web.Areas.BasicData.Controllers.T4MVC_CategoryController();
+        public StoreManagement.Web.Areas.BasicData.Controllers.CustomerController Customer = new StoreManagement.Web.Areas.BasicData.Controllers.T4MVC_CustomerController();
+        public StoreManagement.Web.Areas.BasicData.Controllers.ProductController Product = new StoreManagement.Web.Areas.BasicData.Controllers.T4MVC_ProductController();
+        public T4MVC.BasicData.SharedController Shared = new T4MVC.BasicData.SharedController();
+    }
 }
 
 namespace T4MVC
@@ -67,9 +75,9 @@ internal partial class T4MVC_System_Web_Mvc_ActionResult : System.Web.Mvc.Action
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
+internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
 {
-    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
+    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }
@@ -80,9 +88,9 @@ internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResu
     public RouteValueDictionary RouteValueDictionary { get; set; }
 }
 [GeneratedCode("T4MVC", "2.0"), DebuggerNonUserCode]
-internal partial class T4MVC_System_Web_Mvc_PartialViewResult : System.Web.Mvc.PartialViewResult, IT4MVCActionResult
+internal partial class T4MVC_System_Web_Mvc_JsonResult : System.Web.Mvc.JsonResult, IT4MVCActionResult
 {
-    public T4MVC_System_Web_Mvc_PartialViewResult(string area, string controller, string action, string protocol = null): base()
+    public T4MVC_System_Web_Mvc_JsonResult(string area, string controller, string action, string protocol = null): base()
     {
         this.InitMVCT4Result(area, controller, action, protocol);
     }

@@ -174,15 +174,22 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
-    <Compile Include="CategoryController.generated.cs">
+    <Compile Include="Areas\BasicData\BasicDataAreaRegistration.cs" />
+    <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
+    <Compile Include="BasicData.CategoryController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="BasicData.CustomerController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BasicData.ProductController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
+    <Compile Include="BasicData.SharedController.generated.cs">
+      <DependentUpon>T4MVC.tt</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
-    <Compile Include="CustomerController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Areas\BasicData\Controllers\ProductController.cs" />
     <Compile Include="HomeController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
@@ -192,12 +199,9 @@
     <Compile Include="ManageController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ProductController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Areas\BasicData\Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -227,18 +231,18 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>T4MVC.tt</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\Category\AddCategoryViewModel.cs" />
-    <Compile Include="ViewModels\Category\CategoryViewModel.cs" />
-    <Compile Include="ViewModels\Category\EditCategoryViewModel.cs" />
-    <Compile Include="ViewModels\Customer\AddCustomerViewModel.cs" />
-    <Compile Include="ViewModels\Customer\CustomerViewModel.cs" />
-    <Compile Include="ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Category\AddCategoryViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Category\CategoryViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Category\EditCategoryViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Customer\AddCustomerViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Customer\CustomerViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Customer\EditCustomerViewModel.cs" />
     <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\Invoice\AddInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
-    <Compile Include="ViewModels\Product\AddProductViewModel.cs" />
-    <Compile Include="ViewModels\Product\EditProductViewModel.cs" />
-    <Compile Include="ViewModels\Product\ProductViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Product\AddProductViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Product\EditProductViewModel.cs" />
+    <Compile Include="Areas\BasicData\ViewModels\Product\ProductViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css" />
@@ -250,6 +254,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\BasicData\Views\web.config" />
+    <Content Include="Areas\BasicData\Views\_ViewStart.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.rtl.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -306,24 +312,26 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Category\Create.cshtml" />
-    <Content Include="Views\Category\List.cshtml" />
-    <Content Include="Views\Category\Edit.cshtml" />
-    <Content Include="Views\Product\List.cshtml" />
-    <Content Include="Views\Product\Create.cshtml" />
-    <Content Include="Views\Product\Edit.cshtml" />
+    <Content Include="Areas\BasicData\Views\Category\Create.cshtml" />
+    <Content Include="Areas\BasicData\Views\Category\List.cshtml" />
+    <Content Include="Areas\BasicData\Views\Category\Edit.cshtml" />
+    <Content Include="Areas\BasicData\Views\Product\List.cshtml" />
+    <Content Include="Areas\BasicData\Views\Product\Create.cshtml" />
+    <Content Include="Areas\BasicData\Views\Product\Edit.cshtml" />
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Invoice\Add.cshtml" />
     <Content Include="Views\Invoice\_ItemGroup.cshtml" />
     <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Home\_ResultPView.cshtml" />
-    <Content Include="Views\Product\Details.cshtml" />
-    <Content Include="Views\Customer\Edit.cshtml" />
-    <Content Include="Views\Customer\Create.cshtml" />
-    <Content Include="Views\Customer\List.cshtml" />
+    <Content Include="Areas\BasicData\Views\Product\Details.cshtml" />
+    <Content Include="Areas\BasicData\Views\Customer\Edit.cshtml" />
+    <Content Include="Areas\BasicData\Views\Customer\Create.cshtml" />
+    <Content Include="Areas\BasicData\Views\Customer\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\BasicData\Models\" />
+    <Folder Include="Areas\BasicData\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

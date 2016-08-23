@@ -1,0 +1,40 @@
+﻿@model IEnumerable<StoreManagement.Web.Areas.BasicData.ViewModels.Category.CategoryViewModel>
+
+@{
+    ViewBag.Title = "نمایش گروه";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2> لیست گروه ها </h2>
+
+<p>
+    @Html.ActionLink("گروه جدید", "Create", "Category", null, new { @class = "btn btn-success btn-sm" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Title)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id }, new { @class = "btn btn-xs btn-warning" })
+                    @using (Html.BeginForm("Delete", "Category", FormMethod.Post))
+                    {
+                        @Html.Hidden("id", item.Id)
+                        @Html.Hidden("version", item.Version)
+                        <input type="submit" value="حذف" class="btn btn-xs btn-danger" />
+                    }
+            </td>
+        </tr>
+    }
+</table>
+
+

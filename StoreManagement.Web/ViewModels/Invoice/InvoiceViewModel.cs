@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
+using StoreManagement.Web.Areas.BasicData.ViewModels.Customer;
 
 namespace StoreManagement.Web.ViewModels.Invoice
 {
@@ -15,7 +16,7 @@ namespace StoreManagement.Web.ViewModels.Invoice
         [Timestamp]
         public byte[] Version { get; set; }
 
-        public Customer.CustomerViewModel Customer { get; set; }   // needs check
+        public CustomerViewModel Customer { get; set; }   // needs check
 
         ICollection<InvoiceItem.InvoiceItemViewModel> Items { get; set; }
     }
