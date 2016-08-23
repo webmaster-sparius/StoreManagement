@@ -12,6 +12,7 @@ using System.Net;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
+    [RouteArea("BasicData")]
     public partial class ProductController : Controller
     {
         #region List

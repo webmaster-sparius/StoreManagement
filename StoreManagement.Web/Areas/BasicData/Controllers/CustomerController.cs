@@ -10,8 +10,7 @@ using System.Web.Mvc;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
-    [RoutePrefix("Customer")]
-    [Route("{action}")]
+    [RouteArea("BasicData")]
     public partial class CustomerController : Controller
     {
         #region Fields

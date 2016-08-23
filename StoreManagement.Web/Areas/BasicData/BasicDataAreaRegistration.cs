@@ -2,22 +2,23 @@
 
 namespace StoreManagement.Web.Areas.BasicData
 {
-    public class BasicDataAreaRegistration : AreaRegistration 
+    public class BasicDataAreaRegistration : AreaRegistration
     {
-        public override string AreaName 
+        public override string AreaName
         {
-            get 
+            get
             {
                 return "BasicData";
             }
         }
 
-        public override void RegisterArea(AreaRegistrationContext context) 
+        public override void RegisterArea(AreaRegistrationContext context)
         {
             context.MapRoute(
                 "BasicData_default",
                 "BasicData/{controller}/{action}/{id}",
-                new { action = "Index", id = UrlParameter.Optional }
+                defaults: new { id = UrlParameter.Optional },
+                namespaces: new[] { this.GetType().Namespace + ".Controllers" }
             );
         }
     }

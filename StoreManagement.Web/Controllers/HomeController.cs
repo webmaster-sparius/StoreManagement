@@ -9,7 +9,7 @@ namespace StoreManagement.Web.Controllers
 {
     public partial class HomeController : Controller
     {
-        /*
+
         public virtual ActionResult Index()
         {
             List<Category> categories;
@@ -21,12 +21,12 @@ namespace StoreManagement.Web.Controllers
             ViewData["categories"] = categories;
             return View();
         }
-        //*/
+
 
 
         // loading home page with search already done
 
-        public virtual ActionResult Index(string param)
+        public virtual ActionResult Search(string text)
         {
             List<Category> categories;
             using (var db = new ApplicationDbContext())
@@ -35,12 +35,12 @@ namespace StoreManagement.Web.Controllers
             }
 
             ViewData["categories"] = categories;
-            if (string.IsNullOrEmpty(param))
+            if (string.IsNullOrEmpty(text))
             {
                 ViewData["searched"] = "";
             }
             else {
-                ViewData["searched"] = param;
+                ViewData["searched"] = text;
             }
             return View();
         }

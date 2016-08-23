@@ -175,6 +175,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\BasicData\BasicDataAreaRegistration.cs" />
+    <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
     <Compile Include="BasicData.CategoryController.generated.cs">
       <DependentUpon>T4MVC.tt</DependentUpon>
@@ -340,6 +341,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\StoreManagement.Framework\StoreManagement.Framework.csproj">
+      <Project>{a51cb7be-a9a9-424c-9cf1-16c29688f6f8}</Project>
+      <Name>StoreManagement.Framework</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
