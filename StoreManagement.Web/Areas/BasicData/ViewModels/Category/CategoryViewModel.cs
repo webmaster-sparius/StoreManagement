@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
-namespace StoreManagement.Web.Areas.BasicData.ViewModels.Category
+namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class CategoryViewModel
     {

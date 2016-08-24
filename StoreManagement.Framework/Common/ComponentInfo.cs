@@ -11,5 +11,6 @@ namespace StoreManagement.Framework.Common
     {
         public abstract string AreaName { get; }
         public abstract IEnumerable<ShellLink> GetComponentShellLinks();
+        public abstract IEnumerable<EntityInfo> GetEntityInfos();
     }
 }

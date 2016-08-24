@@ -6,17 +6,21 @@ using System.Linq;
 using System.Web;
 
 
-namespace StoreManagement.Web.Areas.BasicData.ViewModels.Product
+namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class ProductViewModel
     {
         public long Id { get; set; }
+
         [DisplayName("نام کالا")]
         public string Name { get; set; }
+
         [DisplayName("کد کالا")]
         public string Code { get; set; }
+
         [DisplayName("قیمت")]
         public decimal Price { get; set; }
+
         [DisplayName("توضیحات")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }

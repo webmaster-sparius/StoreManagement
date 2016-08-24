@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
-namespace StoreManagement.Web.Areas.BasicData.ViewModels.Customer
+namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class CustomerViewModel
     {

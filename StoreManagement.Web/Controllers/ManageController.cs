@@ -6,7 +6,7 @@ using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
-using StoreManagement.Web.Models;
+using StoreManagement.Web.ViewModels;
 
 namespace StoreManagement.Web.Controllers
 {

@@ -19,7 +19,7 @@
 
 <select class="form-control">
     <option value="همه">همه</option>
-    @{var categs = (List<StoreManagement.Web.Models.Category>)ViewData["categories"]; }
+    @{var categs = (List<StoreManagement.Common.Models.Category>)ViewData["categories"]; }
     @foreach (var elem in categs)
     {
         <option value="@elem.Title"> @elem.Title </option>

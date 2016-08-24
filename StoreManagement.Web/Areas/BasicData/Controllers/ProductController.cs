@@ -1,6 +1,4 @@
-﻿using StoreManagement.Web.Models;
-using StoreManagement.Web.Services;
-using StoreManagement.Web.Areas.BasicData.ViewModels.Product;
+﻿using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -9,6 +7,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
+using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
+using StoreManagement.Common.EntityServices;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
@@ -41,7 +42,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(AddProductViewModel viewModel)
         {
-            var productService = new ProductService();
+            var productService = ServiceFactory.Create<IProductService>();
             if (productService.CheckCodeExist(viewModel.Code, null))
                 ModelState.AddModelError("Code", "یک کالا با این کد قبلا در سیستم ثبت شده است.");
             if (productService.CheckNameExist(viewModel.Name, null))
@@ -100,7 +101,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditProductViewModel viewModel)
         {
-            var productService = new ProductService();
+            var productService = ServiceFactory.Create<IProductService>();
             if (productService.CheckCodeExist(viewModel.Code, viewModel.Id))
                 ModelState.AddModelError("Code", "یک کالا با این کد قبلا در سیستم ثبت شده است.");
             if (productService.CheckNameExist(viewModel.Name, viewModel.Id))

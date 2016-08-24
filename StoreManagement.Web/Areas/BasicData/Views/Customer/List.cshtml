@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreManagement.Web.Areas.BasicData.ViewModels.Customer.CustomerViewModel>
+﻿@model IEnumerable<StoreManagement.Web.Areas.BasicData.ViewModels.CustomerViewModel>
 
 @{
     ViewBag.Title = "List";
@@ -36,7 +36,7 @@
             @Html.DisplayFor(modelItem => item.PhoneNumber)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new {  id=item.Id}) |
+            @Html.ActionLink("Edit", "Edit", new { Id = item.Id }) |
             @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
             @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
         </td>

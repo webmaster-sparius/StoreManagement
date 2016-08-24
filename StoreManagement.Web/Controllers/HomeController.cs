@@ -1,9 +1,9 @@
-﻿using System;
+﻿using StoreManagement.Common.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using StoreManagement.Web.Models;
 
 namespace StoreManagement.Web.Controllers
 {

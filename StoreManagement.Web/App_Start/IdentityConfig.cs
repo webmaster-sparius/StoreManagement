@@ -10,7 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security;
-using StoreManagement.Web.Models;
+using StoreManagement.Common.Models;
 
 namespace StoreManagement.Web
 {

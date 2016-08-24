@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using StoreManagement.Framework.UI;
-using StoreManagement.Web.Models;
+using StoreManagement.Common.Models;
+using StoreManagement.Common.EntityServices;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 
 namespace StoreManagement.Web.Areas.BasicData
 {
@@ -25,6 +27,16 @@ namespace StoreManagement.Web.Areas.BasicData
                 new ShellLink("گروه", "Category", "List"),
                 new ShellLink("کالا", "Product", "List"),
                 new ShellLink("مشتری", "Customer", "List"),
+            };
+        }
+
+        public override IEnumerable<EntityInfo> GetEntityInfos()
+        {
+            return new[]
+            {
+                new EntityInfo(typeof(Category), typeof(CategoryViewModel), typeof(ICategoryService)),
+                new EntityInfo(typeof(Customer), typeof(CustomerViewModel), typeof(ICustomerService)),
+                new EntityInfo(typeof(Product), typeof(ProductViewModel), typeof(IProductService)),
             };
         }
     }

@@ -1,6 +1,7 @@
-﻿using StoreManagement.Web.Models;
-using StoreManagement.Web.Services;
-using StoreManagement.Web.Areas.BasicData.ViewModels.Customer;
+﻿using StoreManagement.Common.EntityServices;
+using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
@@ -53,7 +54,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpPost]
         public virtual ActionResult Create(AddCustomerViewModel viewModel)
         {
-            if (new CustomerService().CheckCustomerExist(viewModel.FirstName, viewModel.LastName, null))
+            if (ServiceFactory.Create<ICustomerService>().CheckCustomerExist(viewModel.FirstName, viewModel.LastName, null))
                 ModelState.AddModelError("", "یک کاربر با این نام و نام خانوادگی ثبت شده است");
             /// to do : add checking when CustomerService implement
             if (!ModelState.IsValid)
@@ -128,11 +129,10 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #endregion
 
         #region RemoteValidation
-        [Route(Name = "UniqueCustomer")]
         [HttpPost]
         public virtual JsonResult CustomerExist(string firstName, string lastName, long? Id)
         {
-            var exist = new CustomerService().CheckCustomerExist(firstName, lastName, Id);
+            var exist = ServiceFactory.Create<ICustomerService>().CheckCustomerExist(firstName, lastName, Id);
             return Json(!exist);
         }
         #endregion

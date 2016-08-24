@@ -16,7 +16,7 @@
     <RootNamespace>StoreManagement.Web</RootNamespace>
     <AssemblyName>StoreManagement.Web</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
+    <MvcBuildViews>true</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
@@ -166,9 +166,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AccountController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -177,30 +174,8 @@
     <Compile Include="Areas\BasicData\BasicDataAreaRegistration.cs" />
     <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
-    <Compile Include="BasicData.CategoryController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BasicData.CustomerController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BasicData.ProductController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="BasicData.SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Areas\BasicData\Controllers\ProductController.cs" />
-    <Compile Include="HomeController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="InvoiceController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="ManageController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Services\CategoryService.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\BasicData\Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -208,42 +183,22 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\BaseEntity.cs" />
-    <Compile Include="Models\Category.cs" />
-    <Compile Include="Models\Customer.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
-    <Compile Include="Models\Invoice.cs" />
-    <Compile Include="Models\InvoiceItem.cs" />
-    <Compile Include="Models\ManageViewModels.cs" />
-    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\CustomerService.cs" />
-    <Compile Include="Services\ICustomerService.cs" />
-    <Compile Include="Services\ICategoryService.cs" />
-    <Compile Include="Services\IProductService.cs" />
-    <Compile Include="Services\ProductService.cs" />
-    <Compile Include="SharedController.generated.cs">
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="T4MVC.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>T4MVC.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\BasicData\ViewModels\Category\AddCategoryViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Category\CategoryViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Category\EditCategoryViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Customer\AddCustomerViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Customer\CustomerViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="ViewModels\AccountViewModels.cs" />
     <Compile Include="ViewModels\InvoiceItem\InvoiceItemViewModel.cs" />
     <Compile Include="ViewModels\Invoice\AddInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Product\AddProductViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Product\EditProductViewModel.cs" />
     <Compile Include="Areas\BasicData\ViewModels\Product\ProductViewModel.cs" />
+    <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.rtl.min.css" />
@@ -272,11 +227,6 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\_references.js" />
-    <None Include="T4MVC.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>T4MVC.cs</LastGenOutput>
-    </None>
-    <None Include="T4MVC.tt.settings.xml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -322,7 +272,6 @@
     <Content Include="Views\Home\Search.cshtml" />
     <Content Include="Views\Invoice\Add.cshtml" />
     <Content Include="Views\Invoice\_ItemGroup.cshtml" />
-    <None Include="T4MVC.tt.hooks.t4" />
     <Content Include="Views\Home\_ResultPView.cshtml" />
     <Content Include="Areas\BasicData\Views\Product\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Customer\Edit.cshtml" />
@@ -336,13 +285,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StoreManagement.Common\StoreManagement.Common.csproj">
+      <Project>{0d346c50-970b-4b49-a18c-fb43b0e68e5f}</Project>
+      <Name>StoreManagement.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StoreManagement.Framework\StoreManagement.Framework.csproj">
       <Project>{a51cb7be-a9a9-424c-9cf1-16c29688f6f8}</Project>
       <Name>StoreManagement.Framework</Name>

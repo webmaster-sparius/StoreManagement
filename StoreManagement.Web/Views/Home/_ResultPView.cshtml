@@ -4,12 +4,13 @@
 }
 
 
-@{ var items = (List<StoreManagement.Web.Models.Product>)ViewData["search_result"]; }
+@{ var items = (List<StoreManagement.Common.Models.Product>)ViewData["search_result"]; }
 
-@foreach(var elem in items) {
+@foreach (var elem in items)
+{
 
     <div>
-        @Html.ActionLink(elem.Name, MVC.BasicData.Product.Details(elem.Id), new {  })
+        @Html.ActionLink(elem.Name, "Details", new { Id = elem.Id }, new { })
     </div>
 
 }

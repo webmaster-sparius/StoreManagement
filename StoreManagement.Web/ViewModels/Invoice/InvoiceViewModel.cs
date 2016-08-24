@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
-using StoreManagement.Web.Areas.BasicData.ViewModels.Customer;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 
 namespace StoreManagement.Web.ViewModels.Invoice
 {

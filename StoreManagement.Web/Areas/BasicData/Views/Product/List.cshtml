@@ -1,4 +1,4 @@
-﻿@model IEnumerable<StoreManagement.Web.Areas.BasicData.ViewModels.Product.ProductViewModel>
+﻿@model IEnumerable<StoreManagement.Web.Areas.BasicData.ViewModels.ProductViewModel>
 
 @{
     ViewBag.Title = "نمایش کالا";
@@ -7,7 +7,7 @@
 <h2> لیست کالا ها </h2>
 
 <p>
-    <a href="@Url.Action(MVC.BasicData.Product.Create())" class="btn btn-success btn-sm"> کالای جدید </a>
+    <a href="@Url.Action("Create")" class="btn btn-success btn-sm"> کالای جدید </a>
 </p>
 <table class="table">
     <tr>
@@ -44,9 +44,9 @@
             <td>
 
                 <div>
-                    @Html.ActionLink("جزئیات", MVC.BasicData.Product.Details(item.Id), new { @class = "btn btn-info btn-xs" })
-                    @Html.ActionLink("ویرایش", MVC.BasicData.Product.Edit(item.Id), new { @class = "btn btn-warning btn-xs" })
-                    @Html.ActionLink("حذف", MVC.BasicData.Product.Delete(item.Id), new { @class = "btn btn-danger btn-xs" })
+                    @Html.ActionLink("جزئیات", "Details", new { Id = item.Id }, new { @class = "btn btn-info btn-xs" })
+                    @Html.ActionLink("ویرایش", "Edit", new { Id = item.Id }, new { @class = "btn btn-warning btn-xs" })
+                    @Html.ActionLink("حذف", "Delete", new { Id = item.Id }, new { @class = "btn btn-danger btn-xs" })
                     <!--
                     <a href="/product/details" class="btn btn-info btn-xs"> جزئیات </a>
                     <a href="/product/edit" class="btn btn-warning btn-xs"> ویرایش </a>

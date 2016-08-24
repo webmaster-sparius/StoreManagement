@@ -1,42 +1,21 @@
-﻿using StoreManagement.Web.Models;
-using StoreManagement.Web.Services;
-using StoreManagement.Web.Areas.BasicData.ViewModels.Category;
+﻿using StoreManagement.Common.EntityServices;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
     [RouteArea("BasicData")]
     public partial class CategoryController : Controller
     {
-        #region Fields
-        /// <summary>
-        /// todo: use dependency injection
-        /// </summary>
-        private readonly ICategoryService _categoryService;
-        #endregion
-
-        #region Constructor
-        /// <summary>
-        /// todo:use dependency injection
-        /// </summary>
-        /// <param name="categoryService"></param>
-        public CategoryController(ICategoryService categoryService)
-        {
-            _categoryService = categoryService;
-        }
-
-        public CategoryController()
-        {
-
-        }
-        #endregion
-
         #region List
+
         public virtual ActionResult List()
         {
             using (var db = new ApplicationDbContext())
@@ -52,6 +31,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #endregion
 
         #region Create
+
         [HttpGet]
         public virtual ActionResult Create()
         {
@@ -61,8 +41,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpPost]
         public virtual ActionResult Create(AddCategoryViewModel viewModel)
         {
-            // best practice 
-            if (new CategoryService().CheckTitleExist(viewModel.Title, null))
+            var catService = ServiceFactory.Create<ICategoryService>();
+
+            if (catService.CheckTitleExist(viewModel.Title, null))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
 
             if (!ModelState.IsValid)
@@ -80,6 +61,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
             return RedirectToAction("List");
         }
+
         #endregion
 
         #region Edit
@@ -107,7 +89,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditCategoryViewModel viewModel)
         {
-            if (new CategoryService().CheckTitleExist(viewModel.Title, viewModel.Id))
+            if (ServiceFactory.Create<ICategoryService>().CheckTitleExist(viewModel.Title, viewModel.Id))
                 ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
             if (!ModelState.IsValid)
             {
@@ -128,7 +110,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 db.Entry<Category>(category).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
 
-                return RedirectToAction(MVC.BasicData.Category.List());
+                return RedirectToAction("List");
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -157,11 +139,10 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #endregion
 
         #region RemoteValidations
-        [Route(Name = "UniqueCategoryTitle")]
         [HttpPost]
         public virtual JsonResult TitleExist(string title, long? id)
         {
-            var exist = new CategoryService().CheckTitleExist(title, id);
+            var exist = ServiceFactory.Create<ICategoryService>().CheckTitleExist(title, id);
             return Json(!exist);
         }
         #endregion

@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -40,7 +40,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App\AppLoader.cs" />
+    <Compile Include="Common\BaseEntity.cs" />
     <Compile Include="Common\ComponentInfo.cs" />
+    <Compile Include="Common\EntityInfo.cs" />
+    <Compile Include="Common\IEntityService.cs" />
+    <Compile Include="Common\ServiceFactory.cs" />
     <Compile Include="ComponentManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ShellLink.cs" />
