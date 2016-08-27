@@ -26,7 +26,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                     .Select(p => new ProductViewModel
                     { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
                     .ToList();
-                return View(products);
+                ViewBag.List = products;
+                ViewBag.Type = typeof(Product);
+                return View("EntityList");
             }
         }
         #endregion

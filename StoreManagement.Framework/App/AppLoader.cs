@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StoreManagement.Framework.MetaData;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -21,6 +22,9 @@ namespace StoreManagement.Framework.App
                 if (!loadedAssemblies.Contains(nameOnly))
                     Assembly.LoadFrom(asmFileName);
             }
+
+            foreach (var ei in ComponentManager.GetAllEntityInfos())
+                MetaDataService.AddEntityInfo(ei);
         }
     }
 }

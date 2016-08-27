@@ -11,5 +11,6 @@ namespace StoreManagement.Common.EntityServices
     public interface ICategoryService : IEntityService<Category>
     {
         bool CheckTitleExist(string title, long? id);
+        IEnumerable<Category> FetchAll();
     }
 }

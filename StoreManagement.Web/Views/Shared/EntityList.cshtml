@@ -1,0 +1,42 @@
+﻿@using System.Collections.Generic;
+@using StoreManagement.Framework.MetaData;
+
+@{
+    Type entityType = ViewBag.Type;
+    Type viewModelType = MetaDataService.GetEntityInfo(entityType).DefaultViewModelType;
+    string entityName = MetaDataHelper.GetDisplayName(viewModelType);
+    var properties = MetaDataService.GetTypeDisplayProperties(viewModelType);
+}
+<h2>فهرست @entityName</h2>
+
+<p>
+    @Html.ActionLink(entityName + " جدید", "Create", entityType.Name, null, new { @class = "btn btn-success btn-sm" })
+</p>
+
+<table class="table">
+    <tr>
+        @foreach (var propInfo in properties)
+        {
+            <th>@propInfo.Item2</th>
+        }
+    </tr>
+    @foreach (var entity in ViewBag.List)
+    {
+        <tr>
+            @foreach (var propInfo in properties)
+            {
+                <td>
+                    @viewModelType.GetProperty(propInfo.Item1).GetValue(entity)
+                </td>
+            }
+            <td>
+
+                <div>
+                    @Html.ActionLink("جزئیات", "Details", new { Id = entity.Id }, new { @class = "btn btn-info btn-xs" })
+                    @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })
+                    @Html.ActionLink("حذف", "Delete", new { Id = entity.Id }, new { @class = "btn btn-danger btn-xs" })
+                </div>
+            </td>
+        </tr>
+    }
+</table>

@@ -8,6 +8,7 @@ using System.Web;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
+    [DisplayName("کالا")]
     public class ProductViewModel
     {
         public long Id { get; set; }

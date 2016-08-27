@@ -24,6 +24,13 @@ namespace StoreManagement.Business.EntityServices
                 return exist;
             }
         }
+
+        public IEnumerable<Category> FetchAll()
+        {
+            using (var db = new ApplicationDbContext())
+                return db.Categories.ToList();
+        }
+
         #endregion
     }
 }

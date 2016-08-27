@@ -42,6 +42,12 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         [DisplayName("گروه")]
         public long CategoryId { get; set; }
 
-        public IList<Category> Categories { get; set; }
+        public IQueryable<Category> Categories
+        {
+            get
+            {
+                return new ApplicationDbContext().Categories;
+            }
+        }
     }
 }

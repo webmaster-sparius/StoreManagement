@@ -47,6 +47,8 @@
     <Compile Include="Common\IEntityService.cs" />
     <Compile Include="Common\ServiceFactory.cs" />
     <Compile Include="ComponentManager.cs" />
+    <Compile Include="MetaData\MetaDataHelper.cs" />
+    <Compile Include="MetaData\MetaDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ShellLink.cs" />
   </ItemGroup>

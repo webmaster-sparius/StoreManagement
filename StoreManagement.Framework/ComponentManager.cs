@@ -10,9 +10,10 @@ namespace StoreManagement.Framework
 {
     public class ComponentManager
     {
-        public static IEnumerable<ShellLink> GetAllLinks()
+        public static IEnumerable<ComponentInfo> GetAllComponentInfos()
         {
-            var links = new List<ShellLink>();
+            var componentInfos = new List<ComponentInfo>();
+
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var asm in assemblies)
             {
@@ -20,15 +21,34 @@ namespace StoreManagement.Framework
                     Where(t => t.IsSubclassOf(typeof(ComponentInfo))))
                 {
                     var c = (ComponentInfo)Activator.CreateInstance(t);
-                    foreach (var link in c.GetComponentShellLinks())
-                    {
-                        link.AreaName = c.AreaName;
-                        links.Add(link);
-                    }
+                    componentInfos.Add(c);
+                }
+            }
+            return componentInfos;
+        }
+
+        public static IEnumerable<ShellLink> GetAllLinks()
+        {
+            var links = new List<ShellLink>();
+
+            foreach (var ci in GetAllComponentInfos())
+            {
+                foreach (var link in ci.GetComponentShellLinks())
+                {
+                    link.AreaName = ci.AreaName;
+                    links.Add(link);
                 }
             }
 
             return links;
+        }
+
+        public static IEnumerable<EntityInfo> GetAllEntityInfos()
+        {
+            var entityInfos = new List<EntityInfo>();
+            foreach (var ci in GetAllComponentInfos())
+                entityInfos.AddRange(ci.GetEntityInfos());
+            return entityInfos;
         }
     }
 }

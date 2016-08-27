@@ -18,15 +18,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         public virtual ActionResult List()
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var categories = db.Categories
-                    .Select(category => new CategoryViewModel { Title = category.Title, Id = category.Id , Version = category.Version })
-                    .ToList();
+            var list = ServiceFactory.Create<ICategoryService>().FetchAll().
+                Select(c => CategoryViewModel.FromModel(c));
+            ViewBag.Type = typeof(Category);
+            ViewBag.List = list;
 
-                return View(categories);
-            }
-
+            return View("EntityList");
         }
         #endregion
 
