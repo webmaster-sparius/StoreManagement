@@ -78,15 +78,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicData\ViewModels\Category\AddCategoryViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Category\CategoryViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Category\EditCategoryViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Customer\AddCustomerViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Customer\CustomerViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Customer\EditCustomerViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Product\AddProductViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Product\EditProductViewModel.cs" />
-    <Compile Include="BasicData\ViewModels\Product\ProductViewModel.cs" />
+    <Compile Include="BasicData\Category\AddCategoryViewModel.cs" />
+    <Compile Include="BasicData\Category\CategoryViewModel.cs" />
+    <Compile Include="BasicData\Category\EditCategoryViewModel.cs" />
+    <Compile Include="BasicData\Customer\AddCustomerViewModel.cs" />
+    <Compile Include="BasicData\Customer\CustomerViewModel.cs" />
+    <Compile Include="BasicData\Customer\EditCustomerViewModel.cs" />
+    <Compile Include="BasicData\Product\AddProductViewModel.cs" />
+    <Compile Include="BasicData\Product\EditProductViewModel.cs" />
+    <Compile Include="BasicData\Product\ProductViewModel.cs" />
     <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

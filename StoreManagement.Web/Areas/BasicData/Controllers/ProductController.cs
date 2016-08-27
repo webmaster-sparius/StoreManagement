@@ -19,27 +19,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            /*
-             * this part should go to product service
-             *
-            using (var db = new ApplicationDbContext())
-            {
-                var products = db.Products.Include(a => a.Category)
-                    .Where(p => p.IsDeleted == false)
-                    .Select(p => new ProductViewModel
-                    { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
-                    .ToList();
-            //*/
-
-            //   var service = ServiceFactory.Create<IProductService>();
-            //   var products = service.FetchAll();
-
-
-            // can not get p.category because database is closed  :(
-            /* var list = products.Select(p => new ProductViewModel
-                         { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
-                         .ToList();
-                         */
+            
 
             var service = ServiceFactory.Create<IProductService>();
             var list = service.FetchViewModels();
