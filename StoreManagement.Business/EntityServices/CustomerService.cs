@@ -21,5 +21,15 @@ namespace StoreManagement.Business.EntityServices
                 return exist;
             }
         }
+
+        public IEnumerable<Customer> FetchAll()
+        {
+            List<Customer> customers = null;
+            using (var db = new ApplicationDbContext())
+            {
+                customers = db.Customers.ToList();
+            }
+            return customers;
+        }
     }
 }

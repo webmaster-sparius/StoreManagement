@@ -71,6 +71,14 @@
       <Project>{a51cb7be-a9a9-424c-9cf1-16c29688f6f8}</Project>
       <Name>StoreManagement.Framework</Name>
     </ProjectReference>
+    <ProjectReference Include="..\StoreManagement.Models\StoreManagement.Models.csproj">
+      <Project>{acf16558-756e-47ec-a61f-920459ed6013}</Project>
+      <Name>StoreManagement.Models</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\StoreManagement.ViewModels\StoreManagement.ViewModels.csproj">
+      <Project>{4ec85294-fcab-4a3c-857f-4de945ad864f}</Project>
+      <Name>StoreManagement.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

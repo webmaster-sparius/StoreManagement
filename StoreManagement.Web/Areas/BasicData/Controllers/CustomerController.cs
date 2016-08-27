@@ -35,12 +35,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
+            /*
             using (var db = new ApplicationDbContext())
             {
                 var customers = db.Customers.Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
                     .ToList();
                 return View(customers);
             }
+            */
+            var customers = ServiceFactory.Create<ICustomerService>().FetchAll().Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
+                    .ToList();
+            return View(customers);
 
         }
         #endregion

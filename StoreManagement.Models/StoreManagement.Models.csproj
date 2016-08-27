@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0D346C50-970B-4B49-A18C-FB43B0E68E5F}</ProjectGuid>
+    <ProjectGuid>{ACF16558-756E-47EC-A61F-920459ED6013}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>StoreManagement.Common</RootNamespace>
-    <AssemblyName>StoreManagement.Common</AssemblyName>
+    <RootNamespace>StoreManagement.Models</RootNamespace>
+    <AssemblyName>StoreManagement.Models</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\bin\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -46,6 +46,7 @@
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.1\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Scaffolding.EntityFramework.12.0, Version=12.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=x86" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -57,30 +58,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityServices\ICategoryService.cs" />
-    <Compile Include="EntityServices\ICustomerService.cs" />
-    <Compile Include="EntityServices\IProductService.cs" />
+    <Compile Include="Class1.cs" />
+    <Compile Include="Models\Category.cs" />
+    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Invoice.cs" />
+    <Compile Include="Models\InvoiceItem.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StoreManagement.Framework\StoreManagement.Framework.csproj">
       <Project>{a51cb7be-a9a9-424c-9cf1-16c29688f6f8}</Project>
       <Name>StoreManagement.Framework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\StoreManagement.Models\StoreManagement.Models.csproj">
-      <Project>{acf16558-756e-47ec-a61f-920459ed6013}</Project>
-      <Name>StoreManagement.Models</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\StoreManagement.ViewModels\StoreManagement.ViewModels.csproj">
-      <Project>{4ec85294-fcab-4a3c-857f-4de945ad864f}</Project>
-      <Name>StoreManagement.ViewModels</Name>
-    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

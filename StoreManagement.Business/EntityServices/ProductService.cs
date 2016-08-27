@@ -1,15 +1,18 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-
+using StoreManagement.Web.Areas.BasicData.ViewModels;
+using System.Data.Entity;
 namespace StoreManagement.Business.EntityServices
 {
     public class ProductService : IProductService
     {
         #region IProductService
+
         public bool CheckNameExist(string name, long? id)
         {
             var products = new ApplicationDbContext().Products;
@@ -27,6 +30,26 @@ namespace StoreManagement.Business.EntityServices
                 products.Any(p => p.Code == code);
             return exist;
         }
-        #endregion
+
+
+        public IEnumerable<Product> FetchAll()
+        {
+            using (var db = new ApplicationDbContext())
+            return db.Products.Where(p => p.IsDeleted == false).ToList();
+        }
+
+            #endregion
+
+        public IEnumerable<ProductViewModel> FetchViewModels()
+        {
+            using (var db = new ApplicationDbContext()) {
+
+                var list = db.Products.Include(a=>a.Category).Where(p =>! p.IsDeleted)
+                    .Select(p => new ProductViewModel
+                    { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
+                            .ToList();
+                return list;
+            }
+        }
     }
 }
