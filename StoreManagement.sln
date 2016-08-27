@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Web", "StoreManagement.Web\StoreManagement.Web.csproj", "{2971DD44-6FD6-4DCD-B080-E74DF0EDB252}"
+	ProjectSection(ProjectDependencies) = postProject
+		{980A0A2A-57C7-4827-983F-59ACC9EC8107} = {980A0A2A-57C7-4827-983F-59ACC9EC8107}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StoreManagement.Framework", "StoreManagement.Framework\StoreManagement.Framework.csproj", "{A51CB7BE-A9A9-424C-9CF1-16C29688F6F8}"
 EndProject
