@@ -123,13 +123,21 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         #region Delete
         [HttpPost]
-        public virtual ActionResult Delete(long id, byte[] version)
+        public virtual ActionResult Delete(long id)
         {
             using (var db = new ApplicationDbContext())
             {
-                var category = new Category { Id = id, Version = version };
-                db.Entry<Category>(category).State = System.Data.Entity.EntityState.Deleted;
-                db.SaveChanges();
+                var category = new Category { Id = id };
+
+                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
+
+                var temp = db.Categories.Find(id);
+                if (temp != null)
+                {
+                    db.Categories.Remove(temp);
+                    db.SaveChanges();
+                }
+
             }
             return RedirectToAction("List");
         }
