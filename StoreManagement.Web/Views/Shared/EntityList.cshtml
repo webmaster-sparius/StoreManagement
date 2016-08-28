@@ -25,7 +25,7 @@
     {
         e_id = entity.Id;
 
-        <tr id="tr_@e_id" >
+        <tr id="tr_@e_id">
             @foreach (var propInfo in properties)
             {
                 <td>
@@ -34,10 +34,10 @@
             }
             <td>
 
-                <div  >
+                <div>
                     @Html.ActionLink("جزئیات", "Details", new { Id = entity.Id }, new { @class = "btn btn-info btn-xs" })
-                    @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })   
-                    <button onclick="delete_by_ajax(@e_id); " type="button"  class="btn btn-danger btn-xs" > حذف  </button>
+                    @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })
+                    <button onclick="delete_by_ajax(@e_id); " type="button" class="btn btn-danger btn-xs"> حذف  </button>
                 </div>
 
             </td>
@@ -45,29 +45,50 @@
     }
 </table>
 
-<!--
-<form id="hiddenForm" action="Delete">
-    <input id="hiddenInput" />
-    <!--  invisible  --
-</form>
--->
+
+
+<div id="dialog-confirm"  style="display:none;"  title="حذف موجودیت ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> آیا مطمئن هستید؟ </p>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+}
 
 @section scripts{
+
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
     <script type="text/javascript">
 
         function delete_by_ajax(target_id) {
 
-            $.ajax({    
-                type: 'post',
-                url: '/basicdata/@entityType.Name/Delete',
-                data: {
-                    id: target_id,
-                },
-                success: function () {
-                    $('#tr_' + target_id).fadeOut(500);
+            $("#dialog-confirm").dialog({
+                resizable: false,
+                height: "auto",
+                width: 400,
+                modal: true,
+                buttons: {
+                    " پاکش کن ": function () {
+                        $(this).dialog("close");
+                        $.ajax({
+                            type: 'post',
+                            url: '@Url.Action("Delete")',
+                            data: {
+                                id: target_id,
+                            },
+                            success: function () {
+                                $('#tr_' + target_id).fadeOut(500);
+                            }
+                        });
+                    },
+                    " بیخیالش ": function () {
+                        $(this).dialog("close");
+                    }
                 }
-            });
+            });   
+
         }
 
-    </script>    
+    </script>
 }
