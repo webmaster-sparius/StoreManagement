@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
+using System.Net;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
@@ -112,6 +113,23 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             {
                 db.Dispose();
             }
+        }
+        #endregion
+
+        #region Details
+        public virtual ActionResult Details(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var viewModel = ServiceFactory.Create<ICategoryService>().FetchAll()
+                .Select(v => new CategoryViewModel
+                {
+                    Id = v.Id,
+                    Title = v.Title
+                }).FirstOrDefault(v => v.Id == id);
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
         }
         #endregion
 

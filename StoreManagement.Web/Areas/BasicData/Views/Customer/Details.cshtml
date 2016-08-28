@@ -1,0 +1,45 @@
+﻿@model StoreManagement.Web.Areas.BasicData.ViewModels.CustomerViewModel
+
+@{
+    ViewBag.Title = "جزئیات مشتری";
+}
+
+<h2>جزئیات</h2>
+
+<div>
+    
+    <hr />
+    <dl class="form-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd class="col-md-10">
+            @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd class="col-md-10">
+            @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control col-md-10", @readonly = "readonly" } })
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd class="col-md-10">
+            @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </dd>
+
+    </dl>
+</div>
+<div class="col-md-offset-2 col-md-10">
+    <br>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning btn-sm" })
+</div>
+<p>
+    @Html.ActionLink("بازگشت به لیست مشتری", "List")
+</p>
