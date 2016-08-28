@@ -38,10 +38,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpPost]
         public virtual ActionResult Create(AddCategoryViewModel viewModel)
         {
-            var catService = ServiceFactory.Create<ICategoryService>();
-
-            if (catService.CheckTitleExist(viewModel.Title, null))
-                ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
 
             if (!ModelState.IsValid)
             {
@@ -86,8 +82,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditCategoryViewModel viewModel)
         {
-            if (ServiceFactory.Create<ICategoryService>().CheckTitleExist(viewModel.Title, viewModel.Id))
-                ModelState.AddModelError("Title", "یک گروه با این عنوان قبلا در سیستم ثبت شده است.");
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "آخرین بارت باشه.");
