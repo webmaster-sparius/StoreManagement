@@ -173,21 +173,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         {
             using (var db = new ApplicationDbContext())
             {
-                var viewModel = db.Products
-                    .Select(p => new EditProductViewModel
-                    {
-                        Name = p.Name,
-                        Code = p.Code,
-                        Price = p.Price,
-                        Description = p.Description,
-                        Id = p.Id,
-                        CategoryId = p.CategoryId,
-                        Version = p.Version
-                    }).FirstOrDefault(p => p.Id == id);
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
+                var product = new Product { Id = id };
+                db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;
+                db.SaveChanges();
             }
+            return RedirectToAction("List");
+        
         }
         #endregion
     }

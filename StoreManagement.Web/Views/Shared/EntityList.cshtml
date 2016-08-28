@@ -6,6 +6,7 @@
     Type viewModelType = MetaDataService.GetEntityInfo(entityType).DefaultViewModelType;
     string entityName = MetaDataHelper.GetDisplayName(viewModelType);
     var properties = MetaDataService.GetTypeDisplayProperties(viewModelType);
+    long e_id = 0;
 }
 <h2>فهرست @entityName</h2>
 
@@ -22,7 +23,9 @@
     </tr>
     @foreach (var entity in ViewBag.List)
     {
-        <tr>
+        e_id = entity.Id;
+
+        <tr id="tr_@e_id" >
             @foreach (var propInfo in properties)
             {
                 <td>
@@ -31,26 +34,46 @@
             }
             <td>
 
-                <div>
+                <div  >
                     @Html.ActionLink("جزئیات", "Details", new { Id = entity.Id }, new { @class = "btn btn-info btn-xs" })
                     @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })
                     @Html.ActionLink("حذف", "Delete", new { Id = entity.Id }, new { @class = "btn btn-danger btn-xs" })
+                    <!--  turn these links into hand written ones to apply javascript  -->
+                
+                    <button onclick="delete_by_ajax(@e_id);" class="btn btn-danger btn-xs" > حذف با ایجکس </button>
+                    <!--  turned links  -->
                 </div>
+
             </td>
         </tr>
     }
 </table>
 
+<!--
+<form id="hiddenForm" action="Delete">
+    <input id="hiddenInput" />
+    <!--  invisible  --
+</form>
+-->
+
 @section scripts{
     <script type="text/javascript">
-        function do_delete() {
-            $.ajax({
+
+        function delete_by_ajax(target_id) {
+
+
+            // not a nice job ! :(
+            $('#tr_' + target_id).remove();
+
+            $.ajax({    
                 type: 'post',
-                url: 'sssssss',
+                url: '@entityType.Name/Delete',
                 data: {
+                    id: $(target_id),
                 },
                 success: function () {
-                    // remove the row from the page
+                    
+                    $('#tr_' + target_id).remove();
                 }
             });
         }

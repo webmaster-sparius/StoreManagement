@@ -47,7 +47,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             */
             var customers = ServiceFactory.Create<ICustomerService>().FetchAll().Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
                     .ToList();
-            return View(customers);
+            ViewBag.List = customers;
+            ViewBag.Type = typeof(Customer);
+            return View("EntityList");
 
         }
         #endregion
