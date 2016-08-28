@@ -137,6 +137,28 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
         }
         #endregion
+        #region Delete
+
+        public virtual ActionResult Delete(long id)         
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var customer = new Customer { Id = id };
+
+             
+
+                var temp = db.Customers.Find(id);
+                if (temp != null)
+                {
+                    db.Customers.Remove(temp);
+                    db.SaveChanges();
+                }
+
+            }
+            return RedirectToAction("List");
+
+        }
+        #endregion
 
         #region RemoteValidation
         [HttpPost]
