@@ -46,7 +46,7 @@ namespace StoreManagement.Business.EntityServices
 
                 var list = db.Products.Include(a=>a.Category).Where(p =>! p.IsDeleted)
                     .Select(p => new ProductViewModel
-                    { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id })
+                    { Code = p.Code, Name = p.Name, Price = p.Price, Category = p.Category.Title, Id = p.Id, Description= p.Description})
                             .ToList();
                 return list;
             }
