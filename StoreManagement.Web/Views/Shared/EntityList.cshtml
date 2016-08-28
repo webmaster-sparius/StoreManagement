@@ -61,13 +61,9 @@
 
         function delete_by_ajax(target_id) {
 
-
-            // not a nice job ! :(
-            $('#tr_' + target_id).remove();
-
             $.ajax({    
                 type: 'post',
-                url: '@entityType.Name/Delete',
+                url: '/@entityType.Name/Delete',
                 data: {
                     id: $(target_id),
                 },

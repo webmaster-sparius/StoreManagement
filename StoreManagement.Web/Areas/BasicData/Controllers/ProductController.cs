@@ -174,8 +174,13 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var product = new Product { Id = id };
-                db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;
-                db.SaveChanges();
+
+                var temp = db.Products.Find(id);
+                if (temp==null)
+                {
+                    db.Products.Remove(temp);
+                    db.SaveChanges();
+                } 
             }
             return RedirectToAction("List");
         
