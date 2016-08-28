@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "name_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +28,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { id = "price_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +36,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { id = "code_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +44,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { id = "description_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +52,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Title", Model.CategoryId), new { @class = "form-control" } )
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Title", Model.CategoryId), new { id = "category_box", @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -66,9 +66,82 @@
 }
 
 <div>
-    @Html.ActionLink("بازگشت به لیست کالا", "List")
+    <a  href="javascript:void(0)"  onclick="go_for_return();" > بازگشت به لیست کالا </a>
 </div>
+
+<div id="dialog-confirm" style="display:none;" title="داداش داری اشتباه خارج میشی! ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+}
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    <script type="text/javascript">
+
+        var original = {};
+
+        $(document).ready(function () {
+
+            original['name'] = $('#name_box').val();
+            original['price'] = $('#price_box').val();
+            original['code'] = $('#code_box').val();
+            original['description'] = $('#description_box').val();
+            original['category'] = $('#category_box').val();
+        });
+
+        function doc_changed() {
+            var res = false;
+            if (original['name'] != $('#name_box').val()) {
+                res = true;
+            }
+            if (original['price'] != $('#price_box').val()) {
+                res = true;
+            }
+            if (original['code'] != $('#code_box').val()) {
+                res = true;
+            }
+            if (original['description'] != $('#description_box').val()) {
+                res = true;
+            }
+            if (original['category'] != $('#category_box').val()) {
+                res = true;
+            }
+
+            return res;
+        }
+
+        function go_for_return() {
+            //alert('product name is: ' + original['name']);
+
+            // if nothing is changed
+            var changed = doc_changed();
+            if (changed) {
+                $("#dialog-confirm").dialog({
+                    resizable: false,
+                    height: "auto",
+                    width: 400,
+                    modal: true,
+                    buttons: {
+                        " حواسم هست ": function () {
+                            $(this).dialog("close");
+                            document.location = '../list';
+                        },
+                        " خوب شد گفتی ": function () {
+                            $(this).dialog("close");
+                        }
+                    }
+                });
+            }
+            else {
+                document.location = '../list';
+            }
+        }
+
+    </script>
 }
