@@ -34,8 +34,10 @@ namespace StoreManagement.Business.EntityServices
 
         public IEnumerable<Product> FetchAll()
         {
+            List<Product> products;
             using (var db = new ApplicationDbContext())
-            return db.Products.Where(p => p.IsDeleted == false).ToList();
+                products =  db.Products.ToList();
+            return products;
         }
 
             #endregion

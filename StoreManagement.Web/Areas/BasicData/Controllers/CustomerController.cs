@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -45,8 +46,13 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View("EntityList");
             }
             */
-            var customers = ServiceFactory.Create<ICustomerService>().FetchAll().Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
-                    .ToList();
+            var customers = ServiceFactory.Create<ICustomerService>().FetchAll()
+                .Select(customer => new CustomerViewModel {
+                    Id = customer.Id,
+                    FirstName = customer.FirstName,
+                    LastName = customer.LastName,
+                    PhoneNumber = customer.PhoneNumber
+                }).ToList();
             ViewBag.List = customers;
             ViewBag.Type = typeof(Customer);
             return View("EntityList");
@@ -137,6 +143,25 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
         }
         #endregion
+
+        #region Details
+        public virtual ActionResult Details(long? id)
+        {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var viewModel = ServiceFactory.Create<ICustomerService>().FetchAll()
+                .Select(v => new CustomerViewModel {
+                    Id = v.Id,
+                    FirstName = v.FirstName,
+                    LastName = v.LastName,
+                    PhoneNumber = v.PhoneNumber
+                }).FirstOrDefault(v => v.Id == id);
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
+        }
+        #endregion
+
         #region Delete
 
         public virtual ActionResult Delete(long id)         
@@ -144,9 +169,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             using (var db = new ApplicationDbContext())
             {
                 var customer = new Customer { Id = id };
-
-             
-
                 var temp = db.Customers.Find(id);
                 if (temp != null)
                 {

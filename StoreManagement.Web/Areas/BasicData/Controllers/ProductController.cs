@@ -19,14 +19,14 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            
+
 
             var service = ServiceFactory.Create<IProductService>();
             var list = service.FetchViewModels();
 
             ViewBag.List = list;
-                ViewBag.Type = typeof(Product);
-                return View("EntityList");
+            ViewBag.Type = typeof(Product);
+            return View("EntityList");
             //}
         }
         #endregion
@@ -131,34 +131,22 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #endregion
 
         #region Details
-        
-        public virtual ActionResult Details(long? id)        
+
+        public virtual ActionResult Details(long? id)
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Products
-                    .Select(p => new ProductViewModel
-                    {
-                        Id = p.Id,
-                        Code = p.Code,
-                        Name = p.Name,
-                        Price = p.Price,
-                        Category = p.Category.Title,
-                        Description = p.Description
-                    })
-                    .FirstOrDefault(p => p.Id == id);
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
-            }
+            var viewModel = ServiceFactory.Create<IProductService>().FetchViewModels()
+                .FirstOrDefault(p => p.Id == id);
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
         }
         #endregion
 
         #region Delete
-        
+
         public virtual ActionResult Delete(long id)         // maybe this must only check is_deleted
         {
             using (var db = new ApplicationDbContext())
@@ -174,16 +162,16 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                     //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
                     db.SaveChanges();
                 }
-                
+
             }
             return RedirectToAction("List");
-        
+
         }
         #endregion
 
         #region RemoteValidation
         [HttpPost]
-        public virtual JsonResult CodeExist(string code,long? Id)
+        public virtual JsonResult CodeExist(string code, long? Id)
         {
             var exist = ServiceFactory.Create<IProductService>().CheckCodeExist(code, Id);
             return Json(!exist);
