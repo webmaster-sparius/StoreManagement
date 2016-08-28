@@ -159,7 +159,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         #region Delete
         
-        public virtual ActionResult Delete(long id)         // this is not the real implemetation
+        public virtual ActionResult Delete(long id)         // maybe this must only check is_deleted
         {
             using (var db = new ApplicationDbContext())
             {
@@ -171,6 +171,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 if (temp != null)
                 {
                     db.Products.Remove(temp);
+                    //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
                     db.SaveChanges();
                 }
                 

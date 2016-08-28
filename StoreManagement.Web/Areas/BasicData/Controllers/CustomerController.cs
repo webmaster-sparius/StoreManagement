@@ -104,7 +104,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 };
                 db.Entry<Customer>(customer).State = System.Data.Entity.EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Edit", new { id = viewModel.Id });
+                //     return RedirectToAction("Edit", new { id = viewModel.Id });
+                return RedirectToAction("List");
             }
             catch (DbUpdateConcurrencyException)
             {
