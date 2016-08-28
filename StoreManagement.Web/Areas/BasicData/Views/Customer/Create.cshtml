@@ -8,7 +8,7 @@
 <h2>ثبت کاربر جدید</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create","Customer",FormMethod.Post,null)) 
 {
     @Html.AntiForgeryToken()
     

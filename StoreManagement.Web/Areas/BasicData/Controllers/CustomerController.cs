@@ -60,11 +60,11 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         {
             return View();
         }
+
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public virtual ActionResult Create(AddCustomerViewModel viewModel)
         {
-            if (ServiceFactory.Create<ICustomerService>().CheckCustomerExist(viewModel.FirstName, viewModel.LastName, null))
-                ModelState.AddModelError("", "یک کاربر با این نام و نام خانوادگی ثبت شده است");
             /// to do : add checking when CustomerService implement
             if (!ModelState.IsValid)
             {
@@ -139,7 +139,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         #region RemoteValidation
         [HttpPost]
-        public virtual JsonResult CustomerExist(string firstName, string lastName, long? Id)
+        public virtual JsonResult CustomerExist(string lastName, string firstName, long? Id)
         {
             var exist = ServiceFactory.Create<ICustomerService>().CheckCustomerExist(firstName, lastName, Id);
             return Json(!exist);

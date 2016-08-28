@@ -14,12 +14,12 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
     {
         [Required(ErrorMessage = "نام کالا را وارد کنید.")]
         [StringLength(100, ErrorMessage = "نام کالا نباید بیشتر از 100 کاراکتر باشد.")]
-        [Remote("TitleExist", "Category", ErrorMessage = "یک کالا با این نام قبلا در سیستم ثبت شده است.", HttpMethod = "POST")]
+        [Remote("NameExist", "Product", ErrorMessage = " کالا با این نام قبلا در سیستم ثبت شده است.", HttpMethod = "POST")]
         [DisplayName("نام")]
         public string Name { get; set; }
         [Required(ErrorMessage = "کد کالا را وارد کنید.")]
         [StringLength(50, ErrorMessage = "تعداد کاراکترهای کد کالا نباید بیشتر از 50کاراکتر باشد.")]
-        [Remote("TitleExist", "Category", ErrorMessage = "یک کالا با این کد قبلا در سیستم ثبت شده است.", HttpMethod = "POST")]
+        [Remote("CodeExist", "Product", ErrorMessage = "کالا با این کد قبلا در سیستم ثبت شده است.", HttpMethod = "POST")]
         [DisplayName("کد")]
         public string Code { get; set; }
         [Required(ErrorMessage = "قیمت کالا را وارد کنید.")]

@@ -42,11 +42,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Create(AddProductViewModel viewModel)
         {
-            var productService = ServiceFactory.Create<IProductService>();
-            if (productService.CheckCodeExist(viewModel.Code, null))
-                ModelState.AddModelError("Code", "یک کالا با این کد قبلا در سیستم ثبت شده است.");
-            if (productService.CheckNameExist(viewModel.Name, null))
-                ModelState.AddModelError("Name", "یک کالا با این نام قبلا در سیستم ثبت شده است.");
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
@@ -101,11 +96,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditProductViewModel viewModel)
         {
-            var productService = ServiceFactory.Create<IProductService>();
-            if (productService.CheckCodeExist(viewModel.Code, viewModel.Id))
-                ModelState.AddModelError("Code", "یک کالا با این کد قبلا در سیستم ثبت شده است.");
-            if (productService.CheckNameExist(viewModel.Name, viewModel.Id))
-                ModelState.AddModelError("Name", "یک کالا با این نام قبلا در سیستم ثبت شده است.");
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
@@ -179,6 +169,22 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
             return RedirectToAction("List");
         
+        }
+        #endregion
+
+        #region RemoteValidation
+        [HttpPost]
+        public virtual JsonResult CodeExist(string code,long? Id)
+        {
+            var exist = ServiceFactory.Create<IProductService>().CheckCodeExist(code, Id);
+            return Json(!exist);
+        }
+
+        [HttpPost]
+        public virtual JsonResult NameExist(string name, long? Id)
+        {
+            var exist = ServiceFactory.Create<IProductService>().CheckNameExist(name, Id);
+            return Json(!exist);
         }
         #endregion
     }
