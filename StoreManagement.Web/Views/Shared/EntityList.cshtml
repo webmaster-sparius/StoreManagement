@@ -36,12 +36,8 @@
 
                 <div  >
                     @Html.ActionLink("جزئیات", "Details", new { Id = entity.Id }, new { @class = "btn btn-info btn-xs" })
-                    @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })
-                    @Html.ActionLink("حذف", "Delete", new { Id = entity.Id }, new { @class = "btn btn-danger btn-xs" })
-                    <!--  turn these links into hand written ones to apply javascript  -->
-                
-                    <button onclick="delete_by_ajax(@e_id);" class="btn btn-danger btn-xs" > حذف با ایجکس </button>
-                    <!--  turned links  -->
+                    @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })   
+                    <button onclick="delete_by_ajax(@e_id); " type="button"  class="btn btn-danger btn-xs" > حذف  </button>
                 </div>
 
             </td>
@@ -63,13 +59,12 @@
 
             $.ajax({    
                 type: 'post',
-                url: '/@entityType.Name/Delete',
+                url: '/basicdata/@entityType.Name/Delete',
                 data: {
-                    id: $(target_id),
+                    id: target_id,
                 },
                 success: function () {
-                    
-                    $('#tr_' + target_id).remove();
+                    $('#tr_' + target_id).fadeOut(500);
                 }
             });
         }
