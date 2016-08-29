@@ -12,5 +12,6 @@ namespace StoreManagement.Common.EntityServices
     {
         bool CheckTitleExist(string title, long? id);
         IEnumerable<Category> FetchAll();
+        IEnumerable<Category> FetchByTitle(string title);
     }
 }

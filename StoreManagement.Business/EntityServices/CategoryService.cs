@@ -31,6 +31,12 @@ namespace StoreManagement.Business.EntityServices
                 return db.Categories.ToList();
         }
 
+        public IEnumerable<Category> FetchByTitle(string title)
+        {
+            using (var db = new ApplicationDbContext())
+                return db.Categories.Where(a => a.Title == title).ToList();
+        }
+
         #endregion
     }
 }

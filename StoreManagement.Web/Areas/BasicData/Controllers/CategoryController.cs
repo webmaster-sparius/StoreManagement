@@ -17,7 +17,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
     {
         #region List
 
-        public virtual ActionResult List()
+        public ActionResult List()
         {
             var list = ServiceFactory.Create<ICategoryService>().FetchAll().
                 Select(c => CategoryViewModel.FromModel(c));
@@ -152,6 +152,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
             }
             return RedirectToAction("List");
+        }
+        #endregion
+
+        #region Search
+        [HttpGet]
+        public ActionResult Search(string title)
+        {
+            var list = ServiceFactory.Create<ICategoryService>().FetchByTitle(title).Select(c => CategoryViewModel.FromModel(c));
+            ViewBag.Type = typeof(Category);
+            ViewBag.List = list;
+            return View("EntityList");
         }
         #endregion
 
