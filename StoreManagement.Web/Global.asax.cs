@@ -29,10 +29,9 @@ namespace StoreManagement.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            var binPath = ConfigurationManager.AppSettings["BinPath"];
-            if (!Path.IsPathRooted(binPath))
-                binPath = Path.Combine(Server.MapPath("."), binPath);
-            AppLoader.LoadBinAssemblies(binPath);
+            AppLoader.InitializeApp(Server.MapPath("."));
         }
+
+
     }
 }
