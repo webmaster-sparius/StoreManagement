@@ -1,14 +1,26 @@
 ﻿
+
+var temp = {};
+
+temp.original = {};
+temp.fields = [];
+
 $(document).ready(function () {
-    for (var i = 0; i < fields.length; i++) {
-        original[fields[i]] = $('#' + fields[i] + '_box').val();
+    for (var i = 0; i < temp.fields.length; i++) {
+        temp.original[temp.fields[i]] = $('#' + temp.fields[i] + '_box').val();
     }
 });
 
+function set_fields(param) {
+    for (var x in param) {
+        temp.fields[x] = param[x];
+    }
+}
+
 function doc_changed() {
     var res = false;
-    for (var x in original) {      // js for loops over keys not values,   nice :)
-        if (original[x] != $('#' + x + '_box').val()) {
+    for (var x in temp.original) {      // js for loops over keys not values,   nice :)
+        if (temp.original[x] != $('#' + x + '_box').val()) {
             res = true;
         }
     }
