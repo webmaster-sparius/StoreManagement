@@ -1,31 +1,24 @@
-﻿
-
-var temp = {};
-
-temp.original = {};
-temp.fields = [];
+﻿var original_array = [];
 
 $(document).ready(function () {
-    for (var i = 0; i < temp.fields.length; i++) {
-        temp.original[temp.fields[i]] = $('#' + temp.fields[i] + '_box').val();
-    }
+    $("#editable_form div.form-group :input").
+                    each(function () { original_array.push($(this).val()) });
 });
 
-function set_fields(param) {
-    for (var x in param) {
-        temp.fields[x] = param[x];
-    }
-}
-
 function doc_changed() {
+    var new_array = [];
+    $("#editable_form div.form-group :input").
+                    each(function () { new_array.push($(this).val()) });
     var res = false;
-    for (var x in temp.original) {      // js for loops over keys not values,   nice :)
-        if (temp.original[x] != $('#' + x + '_box').val()) {
+
+    for (var i = 0; i < original_array.length; i++) {
+        if (original_array[i] != new_array[i]) {
             res = true;
         }
     }
     return res;
 }
+
 
 function go_for_return() {
     // if something is changed

@@ -7,18 +7,21 @@
 <h2>ویرایش کالا</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Product", new {  },
+                            FormMethod.Post, new { id = "editable_form" }))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Version)
 
+
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 " })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "name_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -81,25 +84,10 @@
 
 @section Scripts {
 
-@Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/jqueryval")
     
-<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
-@Scripts.Render("~/scripts/page_edited_warning.js")      <!--  contains definition for go_for_return()  -->
+    @Scripts.Render("~/scripts/page_edited_warning.js")      <!--  contains definition for go_for_return()  -->
 
-<script type="text/javascript">
-            
-    var page_fields = [
-        'name',
-        'price',
-        'code',
-        'description',
-        'category',
-    ];
-
-    set_fields(page_fields);
-
-</script>
-
-    
 }
