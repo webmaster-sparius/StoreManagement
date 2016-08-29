@@ -88,7 +88,6 @@
     <Compile Include="BasicData\Product\AddProductViewModel.cs" />
     <Compile Include="BasicData\Product\EditProductViewModel.cs" />
     <Compile Include="BasicData\Product\ProductViewModel.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
