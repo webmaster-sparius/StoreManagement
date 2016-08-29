@@ -39,8 +39,8 @@
     <a href="javascript:void(0)" onclick="go_for_return();"> بازگشت به لیست گروه </a>
 </div>
 
-<div id="dialog-confirm" style="display:none;" title="داداش داری اشتباه خارج میشی! ">
-    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
+<div id="dialog-confirm" style="display:none;" title="وایسا کجا میری! ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات ذخیره نشده از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
 </div>
 
 @section css{
@@ -52,15 +52,16 @@
 
     <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
 
-    <script type="text/javascript">
+@Scripts.Render("~/scripts/page_edited_warning.js")      <!--  contains definition for go_for_return()  -->
 
-        var original = {};
+<script type="text/javascript">
 
+    var page_fields = [
+        'title',
+    ];
 
-        var fields = [
-            'title',
-        ];
+    set_fields(page_fields);
 
-    </script>
-    @Scripts.Render("~/scripts/page_edited_warning.js") 
+</script>
+
 }
