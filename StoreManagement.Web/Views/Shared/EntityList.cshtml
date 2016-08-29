@@ -7,12 +7,26 @@
     string entityName = MetaDataHelper.GetDisplayName(viewModelType);
     var properties = MetaDataService.GetTypeDisplayProperties(viewModelType);
     long e_id = 0;
+    bool shima_flag = false;
 }
 <h2>فهرست @entityName</h2>
 
-<p>
-    @Html.ActionLink(entityName + " جدید", "Create", entityType.Name, null, new { @class = "btn btn-success btn-sm" })
-</p>
+@{ 
+    if((entityName[entityName.Length-1] == 'ا') || (entityName[entityName.Length-1] == 'و'))
+    {
+        shima_flag = true;
+    }
+}
+
+@if (shima_flag) {
+    <p>
+        @Html.ActionLink(entityName + "ی" + " جدید", "Create", entityType.Name, null, new { @class = "btn btn-success btn-sm" })
+    </p>
+} else {
+    <p>
+        @Html.ActionLink(entityName + " جدید", "Create", entityType.Name, null, new { @class = "btn btn-success btn-sm" })
+    </p>
+ }
 
 <table class="table">
     <tr>
