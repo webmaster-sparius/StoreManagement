@@ -10,10 +10,10 @@ namespace StoreManagement.Framework
 {
     public class ComponentManager
     {
-        public static IEnumerable<ComponentInfo> GetAllComponentInfos()
+        private static IEnumerable<ComponentInfo> allComponentInfo;
+        static ComponentManager()
         {
             var componentInfos = new List<ComponentInfo>();
-
             var assemblies = AppDomain.CurrentDomain.GetAssemblies();
             foreach (var asm in assemblies)
             {
@@ -24,7 +24,11 @@ namespace StoreManagement.Framework
                     componentInfos.Add(c);
                 }
             }
-            return componentInfos;
+            allComponentInfo = componentInfos;
+        }
+        public static IEnumerable<ComponentInfo> GetAllComponentInfos()
+        {
+            return allComponentInfo;
         }
 
         public static IEnumerable<ShellLink> GetAllLinks()
