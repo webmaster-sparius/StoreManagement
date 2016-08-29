@@ -30,8 +30,6 @@ namespace StoreManagement.Framework.App
                 if (!loadedAssemblies.Contains(nameOnly))
                     Assembly.LoadFrom(asmFileName);
             }
-
-
             foreach (var ei in ComponentManager.GetAllEntityInfos())
                 MetaDataService.AddEntityInfo(ei);
         }

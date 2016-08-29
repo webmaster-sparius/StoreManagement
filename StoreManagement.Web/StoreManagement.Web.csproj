@@ -285,6 +285,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StoreManagement.Business\StoreManagement.Business.csproj">
+      <Project>{980A0A2A-57C7-4827-983F-59ACC9EC8107}</Project>
+      <Name>StoreManagement.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StoreManagement.Common\StoreManagement.Common.csproj">
       <Project>{0d346c50-970b-4b49-a18c-fb43b0e68e5f}</Project>
       <Name>StoreManagement.Common</Name>
