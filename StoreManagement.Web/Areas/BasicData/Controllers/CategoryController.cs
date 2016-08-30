@@ -62,21 +62,11 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpGet]
         public virtual ActionResult Edit(long id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Categories
-                    .Select(a => new EditCategoryViewModel
-                    {
-                        Id = a.Id,
-                        Title = a.Title,
-                        Version = a.Version
-                    }).FirstOrDefault(a => a.Id == id);
+            EditCategoryViewModel viewModel = ServiceFactory.Create<ICategoryService>().FetchEditViewModel(id);
 
                 if (viewModel == null)
                     return HttpNotFound();
-
                 return View(viewModel);
-            }
         }
 
         [HttpPost]
@@ -88,31 +78,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "آخرین بارت باشه.");
                 return View(viewModel);
             }
-
-            var db = new ApplicationDbContext();
             try
             {
-                var category = new Category
-                {
-                    Id = viewModel.Id,
-                    Title = viewModel.Title,
-                    Version = viewModel.Version
-                };
-
-                db.Entry<Category>(category).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                return RedirectToAction("List");
+                ServiceFactory.Create<ICategoryService>().EditByViewModel(viewModel);
             }
             catch (DbUpdateConcurrencyException)
             {
                 ModelState.AddModelError("", "گروه مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
                 return View(viewModel);
             }
-            finally
-            {
-                db.Dispose();
-            }
+            return RedirectToAction("List");
+            
         }
         #endregion
 

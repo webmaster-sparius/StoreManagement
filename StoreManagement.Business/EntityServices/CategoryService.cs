@@ -1,5 +1,6 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,43 @@ namespace StoreManagement.Business.EntityServices
         {
             using (var db = new ApplicationDbContext())
                 return db.Categories.ToList();
+        }
+
+
+        public EditCategoryViewModel FetchEditViewModel(long? id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var viewModel = db.Categories
+                    .Select(a => new EditCategoryViewModel
+                    {
+                        Id = a.Id,
+                        Title = a.Title,
+                        Version = a.Version
+                    }).FirstOrDefault(a => a.Id == id);
+                return viewModel;
+            }
+        }
+
+        public void EditByViewModel(EditCategoryViewModel viewModel)
+        {
+            var db = new ApplicationDbContext();
+            try
+            {
+                var category = new Category
+                {
+                    Id = viewModel.Id,
+                    Title = viewModel.Title,
+                    Version = viewModel.Version
+                };
+
+                db.Entry<Category>(category).State = System.Data.Entity.EntityState.Modified;
+                db.SaveChanges();
+            }
+            finally
+            {
+                db.Dispose();
+            }
         }
 
         #endregion

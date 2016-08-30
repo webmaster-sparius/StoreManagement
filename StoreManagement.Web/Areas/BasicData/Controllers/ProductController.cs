@@ -68,67 +68,40 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region Edit
 
         [HttpGet]
-        public virtual ActionResult Edit(long? id)
+        public virtual ActionResult Edit(long? id)      // returns the viewmodel doesn't change anything
         {
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Products
-                    .Select(p => new EditProductViewModel
-                    {
-                        Name = p.Name,
-                        Code = p.Code,
-                        Price = p.Price,
-                        Description = p.Description,
-                        Id = p.Id,
-                        CategoryId = p.CategoryId,
-                        Version = p.Version
-                    }).FirstOrDefault(p => p.Id == id);
+            EditProductViewModel viewModel = ServiceFactory.Create<IProductService>().FetchEditViewModel(id);
+         
                 if (viewModel == null)
                     return HttpNotFound();
                 return View(viewModel);
-            }
+            
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public virtual ActionResult Edit(EditProductViewModel viewModel)
+        public virtual ActionResult Edit(EditProductViewModel viewModel)    // changes an entity redirects to list
         {
             if (!ModelState.IsValid)
             {
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-            var db = new ApplicationDbContext();
-            try
-            {
-                var product = new Product
-                {
-                    Id = viewModel.Id,
-                    Name = viewModel.Name,
-                    Code = viewModel.Code,
-                    Description = viewModel.Description,
-                    CategoryId = viewModel.CategoryId,
-                    Version = viewModel.Version,
-                    Price = viewModel.Price
-                };
-                db.Entry<Product>(product).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("List");
+            try {
+                ServiceFactory.Create<IProductService>().EditByViewModel(viewModel);
             }
             catch (DbUpdateConcurrencyException)
             {
                 ModelState.AddModelError("", "کالا مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
                 return View(viewModel);
             }
-            finally
-            {
-                db.Dispose();
-            }
+            return RedirectToAction("List");
         }
         #endregion
+
 
         #region Details
 
