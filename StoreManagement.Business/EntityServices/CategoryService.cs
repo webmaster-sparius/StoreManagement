@@ -33,7 +33,7 @@ namespace StoreManagement.Business.EntityServices
         }
 
 
-        public EditCategoryViewModel FetchEditViewModel(long? id)
+		public EditCategoryViewModel FetchEditViewModel(long? id)
         {
             using (var db = new ApplicationDbContext())
             {
@@ -47,7 +47,10 @@ namespace StoreManagement.Business.EntityServices
                 return viewModel;
             }
         }
-
+                public IEnumerable<Category> FetchByTitle(string title)
+				{
+				return db.Categories.Where(a => a.Title == title).ToList();
+				}
         public void EditByViewModel(EditCategoryViewModel viewModel)
         {
             var db = new ApplicationDbContext();

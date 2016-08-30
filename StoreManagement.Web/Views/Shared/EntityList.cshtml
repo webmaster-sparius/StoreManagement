@@ -9,6 +9,10 @@
     long e_id = 0;
     bool shima_flag = false;
 }
+@if (ViewBag.RowsAffected != null)
+{
+    <div class="bg-danger text-danger img-rounded" style="height:20px"><h5><strong>@string.Format("نتیجه جستجو: {0} مورد یافت شد", ViewBag.RowsAffected)</strong></h5></div>
+}
 <h2>فهرست @entityName</h2>
 
 @{ 
@@ -30,11 +34,18 @@
 
 <table class="table">
     <tr>
-        @foreach (var propInfo in properties)
+        @using (Html.BeginForm("Search", entityType.Name, FormMethod.Get))
         {
-            <th>@propInfo.Item2</th>
+            foreach (var propInfo in properties)
+            {
+                <th><div>@propInfo.Item2 </div>
+                     <div><input type="text" name=@propInfo.Item1 style="width : 100px ;height : 25px"  class=form-control text-box single-line /></div>
+                </th>
+                }
+            <th>
+                <div>&nbsp;</div> <input type="submit", value="جستجو" class = "btn btn-primary btn-sm" style ="width: 138px; height:25px"/>
+           </th>
         }
-        <th></th>
     </tr>
     @foreach (var entity in ViewBag.List)
     {

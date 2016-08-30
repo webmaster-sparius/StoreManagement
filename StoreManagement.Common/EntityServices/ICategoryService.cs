@@ -13,7 +13,9 @@ namespace StoreManagement.Common.EntityServices
     {
         bool CheckTitleExist(string title, long? id);
         IEnumerable<Category> FetchAll();
-        EditCategoryViewModel FetchEditViewModel(long? id);
+		EditCategoryViewModel FetchEditViewModel(long? id);
         void EditByViewModel(EditCategoryViewModel viewModel);
+        void EditByViewModel(EditCategoryViewModel viewModel);
+		IEnumerable<Category> FetchByTitle(string title);
     }
 }
