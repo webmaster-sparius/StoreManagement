@@ -15,7 +15,6 @@ namespace StoreManagement.Common.EntityServices
         IEnumerable<Category> FetchAll();
 		EditCategoryViewModel FetchEditViewModel(long? id);
         void EditByViewModel(EditCategoryViewModel viewModel);
-        void EditByViewModel(EditCategoryViewModel viewModel);
 		IEnumerable<Category> FetchByTitle(string title);
     }
 }

@@ -47,10 +47,15 @@ namespace StoreManagement.Business.EntityServices
                 return viewModel;
             }
         }
-                public IEnumerable<Category> FetchByTitle(string title)
-				{
-				return db.Categories.Where(a => a.Title == title).ToList();
-				}
+
+        public IEnumerable<Category> FetchByTitle(string title)
+		{
+            using (var db = new ApplicationDbContext())
+            {
+                return db.Categories.Where(a => a.Title == title).ToList();
+            }
+		}
+
         public void EditByViewModel(EditCategoryViewModel viewModel)
         {
             var db = new ApplicationDbContext();
