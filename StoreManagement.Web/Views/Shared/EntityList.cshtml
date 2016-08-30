@@ -9,6 +9,10 @@
     long e_id = 0;
     bool shima_flag = false;
 }
+@if (ViewBag.RowsAffected != null)
+{
+    <div class="bg-danger text-danger img-rounded" style="height:20px"><h5><strong>@string.Format("نتیجه جستجو: {0} مورد یافت شد", ViewBag.RowsAffected)</strong></h5></div>
+}
 <h2>فهرست @entityName</h2>
 
 @{ 

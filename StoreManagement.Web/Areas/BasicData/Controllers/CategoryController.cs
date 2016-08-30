@@ -162,6 +162,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             var list = ServiceFactory.Create<ICategoryService>().FetchByTitle(title).Select(c => CategoryViewModel.FromModel(c));
             ViewBag.Type = typeof(Category);
             ViewBag.List = list;
+            ViewBag.RowsAffected = list.Count();
             return View("EntityList");
         }
         #endregion
