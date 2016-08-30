@@ -113,20 +113,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpPost]
         public virtual ActionResult Delete(long id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var category = new Category { Id = id };
 
-                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
-
-                var temp = db.Categories.Find(id);
-                if (temp != null)
-                {
-                    db.Categories.Remove(temp);
-                    db.SaveChanges();
-                }
-
-            }
+            ServiceFactory.Create<ICategoryService>().DeleteById(id);
             return RedirectToAction("List");
         }
         #endregion

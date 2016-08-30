@@ -122,21 +122,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         public virtual ActionResult Delete(long id)         // maybe this must only check is_deleted
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var product = new Product { Id = id };
-
-                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
-
-                var temp = db.Products.Find(id);
-                if (temp != null)
-                {
-                    db.Products.Remove(temp);
-                    //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
-                    db.SaveChanges();
-                }
-
-            }
+            ServiceFactory.Create<IProductService>().DeleteById(id);
             return RedirectToAction("List");
 
         }

@@ -16,5 +16,6 @@ namespace StoreManagement.Common.EntityServices
 		EditCategoryViewModel FetchEditViewModel(long? id);
         void EditByViewModel(EditCategoryViewModel viewModel);
 		IEnumerable<Category> FetchByTitle(string title);
+        void DeleteById(long id);
     }
 }

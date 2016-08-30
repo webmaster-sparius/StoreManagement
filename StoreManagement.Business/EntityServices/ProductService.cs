@@ -102,5 +102,24 @@ namespace StoreManagement.Business.EntityServices
                 db.Dispose();
             }
         }
+
+        public void DeleteById(long? id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var product = new Product { Id = id.Value };
+
+                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
+
+                var temp = db.Products.Find(id.Value);
+                if (temp != null)
+                {
+                    db.Products.Remove(temp);
+                    //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
+                    db.SaveChanges();
+                }
+
+            }   
+        }
     }
 }

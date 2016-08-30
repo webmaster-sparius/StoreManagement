@@ -141,17 +141,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         public virtual ActionResult Delete(long id)         
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var customer = new Customer { Id = id };
-                var temp = db.Customers.Find(id);
-                if (temp != null)
-                {
-                    db.Customers.Remove(temp);
-                    db.SaveChanges();
-                }
-
-            }
+            ServiceFactory.Create<ICustomerService>().DeleteById(id);
             return RedirectToAction("List");
 
         }

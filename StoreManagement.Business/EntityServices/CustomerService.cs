@@ -73,6 +73,20 @@ namespace StoreManagement.Business.EntityServices
             }
         }
 
+        public void DeleteById(long? id)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var customer = new Customer { Id = id.Value };
+                var temp = db.Customers.Find(id);
+                if (temp != null)
+                {
+                    db.Customers.Remove(temp);
+                    db.SaveChanges();
+                }
+
+            }
+        }
 
     }
 }
