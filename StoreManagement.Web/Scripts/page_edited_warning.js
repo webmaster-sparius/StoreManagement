@@ -57,3 +57,29 @@ function go_for_return(cn,vn) {     // controller name , view name
         }
     }
 }
+
+function go_for_return_to_list_of(cn) {
+    // if something is changed
+    var changed = doc_changed();
+    if (changed) {
+        $("#dialog-confirm").dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                " حواسم هست ": function () {
+                    $(this).dialog("close");
+                        document.location = '/basicdata/' + cn + '/list';
+                },
+                " خوب شد گفتی ": function () {
+                    $(this).dialog("close");
+                }
+            }
+        });
+    }
+    // no change
+    else {
+            document.location = '/basicdata/' + cn + '/list';
+    }
+}
