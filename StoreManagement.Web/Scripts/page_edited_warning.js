@@ -23,7 +23,7 @@ function doc_changed() {
 }
 
 
-function go_for_return() {
+function go_for_return(cn,vn) {     // controller name , view name
     // if something is changed
     var changed = doc_changed();
     if (changed) {
@@ -35,7 +35,12 @@ function go_for_return() {
             buttons: {
                 " حواسم هست ": function () {
                     $(this).dialog("close");
-                    document.location = '../list';
+                    if(vn == 'create'){
+                        document.location = '/basicdata/' + cn + '/list';
+                    }
+                    else {
+                        document.location = '../list';
+                    }
                 },
                 " خوب شد گفتی ": function () {
                     $(this).dialog("close");
@@ -44,6 +49,11 @@ function go_for_return() {
         });
     }
     else {
-        document.location = '../list';
+        if (vn == 'create') {
+            document.location = '/basicdata/' + cn + '/list';
+        }
+        else {
+            document.location = '../list';
+        }
     }
 }
