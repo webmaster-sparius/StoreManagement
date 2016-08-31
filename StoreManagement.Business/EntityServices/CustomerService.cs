@@ -88,5 +88,15 @@ namespace StoreManagement.Business.EntityServices
             }
         }
 
+        public void CreateByViewModel(AddCustomerViewModel viewModel)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var customer = new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber };
+                db.Customers.Add(customer);
+                db.SaveChanges();
+            }
+        }
+
     }
 }

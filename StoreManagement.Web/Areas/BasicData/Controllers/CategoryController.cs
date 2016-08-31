@@ -46,13 +46,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
-            using (var db = new ApplicationDbContext())
-            {
+            ServiceFactory.Create<ICategoryService>().CreateByViewModel(viewModel);
 
-                var category = new Category { Title = viewModel.Title };
-                db.Categories.Add(category);
-                db.SaveChanges();
-            }
             return RedirectToAction("List");
         }
 

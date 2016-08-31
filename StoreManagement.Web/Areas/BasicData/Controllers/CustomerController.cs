@@ -77,12 +77,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
                 return View(viewModel);
             }
-            using (var db = new ApplicationDbContext())
-            {
-                var customer = new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber };
-                db.Customers.Add(customer);
-                db.SaveChanges();
-            }
+
+            ServiceFactory.Create<ICustomerService>().CreateByViewModel(viewModel);
+
             return RedirectToAction("List");
         }
         #endregion

@@ -47,21 +47,10 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-            using (var db = new ApplicationDbContext())
-            {
-                var product = new Product
-                {
-                    Code = viewModel.Code,
-                    CategoryId = viewModel.CategoryId,
-                    Category = db.Categories.Find(viewModel.CategoryId),
-                    Price = viewModel.Price,
-                    Name = viewModel.Name,
-                    Description = viewModel.Description
-                };
-                db.Products.Add(product);
-                db.SaveChanges();
-                return RedirectToAction("List");
-            }
+
+            ServiceFactory.Create<IProductService>().CreateByViewModel(viewModel);
+
+            return RedirectToAction("List");
         }
         #endregion
 

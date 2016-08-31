@@ -121,5 +121,23 @@ namespace StoreManagement.Business.EntityServices
 
             }   
         }
+
+        public void CreateByViewModel(AddProductViewModel viewModel)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var product = new Product
+                {
+                    Code = viewModel.Code,
+                    CategoryId = viewModel.CategoryId,
+                    Category = db.Categories.Find(viewModel.CategoryId),
+                    Price = viewModel.Price,
+                    Name = viewModel.Name,
+                    Description = viewModel.Description
+                };
+                db.Products.Add(product);
+                db.SaveChanges();
+            }
+        }
     }
 }

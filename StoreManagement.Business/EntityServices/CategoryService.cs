@@ -95,6 +95,17 @@ namespace StoreManagement.Business.EntityServices
             }
         }
 
+        public void CreateByViewModel(AddCategoryViewModel viewModel)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+
+                var category = new Category { Title = viewModel.Title };
+                db.Categories.Add(category);
+                db.SaveChanges();
+            }
+        }
+
         #endregion
     }
 }

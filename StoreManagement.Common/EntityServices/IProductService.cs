@@ -17,5 +17,6 @@ namespace StoreManagement.Common.EntityServices
         EditProductViewModel FetchEditViewModel(long? id);
         void EditByViewModel(EditProductViewModel viewModel);
         void DeleteById(long? id);
+        void CreateByViewModel(AddProductViewModel viewModel);
     }
 }

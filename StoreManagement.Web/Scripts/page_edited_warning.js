@@ -1,12 +1,11 @@
 ﻿var original_array = [];
 
-$(document).ready(function () {
+$(function () {
     $("#editable_form div.form-group :input").
                     each(function () { original_array.push($(this).val()) });
-    //window.onclose(alert("youhoo"));
 });
 
-//$(document).unload(alert("hey"));
+
 //window.onunload(alert("bye now"));
 
 function doc_changed() {
