@@ -195,6 +195,8 @@
     <Content Include="Content\jsgrid-theme.min.css" />
     <Content Include="Content\jsgrid.css" />
     <Content Include="Content\jsgrid.min.css" />
+    <Content Include="Content\PersianDatePicker.css" />
+    <Content Include="Content\PersianDatePicker.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -208,6 +210,7 @@
     <Content Include="Areas\BasicData\Views\Category\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Customer\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Invoice\Create.cshtml" />
+    <Content Include="Areas\BasicData\Views\Invoice\Date.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.rtl.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -222,6 +225,8 @@
     <Content Include="Scripts\jsgrid.js" />
     <Content Include="Scripts\jsgrid.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\PersianDatePicker.js" />
+    <Content Include="Scripts\PersianDatePicker.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\page_edited_warning.js" />

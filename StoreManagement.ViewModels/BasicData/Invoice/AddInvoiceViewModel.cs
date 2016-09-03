@@ -5,13 +5,15 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Globalization;
+using System.Threading;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class AddInvoiceViewModel
     {
         [DisplayName("شماره فاکتور")]
-        [Required]
+        [Required(ErrorMessage ="شماره فاکتور نمیتواند خالی باشد.")]
         [MaxLength(50)]
         public string Number { get; set; }
 
@@ -19,6 +21,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         //[Required(ErrorMessage = "  مشتری را انتخاب کنید.")]
         public long CustomerId { get; set; }
 
+        [DataType(DataType.Date)]
         [DisplayName("تاریخ")]
         public DateTime CreatedOn { get; set; }
 
