@@ -20,7 +20,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 {
                     Id = invoice.Id,
                     Number = invoice.Number,
-                    Customer = invoice.Customer.LastName,
+                    Customer = invoice.Customer.FirstName + " " + invoice.Customer.LastName,
                 }).ToList();
             ViewBag.Type = typeof(Invoice);
             ViewBag.List = list;
