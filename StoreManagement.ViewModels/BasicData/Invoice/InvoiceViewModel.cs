@@ -12,6 +12,8 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
     [DisplayName("فاکتور")]
     public class InvoiceViewModel
     {
+        public long Id{get;set;}
+
         [DisplayName("شماره")]
         [Required]
         [MaxLength(50)]
@@ -22,6 +24,6 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         [DisplayName("مشتری")]
         public string Customer { get; set; }   // needs check
 
-        ICollection<InvoiceItemViewModel> Items { get; set; }
+        public ICollection<InvoiceItemViewModel> Items { get; set; }
     }
 }

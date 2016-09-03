@@ -15,7 +15,13 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            var list = ServiceFactory.Create<IInvoiceService>().FetchAll();
+            var list = ServiceFactory.Create<IInvoiceService>().FetchAll()
+                .Select(invoice => new InvoiceViewModel
+                {
+                    Id = invoice.Id,
+                    Number = invoice.Number,
+                    Customer = invoice.Customer.LastName,
+                }).ToList();
             ViewBag.Type = typeof(Invoice);
             ViewBag.List = list;
 
