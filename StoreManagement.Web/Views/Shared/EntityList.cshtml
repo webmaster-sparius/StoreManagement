@@ -77,6 +77,12 @@
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> آیا مطمئن هستید؟ </p>
 </div>
 
+<div id="dialog-impossible" style="display:none;" title="حذف ممکن نیست ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> احتمالا موجودیت های دیگری به این موجودیت وابسته اند. </p>
+</div>
+
+
+
 @section css{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 }
@@ -105,6 +111,19 @@
                             },
                             success: function () {
                                 $('#tr_' + target_id).fadeOut(500);
+                            },
+                            error: function(){
+                                $("#dialog-impossible").dialog({
+                                    resizable: false,
+                                    height: "auto",
+                                    width: 400,
+                                    modal: true,
+                                    buttons: {
+                                        " حله ": function() {
+                                            $(this).dialog("close");
+                                        }
+                                    }
+                                });
                             }
                         });
                     },
