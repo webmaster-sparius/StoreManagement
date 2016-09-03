@@ -1,0 +1,174 @@
+﻿@model StoreManagement.Web.Areas.BasicData.ViewModels.AddInvoiceViewModel
+@using StoreManagement.Web.Areas.BasicData.ViewModels
+@{
+    ViewBag.Title = "Invoice";
+
+}
+
+
+<h2>ثبت فاکتور</h2>
+
+@*@using (Html.BeginForm("Create", "Invoice", FormMethod.Post)) {*@
+<form id="invoiceForm">
+    <div class="form-group">
+        @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+
+        @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.Customers, "Id", "LastName"), new { @class = "form-control" })
+
+        @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    <hr />
+    <div id="jsGrid">
+
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", id = "text" } })
+    </div>
+    <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
+        </div>
+    </div>
+</form>
+
+<link type="text/css" rel="stylesheet" href="~/Content/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/jsgrid-theme.min.css" />
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/jsgrid.min.js"></script>
+    <script type="text/javascript">
+        var products = [];
+        products.push({Id: 0, Name: "", Price: "0"})
+        @foreach (var p in Model.Products)
+        {
+            @:products.push({Id: @p.Id, Name: "@p.Name", Price: "@p.Price"});
+                                                                                                }
+        var Items = [];
+        function FindProduct(productId){
+            var prod = products.find(function(p)
+            {
+                return p.Id === productId;
+            });
+            return prod;
+        }
+
+        function AddItem(product,price,quantity){
+            var prod = FindProduct(product);
+            Items.push({
+                "ProductId": product,
+                "priceAll": price,
+                "Quantity": quantity,
+                "Price": prod.Price
+            });
+        }
+
+
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            height: "400px",
+
+            //  inserting: true,
+            editing: true,
+            sorting: true,
+            paging: true,
+
+            noDataContent: function(){
+                $("#jsGrid").jsGrid("option","inserting",true);
+            },
+
+            controller:
+           {
+               insertItem: function(item){
+                   var prod = FindProduct(item.ProductId);
+                   item.Price = prod.Price;
+                   item.priceAll = item.Price * item.Quantity;
+                   return item;
+               }
+           },
+            onItemUpdating: function(args){
+                if(args.item.Price != args.previousItem.Price ||
+                    args.item.Quantity != args.previousItem.Quantity)
+                {
+                    args.item.priceAll = args.item.Price * args.item.Quantity;
+                }
+                if(args.item.priceAll != args.previousItem.priceAll){
+                    args.item.Price = args.item.priceAll / args.item.Quantity;
+                }
+                if(args.item.ProductId != args.previousItem.ProductId){
+                    var prod = FindProduct(args.item.ProductId);
+                    args.item.Price = prod.Price;
+                    args.item.priceAll = args.item.Price * args.item.Quantity;
+                }
+
+            },
+
+            onItemInserted: function(args){
+                var sum =0;
+                for(var i=0; i<Items.length; i++){
+                    sum = sum + Items[i].priceAll;
+                    $('#text').val(sum.toString());
+                }
+            },
+
+            onItemUpdated: function(args){
+                var sum =0;
+                for(var i=0; i<Items.length; i++){
+                    sum = sum + Items[i].priceAll;
+                    $('#text').val(sum.toString());
+                }
+            },
+
+            data: Items,
+
+            invalidMessage:"",
+            fields: [
+                { name: "ProductId", title: "کالا", type: "select", items: products, valueField: "Id", textField: "Name",
+                    validate:{
+                        validator: function(value,item,param){
+                            if(value != 0){
+                                return true;
+                            }
+                        },
+                        message: "کالا را انتخاب کنید."
+                    }
+                },
+                { name: "Quantity", title:"تعداد", type: "number",validate: {
+                    validator: "range",
+                    message:  "تعداد کالا باید بین 1 تا 100 باشد." ,
+                    param: [1,100],
+                    width: 60 }},
+
+                { name: "Price",title: "فی", type: "number", width: 100},
+                { name: "priceAll", title: "قیمت", type: "number", width: 100 },
+                { type: "control" ,modeSwitchButton: false, editButton: false }
+            ]
+        });
+
+
+        function save_js(){
+            var inputs=[];
+            $("#invoiceForm div.form-group :input").each(function(){inputs.push($(this).val())});
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Create","Invoice")',
+                dataType: 'json',
+                data: {
+                    inputs: inputs,
+                    items: Items,
+                },
+                success: function(data){
+                    alert(data.msg);
+                    
+                },
+                failure: function(){
+                    alert("fail!");
+                }
+            });
+        }
+    </script>
+}

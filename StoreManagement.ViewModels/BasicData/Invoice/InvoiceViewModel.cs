@@ -4,20 +4,23 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
+using StoreManagement.Common.Models;
+using System.ComponentModel;
 
-namespace StoreManagement.Web.ViewModels.Invoice
+namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class InvoiceViewModel
     {
+        [DisplayName("شماره")]
         [Required]
         [MaxLength(50)]
         public string Number { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }
+        [DisplayName("مشتری")]
+        public string Customer { get; set; }   // needs check
 
-        public CustomerViewModel Customer { get; set; }   // needs check
-
-        ICollection<InvoiceItem.InvoiceItemViewModel> Items { get; set; }
+        ICollection<InvoiceItemViewModel> Items { get; set; }
     }
 }

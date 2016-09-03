@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel.DataAnnotations;
 
-namespace StoreManagement.Web.ViewModels.InvoiceItem
+namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class InvoiceItemViewModel
     {
