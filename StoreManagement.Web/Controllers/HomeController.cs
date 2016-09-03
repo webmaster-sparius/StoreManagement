@@ -12,6 +12,7 @@ namespace StoreManagement.Web.Controllers
 
         public virtual ActionResult Index()
         {
+            /*
             List<Category> categories;
             using (var db = new ApplicationDbContext())
             {
@@ -20,6 +21,10 @@ namespace StoreManagement.Web.Controllers
 
             ViewData["categories"] = categories;
             return View();
+            */
+
+            Response.Redirect("/basicdata/invoice/create");
+            return null;
         }
 
 

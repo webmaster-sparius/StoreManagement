@@ -15,7 +15,14 @@
         @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
 
         @Html.LabelFor(model => model.CustomerId, htmlAttributes: new { @class = "control-label col-md-2" })
-        @Html.DropDownListFor(model => model.CustomerId, new SelectList(Model.Customers, "Id", "LastName"), new { @class = "form-control" })
+        
+        <select id="CustomerId" class="form-control" data-val="true" data-val-number="The field مشتری must be a number. "
+                data-val-required="The مشتری field is required." name="CustomerId">
+            @foreach (var c in Model.Customers)
+            {
+                <option value="@c.Id">  @c.FirstName @c.LastName  </option>
+            }
+        </select>
 
         @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
         @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
