@@ -1,0 +1,78 @@
+﻿@model StoreManagement.Web.Areas.BasicData.ViewModels.InvoiceViewModel
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>جزئیات</h2>
+
+<div>
+    <hr />
+    <dl class="form-horizontal">
+        <dt>
+            @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.Customer, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.EditorFor(model => model.Customer, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </dd>
+
+        <dt>
+            @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+        </dt>
+
+        <dd>
+            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+        </dd>
+    </dl>
+    <hr />
+    <div id="jsGrid">
+
+    </div>
+    <div class="form-horizontal">
+        @Html.LabelFor(model=>model.FinalPrice, htmlAttributes: new { @class = "control-label col-md-2" })
+        @Html.EditorFor(model => model.FinalPrice, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+    </div>
+</div>
+<div class="col-md-offset-2 col-md-10">
+    <br>
+    @Html.ActionLink("ویرایش", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning btn-sm" })
+</div>
+<p>
+    @Html.ActionLink("بازگشت به لیست فاکتور", "List")
+</p>
+<link type="text/css" rel="stylesheet" href="~/Content/jsgrid.min.css" />
+<link type="text/css" rel="stylesheet" href="~/Content/jsgrid-theme.min.css" />
+
+@section scripts{
+    <script type="text/javascript" src="~/Scripts/jsgrid.min.js"></script>
+    <script type="text/javascript">
+        var items = [];
+        
+        @foreach(var item in Model.Items)
+        {
+            @: items.push({product: "@item.ProductName", quantity: @item.Quantity, price: @item.Price, finalPrice: @item.FinalPrice });
+                }
+        $("#jsGrid").jsGrid({
+            width: "100%",
+            height: "400px",
+            sorting: true,
+            paging: true,
+            data: items,
+            fields: [
+               { name: "product", title: "کالا", type: "text", width: 150 },
+               { name: "quantity", title:"تعداد", type: "number",width: 60 },
+               { name: "price",title: "فی", type: "number", width: 100},
+               { name: "finalPrice", title: "قیمت", type: "number", width: 100 }
+            ]
+        });
+    </script>
+}

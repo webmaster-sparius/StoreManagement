@@ -5,6 +5,7 @@ using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,7 +16,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            var list = ServiceFactory.Create<IInvoiceService>().FetchAll();
+            var list = ServiceFactory.Create<IInvoiceService>().FetchViewModels();
+
             ViewBag.Type = typeof(Invoice);
             ViewBag.List = list;
 
@@ -34,17 +36,27 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         }
         
         [HttpPost]
-        public JsonResult Create(List<string> inputs, List<InvoiceItem> items)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(List<string> inputs, List<InvoiceItem> items)
         {
             if (inputs != null & items != null)
             {
                 ServiceFactory.Create<IInvoiceService>().Create(inputs, items);
-                return Json(new { msg = "success" });
             }
-            else
-            {
-                return Json(new { msg = "fail" });
-            }
+            return RedirectToAction("List");
+        }
+        #endregion
+
+        #region Details
+        public ActionResult Details(long? id)
+        {
+            if(id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            var viewModel = ServiceFactory.Create<IInvoiceService>().FetchViewModels()
+                .FirstOrDefault(i => i.Id == id);
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
         }
         #endregion
     }
