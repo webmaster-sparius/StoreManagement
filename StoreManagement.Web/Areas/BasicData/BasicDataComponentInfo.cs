@@ -27,7 +27,7 @@ namespace StoreManagement.Web.Areas.BasicData
                 new ShellLink("گروه", "Category", "List"),
                 new ShellLink("کالا", "Product", "List"),
                 new ShellLink("مشتری", "Customer", "List"),
-                new ShellLink("ثبت فاکتور","Invoice","Create"),
+               // new ShellLink("ثبت فاکتور","Invoice","Create"),
                 new ShellLink("فاکتور","Invoice","List")
             };
         }

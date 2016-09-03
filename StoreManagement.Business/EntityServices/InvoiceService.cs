@@ -18,6 +18,35 @@ namespace StoreManagement.Business.EntityServices
                 Invoices = db.Invoices.ToList();
             return Invoices;
         }
+
+        public void Create(List<string> inputs, List<InvoiceItem> items)
+        {
+            using (var db = new ApplicationDbContext())
+            {
+                var invoice = new Invoice
+                {
+                    Number = inputs[0],
+                    CustomerId = Int32.Parse(inputs[1]),
+                    CreatedOn = DateTime.Parse(inputs[2]),
+                    Customer = db.Customers.Find(Int32.Parse(inputs[1]))
+                };
+                foreach (var item in items)
+                {
+                    var invoiceItem = new InvoiceItem
+                    {
+                        ProductId = item.ProductId,
+                        Price = item.Price,
+                        Quantity = item.Quantity,
+                        Product = db.Products.Find(item.ProductId),
+                        Invoice = invoice
+                    };
+                    db.InvoiceItems.Add(invoiceItem);
+                    invoice.Items.Add(invoiceItem);
+                }
+                db.Invoices.Add(invoice);
+                db.SaveChanges();
+            }
+        }
         #endregion
     }
 }

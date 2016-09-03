@@ -9,6 +9,7 @@ namespace StoreManagement.Common.EntityServices
 {
     public interface IInvoiceService
     {
-       IEnumerable<Invoice> FetchAll();
+        IEnumerable<Invoice> FetchAll();
+        void Create(List<string> inputs, List<InvoiceItem> items);
     }
 }

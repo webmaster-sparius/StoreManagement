@@ -9,6 +9,7 @@ using System.ComponentModel;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
+    [DisplayName("فاکتور")]
     public class InvoiceViewModel
     {
         [DisplayName("شماره")]
