@@ -8,7 +8,8 @@
 <h2>ویرایش مشتری</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Customer", new { },
+                                        FormMethod.Post, new { id = "editable_form" }))
 {
     @Html.AntiForgeryToken()
     
@@ -21,7 +22,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.FirstName, new { htmlAttributes = new { id = "firstname_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.FirstName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -29,7 +30,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.LastName, new { htmlAttributes = new { id = "lastname_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -37,7 +38,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.PhoneNumber, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.PhoneNumber, new { htmlAttributes = new { id = "phonenumber_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.PhoneNumber, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,10 +51,25 @@
     </div>
 }
 
+<!--    -->
+
 <div>
-    @Html.ActionLink("بازگشت به لیست مشتری", "List")
+    <a href="javascript:void(0)" onclick="go_for_return_to_list_of('customer');"> بازگشت به لیست مشتری </a>
 </div>
 
+<div id="dialog-confirm" style="display:none;" title="وایسا کجا میری! ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات ذخیره نشده از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+}
+
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+
 }

@@ -7,20 +7,23 @@
 <h2>ویرایش کالا</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Product", new {  },
+                                     FormMethod.Post, new { id = "editable_form" }))
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
+                @Html.AntiForgeryToken()
+
+                <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.Id)
         @Html.HiddenFor(model => model.Version)
 
+
+
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2 " })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "name_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -28,7 +31,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { id = "price_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -36,7 +39,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Code, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Code, new { htmlAttributes = new { id = "code_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Code, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,7 +47,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { id = "description_box", @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -52,7 +55,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CategoryId, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Title", Model.CategoryId), new { @class = "form-control" } )
+                @Html.DropDownListFor(model => model.CategoryId, new SelectList(Model.Categories, "Id", "Title", Model.CategoryId), new { id = "category_box", @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.CategoryId, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -65,10 +68,26 @@
     </div>
 }
 
+<!--    -->
+
 <div>
-    @Html.ActionLink("بازگشت به لیست کالا", "List")
+    <a  href="javascript:void(0)"  onclick="go_for_return_to_list_of('product');" > بازگشت به لیست کالا </a>
 </div>
 
+<div id="dialog-confirm" style="display:none;" title="وایسا کجا میری! ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات ذخیره نشده از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+}
+
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+    
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+    
+
 }

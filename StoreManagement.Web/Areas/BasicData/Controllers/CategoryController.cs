@@ -17,7 +17,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
     {
         #region List
 
-        public virtual ActionResult List()
+        public ActionResult List()
         {
             var list = ServiceFactory.Create<ICategoryService>().FetchAll().
                 Select(c => CategoryViewModel.FromModel(c));
@@ -46,13 +46,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
-            using (var db = new ApplicationDbContext())
-            {
+            ServiceFactory.Create<ICategoryService>().CreateByViewModel(viewModel);
 
-                var category = new Category { Title = viewModel.Title };
-                db.Categories.Add(category);
-                db.SaveChanges();
-            }
             return RedirectToAction("List");
         }
 
@@ -62,21 +57,11 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpGet]
         public virtual ActionResult Edit(long id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Categories
-                    .Select(a => new EditCategoryViewModel
-                    {
-                        Id = a.Id,
-                        Title = a.Title,
-                        Version = a.Version
-                    }).FirstOrDefault(a => a.Id == id);
+            EditCategoryViewModel viewModel = ServiceFactory.Create<ICategoryService>().FetchEditViewModel(id);
 
                 if (viewModel == null)
                     return HttpNotFound();
-
                 return View(viewModel);
-            }
         }
 
         [HttpPost]
@@ -88,31 +73,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "آخرین بارت باشه.");
                 return View(viewModel);
             }
-
-            var db = new ApplicationDbContext();
             try
             {
-                var category = new Category
-                {
-                    Id = viewModel.Id,
-                    Title = viewModel.Title,
-                    Version = viewModel.Version
-                };
-
-                db.Entry<Category>(category).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-
-                return RedirectToAction("List");
+                ServiceFactory.Create<ICategoryService>().EditByViewModel(viewModel);
             }
             catch (DbUpdateConcurrencyException)
             {
                 ModelState.AddModelError("", "گروه مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
                 return View(viewModel);
             }
-            finally
-            {
-                db.Dispose();
-            }
+            return RedirectToAction("List");
+            
         }
         #endregion
 
@@ -137,21 +108,21 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpPost]
         public virtual ActionResult Delete(long id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var category = new Category { Id = id };
 
-                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
-
-                var temp = db.Categories.Find(id);
-                if (temp != null)
-                {
-                    db.Categories.Remove(temp);
-                    db.SaveChanges();
-                }
-
-            }
+            ServiceFactory.Create<ICategoryService>().DeleteById(id);
             return RedirectToAction("List");
+        }
+        #endregion
+
+        #region Search
+        [HttpGet]
+        public ActionResult Search(string title)
+        {
+            var list = ServiceFactory.Create<ICategoryService>().FetchByTitle(title).Select(c => CategoryViewModel.FromModel(c));
+            ViewBag.Type = typeof(Category);
+            ViewBag.List = list;
+            ViewBag.RowsAffected = list.Count();
+            return View("EntityList");
         }
         #endregion
 

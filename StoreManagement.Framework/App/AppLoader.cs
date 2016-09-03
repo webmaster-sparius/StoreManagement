@@ -1,6 +1,7 @@
 ﻿using StoreManagement.Framework.MetaData;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -11,7 +12,14 @@ namespace StoreManagement.Framework.App
 {
     public class AppLoader
     {
-        public static void LoadBinAssemblies(string path)
+        public static void InitializeApp(string appRootPath)
+        {
+            var binPath = ConfigurationManager.AppSettings["BinPath"];
+            if (!Path.IsPathRooted(binPath))
+                binPath = Path.Combine(appRootPath, binPath);
+            LoadBinAssemblies(binPath);
+        }
+        private static void LoadBinAssemblies(string path)
         {
             var loadedAssemblies = new HashSet<string>(
                 AppDomain.CurrentDomain.GetAssemblies().
@@ -22,7 +30,6 @@ namespace StoreManagement.Framework.App
                 if (!loadedAssemblies.Contains(nameOnly))
                     Assembly.LoadFrom(asmFileName);
             }
-
             foreach (var ei in ComponentManager.GetAllEntityInfos())
                 MetaDataService.AddEntityInfo(ei);
         }

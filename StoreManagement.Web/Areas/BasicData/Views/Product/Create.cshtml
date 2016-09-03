@@ -6,7 +6,8 @@
 
 <h2>درج کالا</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Create", "Product", new { },
+                                        FormMethod.Post, new { id = "editable_form" }))
 {
     @Html.AntiForgeryToken()
 
@@ -62,12 +63,27 @@
     </div>
 }
 
+<!--    -->
+
 <div>
-    @Html.ActionLink("بازگشت به لیست کالا", "List")
+    <a href="javascript:void(0)" onclick="go_for_return_to_list_of('product');"> بازگشت به لیست کالا </a>
 </div>
 
-@section scripts{
+<div id="dialog-confirm" style="display:none;" title="وایسا کجا میری! ">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span> تغییرات ذخیره نشده از دست خواهد رفت آیا می خواهید خارج شوید؟ </p>
+</div>
+
+@section css{
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+}
+
+@section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
+
+    <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+
+
 }
 
 

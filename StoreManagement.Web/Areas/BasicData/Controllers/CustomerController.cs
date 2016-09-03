@@ -77,12 +77,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
                 return View(viewModel);
             }
-            using (var db = new ApplicationDbContext())
-            {
-                var customer = new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber };
-                db.Customers.Add(customer);
-                db.SaveChanges();
-            }
+
+            ServiceFactory.Create<ICustomerService>().CreateByViewModel(viewModel);
+
             return RedirectToAction("List");
         }
         #endregion
@@ -97,50 +94,25 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "تمام فیلد ها باید وارد شوند.");
                 return View(viewModel);
             }
-            var db = new ApplicationDbContext();
             try
             {
-                var customer = new Customer
-                {
-                    FirstName = viewModel.FirstName,
-                    LastName = viewModel.LastName,
-                    PhoneNumber = viewModel.PhoneNumber,
-                    Id = viewModel.Id,
-                    Version = viewModel.Version
-                };
-                db.Entry<Customer>(customer).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-                //     return RedirectToAction("Edit", new { id = viewModel.Id });
-                return RedirectToAction("List");
+                ServiceFactory.Create<ICustomerService>().EditByViewModel(viewModel);
             }
             catch (DbUpdateConcurrencyException)
             {
                 ModelState.AddModelError("", "اطلاعات کاریر مورد نظر توسط کاربر دیگری در شبکه، تغییر یافته است. برای ادامه صفحه را رفرش کنید.");
                 return View(viewModel);
             }
-            finally
-            {
-                db.Dispose();
-            }
+            return RedirectToAction("List");
         }
+
         [HttpGet]
         public virtual ActionResult Edit(long id)
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var viewModel = db.Customers.Select(
-                    a => new EditCustomerViewModel
-                    {
-                        Id = a.Id,
-                        FirstName = a.FirstName,
-                        LastName = a.LastName,
-                        PhoneNumber = a.PhoneNumber,
-                        Version = a.Version
-                    }).FirstOrDefault(a => a.Id == id);
+            EditCustomerViewModel viewModel = ServiceFactory.Create<ICustomerService>().FetchEditViewModel(id);
                 if (viewModel == null)
                     return HttpNotFound();
                 return View(viewModel);
-            }
         }
         #endregion
 
@@ -166,17 +138,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         public virtual ActionResult Delete(long id)         
         {
-            using (var db = new ApplicationDbContext())
-            {
-                var customer = new Customer { Id = id };
-                var temp = db.Customers.Find(id);
-                if (temp != null)
-                {
-                    db.Customers.Remove(temp);
-                    db.SaveChanges();
-                }
-
-            }
+            ServiceFactory.Create<ICustomerService>().DeleteById(id);
             return RedirectToAction("List");
 
         }

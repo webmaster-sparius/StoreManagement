@@ -44,8 +44,9 @@
                     @foreach (var link in ComponentManager.GetAllLinks())
                     {
                         <li class="list-group-item">
-                            <a href="@Url.Action(link.ActionName, link.ControllerName, new { Area = link.AreaName })">
-                            @link.Title
+               <!--             <a href="//Url.Action(link.ActionName, link.ControllerName, new { Area = link.AreaName })">  -->
+                            <a href="javascript:void(0)" onclick="go_for_return_to_list_of('@link.ControllerName');">
+                                @link.Title
                             </a>
                         </li>
                     }
@@ -67,6 +68,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/scripts/page_edited_warning.js")
     @RenderSection("scripts", required: false)
 </body>
 </html>
@@ -76,3 +78,4 @@
         document.location = "/home/index?param=" + $("#navbartb").val();    //*/
     }
 </script>
+

@@ -16,7 +16,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\StoreManagement.Web\bin\roslyn\</OutputPath>
+    <OutputPath>..\StoreManagement.Web\bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -92,7 +92,6 @@
     <Compile Include="BasicData\Product\AddProductViewModel.cs" />
     <Compile Include="BasicData\Product\EditProductViewModel.cs" />
     <Compile Include="BasicData\Product\ProductViewModel.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
