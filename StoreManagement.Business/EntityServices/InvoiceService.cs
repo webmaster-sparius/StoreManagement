@@ -15,7 +15,19 @@ namespace StoreManagement.Business.EntityServices
         {
             List<Invoice> Invoices;
             using (var db = new ApplicationDbContext())
+            {
                 Invoices = db.Invoices.ToList();
+                List<InvoiceItem> InvoiceItems = db.InvoiceItems.ToList();
+                foreach(var invoice in Invoices)
+                {
+                    foreach(var item in InvoiceItems)
+                    {
+                        if (item.InvoiceId == invoice.Id)
+                            invoice.Items.Add(item);
+                    }
+                    invoice.Customer = db.Customers.Find(invoice.CustomerId);
+                }
+            }
             return Invoices;
         }
 
