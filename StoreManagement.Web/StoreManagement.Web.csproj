@@ -208,6 +208,7 @@
     <Content Include="Areas\BasicData\Views\Category\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Customer\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Invoice\Create.cshtml" />
+    <Content Include="Areas\BasicData\Views\Invoice\Details.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.rtl.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
