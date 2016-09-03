@@ -27,6 +27,8 @@ namespace StoreManagement.Web.Areas.BasicData
                 new ShellLink("گروه", "Category", "List"),
                 new ShellLink("کالا", "Product", "List"),
                 new ShellLink("مشتری", "Customer", "List"),
+                new ShellLink("ثبت فاکتور","Invoice","Create"),
+                new ShellLink("فاکتور","Invoice","List")
             };
         }
 
@@ -37,6 +39,7 @@ namespace StoreManagement.Web.Areas.BasicData
                 new EntityInfo(typeof(Category), typeof(CategoryViewModel), typeof(ICategoryService)),
                 new EntityInfo(typeof(Customer), typeof(CustomerViewModel), typeof(ICustomerService)),
                 new EntityInfo(typeof(Product), typeof(ProductViewModel), typeof(IProductService)),
+                new EntityInfo(typeof(Invoice), typeof(InvoiceViewModel),typeof(IInvoiceService))
             };
         }
     }

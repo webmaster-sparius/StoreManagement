@@ -59,6 +59,7 @@
   <ItemGroup>
     <Compile Include="EntityServices\ICategoryService.cs" />
     <Compile Include="EntityServices\ICustomerService.cs" />
+    <Compile Include="EntityServices\IInvoiceService.cs" />
     <Compile Include="EntityServices\IProductService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
