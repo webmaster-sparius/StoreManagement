@@ -82,6 +82,10 @@ namespace StoreManagement.Web.Controllers
         }
 
 
+        public virtual PartialViewResult GetEditedDiv()
+        {
+            return PartialView("_EditedDiv");
+        }
 
 
     }

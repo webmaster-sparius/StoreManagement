@@ -4,8 +4,20 @@ var peo = {};
 peo.original_array = [];
 
 $(document).ready(function () {
-    $("#editable_form div.form-group :input").
+    $("#editable_form  :input").
                     each(function () { peo.original_array.push($(this).val()) });
+
+    /////////////////////
+
+    $.ajax({
+        type: 'post',
+        url: '/home/getediteddiv',
+        data: {},
+        success: function (result) {
+            $('body').append(result);
+        }
+    });
+
 });
 
 
@@ -13,7 +25,7 @@ $(document).ready(function () {
 
 function peo_doc_changed() {
     var new_array = [];
-    $("#editable_form div.form-group :input").
+    $("#editable_form  :input").
                     each(function () { new_array.push($(this).val()) });
     var res = false;
 

@@ -15,14 +15,18 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         public long Id{get;set;}
 
         [DisplayName("شماره")]
-        [Required]
-        [MaxLength(50)]
         public string Number { get; set; }
 
         [Timestamp]
         public byte[] Version { get; set; }
         [DisplayName("مشتری")]
-        public string Customer { get; set; }   // needs check
+        public string Customer { get; set; } 
+        
+        [DisplayName("تاریخ")]
+        public DateTime CreatedOn { get; set; }
+
+        [DisplayName("قیمت کل")]
+        public decimal  FinalPrice{get; set;}
 
         public ICollection<InvoiceItemViewModel> Items { get; set; }
     }

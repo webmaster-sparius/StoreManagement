@@ -8,10 +8,14 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class InvoiceItemViewModel
     {
-        [Required]
+        
         public decimal Quantity { get; set; }
 
-        [Required]
+        
         public decimal Price { get; set; }
+
+        public decimal FinalPrice { get; set; }
+
+        public string ProductName { get; set; }
     }
 }

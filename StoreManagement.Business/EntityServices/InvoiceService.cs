@@ -1,5 +1,6 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
+using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace StoreManagement.Business.EntityServices
 {
-     public  class InvoiceService : IInvoiceService 
+    public class InvoiceService : IInvoiceService
     {
-        #region
+        #region IInvoiceService
         public IEnumerable<Invoice> FetchAll()
         {
             List<Invoice> Invoices;
@@ -18,13 +19,8 @@ namespace StoreManagement.Business.EntityServices
             {
                 Invoices = db.Invoices.ToList();
                 List<InvoiceItem> InvoiceItems = db.InvoiceItems.ToList();
-                foreach(var invoice in Invoices)
+                foreach (var invoice in Invoices)
                 {
-                    foreach(var item in InvoiceItems)
-                    {
-                        if (item.InvoiceId == invoice.Id)
-                            invoice.Items.Add(item);
-                    }
                     invoice.Customer = db.Customers.Find(invoice.CustomerId);
                 }
             }
@@ -58,6 +54,43 @@ namespace StoreManagement.Business.EntityServices
                 db.Invoices.Add(invoice);
                 db.SaveChanges();
             }
+        }
+
+        public IEnumerable<InvoiceViewModel> FetchViewModels()
+        {
+            List<InvoiceViewModel> invoices;
+            using (var db = new ApplicationDbContext())
+            {
+                List<Invoice> list = db.Invoices.ToList();
+                var items = db.InvoiceItems.ToList();
+                foreach (var invoice in list)
+                {
+                    foreach (var item in items)
+                    {
+                        if (item.InvoiceId == invoice.Id)
+                        {
+                            invoice.Items.Add(item);
+                        }
+                    }
+                    invoice.Customer = db.Customers.Find(invoice.CustomerId);
+                }
+                invoices = list.Select(invoice => new InvoiceViewModel
+                {
+                    Id = invoice.Id,
+                    Customer = invoice.Customer.FirstName + " " + invoice.Customer.LastName,
+                    Number = invoice.Number,
+                    Items = invoice.Items.Select(i => new InvoiceItemViewModel
+                    {
+                        ProductName = db.Products.Find(i.ProductId).Name, 
+                        Price = i.Price,
+                        Quantity = i.Quantity,
+                        FinalPrice = i.Quantity * i.Price
+                    }).ToList(),
+                    CreatedOn = invoice.CreatedOn,
+                    FinalPrice = invoice.Items.Sum(item => (item.Quantity * item.Price))
+                }).ToList();
+            }
+            return invoices;
         }
         #endregion
     }
