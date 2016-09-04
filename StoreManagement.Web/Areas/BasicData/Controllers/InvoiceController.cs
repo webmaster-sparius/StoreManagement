@@ -31,12 +31,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         public ActionResult Create()
         {
             AddInvoiceViewModel viewModel = new AddInvoiceViewModel();
-            viewModel.CreatedOn = DateTime.Now;
+           // viewModel.CreatedOn = DateTime.Now;
             return View(viewModel);
         }
         
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        
         public ActionResult Create(List<string> inputs, List<InvoiceItem> items)
         {
             if (inputs != null & items != null)
