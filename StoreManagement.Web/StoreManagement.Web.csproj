@@ -190,6 +190,9 @@
     <Compile Include="ViewModels\ManageViewModels.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-rtl.css" />
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
     <Content Include="Content\jsgrid-theme.css" />
     <Content Include="Content\jsgrid-theme.min.css" />
@@ -197,10 +200,32 @@
     <Content Include="Content\jsgrid.min.css" />
     <Content Include="Content\PersianDatePicker.css" />
     <Content Include="Content\PersianDatePicker.min.css" />
+    <Content Include="Content\Styles\Images\1.png" />
+    <Content Include="Content\Styles\Images\2.png" />
+    <Content Include="Content\Styles\Images\3.png" />
+    <Content Include="Content\Styles\Images\back.gif" />
+    <Content Include="Content\Styles\Images\calendar.png" />
+    <Content Include="Content\Styles\Images\png.gif" />
+    <Content Include="Content\Styles\Images\ui-bg_flat_30_cccccc_40x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_flat_50_5c5c5c_40x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_glass_40_ffc73d_1x400.png" />
+    <Content Include="Content\Styles\Images\ui-bg_highlight-hard_20_0972a5_1x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_highlight-soft_33_003147_1x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_highlight-soft_35_222222_1x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_highlight-soft_44_444444_1x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_highlight-soft_80_eeeeee_1x100.png" />
+    <Content Include="Content\Styles\Images\ui-bg_loop_25_000000_21x21.png" />
+    <Content Include="Content\Styles\Images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\Styles\Images\ui-icons_4b8e0b_256x240.png" />
+    <Content Include="Content\Styles\Images\ui-icons_a83300_256x240.png" />
+    <Content Include="Content\Styles\Images\ui-icons_cccccc_256x240.png" />
+    <Content Include="Content\Styles\Images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\Styles\jquery-ui-1.8.14.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -217,6 +242,8 @@
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-1.6.2.min.js" />
+    <Content Include="Scripts\jquery.ui.datepicker-cc.all.min.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
