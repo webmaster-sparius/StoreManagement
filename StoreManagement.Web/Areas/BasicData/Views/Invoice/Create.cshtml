@@ -184,7 +184,7 @@
         function save_js(){
             var inputs=[];
             $("#invoiceForm div.form-group :input").each(function(){inputs.push($(this).val())});
-          //  $(".jsgrid-table jsgrid-cell").each(function(){inputs.push($(this).val())});
+            $(".jsgrid-table jsgrid-cell").each(function(){inputs.push($(this).val())});
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Create","Invoice")',
@@ -196,9 +196,6 @@
                 success: function(data){s
                     alert(data.msg);
                     
-                },
-                error: function(){
-                    alert("fail!");
                 }
             });
         }
