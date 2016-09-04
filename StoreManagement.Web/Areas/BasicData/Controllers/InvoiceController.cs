@@ -37,13 +37,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         
         [HttpPost]
         
-        public ActionResult Create(List<string> inputs, List<InvoiceItem> items)
+        public void  Create(List<string> inputs, List<InvoiceItem> items)
         {
-            if (inputs != null & items != null)
+            if (inputs != null && items != null)
             {
                 ServiceFactory.Create<IInvoiceService>().Create(inputs, items);
             }
-            return RedirectToAction("List");
         }
         #endregion
 

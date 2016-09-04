@@ -26,7 +26,7 @@
             </select>
 
             @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.TextBox("Date")        
+            <input id="Date" class="hasDatePicker form-control" name="Date" value="@DateTime.UtcNow.Date" type="text" />
         </div>
 
          
@@ -187,16 +187,12 @@
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Create","Invoice")',
-                dataType: 'json',
                 data: {
                     inputs: inputs,
                     items: Items,
                 },
                 success: function(data){
-                    alert(data.msg);
-                },
-                error: function(data) {
-                    alert(data);
+                    document.location = '@Url.Action("List","Invoice")';
                 }
             });
         }
