@@ -36,7 +36,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         }
         
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Create(List<string> inputs, List<InvoiceItem> items)
         {
             if (inputs != null & items != null)
