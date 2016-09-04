@@ -92,6 +92,26 @@ namespace StoreManagement.Business.EntityServices
             }
             return invoices;
         }
+
+        public void DeleteById(long id)
+        {
+            ////////////////////////
+            using (var db = new ApplicationDbContext())
+            {
+                var product = new Invoice { Id = id };
+
+                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
+
+                var temp = db.Invoices.Find(id);
+                if (temp != null)
+                {
+                    db.Invoices.Remove(temp);
+                    //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
+                    db.SaveChanges();
+                }
+            }
+            /////////////////////////
+        }
         #endregion
     }
 }

@@ -73,5 +73,13 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             return View("Impossible");
         }
         #endregion
+
+        #region Delete
+        public ActionResult Delete(long id)
+        {
+            ServiceFactory.Create<IInvoiceService>().DeleteById(id);
+            return RedirectToAction("List");
+        }
+        #endregion
     }
 }

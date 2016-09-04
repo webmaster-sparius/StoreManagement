@@ -12,5 +12,6 @@ namespace StoreManagement.Common.EntityServices
         IEnumerable<Invoice> FetchAll();
         void Create(List<string> inputs, List<InvoiceItem> items);
         IEnumerable<InvoiceViewModel> FetchViewModels();
+        void DeleteById(long id);
     }
 }
