@@ -26,8 +26,10 @@
             </select>
 
             @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextBox("Date")        
         </div>
+
+         
         <hr />
         <div id="jsGrid">
 
@@ -42,7 +44,7 @@
                 <button id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
             </div>
         </div>
-    </form>
+</form>
 </div>
 
 <link type="text/css" rel="stylesheet" href="~/Content/jsgrid.min.css" />
@@ -55,9 +57,13 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
 }
 
-
-
 @section Scripts {
+
+    <script language="javascript">
+    $(document).ready(function() {
+    $('#Date').datepicker();
+    });
+    </script>
 
     @Scripts.Render("~/bundles/jqueryval")
 
