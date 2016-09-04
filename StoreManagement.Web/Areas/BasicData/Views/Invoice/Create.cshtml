@@ -41,7 +41,7 @@
         <br />
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <button id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
+                <button type="button" id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
             </div>
         </div>
 </form>
@@ -61,7 +61,7 @@
 
     <script language="javascript">
     $(document).ready(function() {
-    $('#Date').datepicker();
+        $('#Date').datepicker();
     });
     </script>
 
@@ -184,7 +184,6 @@
         function save_js(){
             var inputs=[];
             $("#invoiceForm div.form-group :input").each(function(){inputs.push($(this).val())});
-            $(".jsgrid-table jsgrid-cell").each(function(){inputs.push($(this).text())});
             $.ajax({
                 type: 'POST',
                 url: '@Url.Action("Create","Invoice")',
@@ -193,9 +192,11 @@
                     inputs: inputs,
                     items: Items,
                 },
-                success: function(data){s
+                success: function(data){
                     alert(data.msg);
-                    
+                },
+                error: function(data) {
+                    alert(data);
                 }
             });
         }
