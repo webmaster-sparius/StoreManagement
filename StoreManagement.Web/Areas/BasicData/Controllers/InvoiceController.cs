@@ -59,5 +59,19 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             return View(viewModel);
         }
         #endregion
+
+        #region Edit
+        public ActionResult Edit(long? id)
+        {
+            return View("Impossible");
+        }
+        #endregion
+
+        #region Impossible
+        public ActionResult Impossible(long? id)
+        {
+            return View("Impossible");
+        }
+        #endregion
     }
 }
