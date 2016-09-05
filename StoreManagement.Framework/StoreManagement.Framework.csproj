@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,12 +55,18 @@
     <Compile Include="Common\ComponentInfo.cs" />
     <Compile Include="Common\EntityInfo.cs" />
     <Compile Include="Common\IEntityService.cs" />
+    <Compile Include="Common\Repository.cs" />
+    <Compile Include="Common\EntityService.cs" />
     <Compile Include="Common\ServiceFactory.cs" />
     <Compile Include="ComponentManager.cs" />
     <Compile Include="MetaData\MetaDataHelper.cs" />
     <Compile Include="MetaData\MetaDataService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\ShellLink.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

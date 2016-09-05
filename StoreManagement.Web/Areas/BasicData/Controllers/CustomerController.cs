@@ -78,13 +78,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
-            ServiceFactory.Create<ICustomerService>().CreateByViewModel(viewModel);
+            ServiceFactory.Create<ICustomerService>()
+                .Create(new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber });
 
             return RedirectToAction("List");
         }
         #endregion
 
         #region Edit
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditCustomerViewModel viewModel)
@@ -96,7 +98,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
             try
             {
-                ServiceFactory.Create<ICustomerService>().EditByViewModel(viewModel);
+                ServiceFactory.Create<ICustomerService>()
+                    .Save(new Customer
+                {
+                    FirstName = viewModel.FirstName,
+                    LastName = viewModel.LastName,
+                    PhoneNumber = viewModel.PhoneNumber,
+                    Id = viewModel.Id,
+                    Version = viewModel.Version
+                });
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -151,6 +161,23 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             var exist = ServiceFactory.Create<ICustomerService>().CheckCustomerExist(firstName, lastName, Id);
             return Json(!exist);
         }
+        #endregion
+
+        #region Service Communication
+
+        public EditCustomerViewModel FetchEditViewModel(long id)
+        {
+            var svc = ServiceFactory.Create<ICustomerService>();
+            return svc.FetchByIdAndProject(id, a => new EditCustomerViewModel
+            {
+                Id = a.Id,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                PhoneNumber = a.PhoneNumber,
+                Version = a.Version
+            });
+        }
+
         #endregion
     }
 }

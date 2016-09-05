@@ -1,5 +1,6 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,13 +16,13 @@ namespace StoreManagement.Business.EntityServices
         public IEnumerable<Invoice> FetchAll()
         {
             List<Invoice> Invoices;
-            using (var db = new ApplicationDbContext())
+            using (var db = new Repository())
             {
-                Invoices = db.Invoices.ToList();
-                List<InvoiceItem> InvoiceItems = db.InvoiceItems.ToList();
+                Invoices = db.Set<Invoice>().ToList();
+                List<InvoiceItem> InvoiceItems = db.Set<InvoiceItem>().ToList();
                 foreach (var invoice in Invoices)
                 {
-                    invoice.Customer = db.Customers.Find(invoice.CustomerId);
+                    invoice.Customer = db.Set<Customer>().Find(invoice.CustomerId);
                 }
             }
             return Invoices;
@@ -29,14 +30,14 @@ namespace StoreManagement.Business.EntityServices
 
         public void Create(List<string> inputs, List<InvoiceItem> items)
         {
-            using (var db = new ApplicationDbContext())
+            using (var db = new Repository())
             {
                 var invoice = new Invoice
                 {
                     Number = inputs[0],
                     CustomerId = Int32.Parse(inputs[1]),
                     CreatedOn = DateTime.Parse(inputs[2]),
-                    Customer = db.Customers.Find(Int32.Parse(inputs[1]))
+                    Customer = db.Set<Customer>().Find(Int32.Parse(inputs[1]))
                 };
                 foreach (var item in items)
                 {
@@ -45,13 +46,13 @@ namespace StoreManagement.Business.EntityServices
                         ProductId = item.ProductId,
                         Price = item.Price,
                         Quantity = item.Quantity,
-                        Product = db.Products.Find(item.ProductId),
+                        Product = db.Set<Product>().Find(item.ProductId),
                         Invoice = invoice
                     };
-                    db.InvoiceItems.Add(invoiceItem);
+                    db.Set<InvoiceItem>().Add(invoiceItem);
                     invoice.Items.Add(invoiceItem);
                 }
-                db.Invoices.Add(invoice);
+                db.Set<Invoice>().Add(invoice);
                 db.SaveChanges();
             }
         }
@@ -59,10 +60,10 @@ namespace StoreManagement.Business.EntityServices
         public IEnumerable<InvoiceViewModel> FetchViewModels()
         {
             List<InvoiceViewModel> invoices;
-            using (var db = new ApplicationDbContext())
+            using (var db = new Repository())
             {
-                List<Invoice> list = db.Invoices.ToList();
-                var items = db.InvoiceItems.ToList();
+                List<Invoice> list = db.Set<Invoice>().ToList();
+                var items = db.Set<InvoiceItem>().ToList();
                 foreach (var invoice in list)
                 {
                     foreach (var item in items)
@@ -72,7 +73,7 @@ namespace StoreManagement.Business.EntityServices
                             invoice.Items.Add(item);
                         }
                     }
-                    invoice.Customer = db.Customers.Find(invoice.CustomerId);
+                    invoice.Customer = db.Set<Customer>().Find(invoice.CustomerId);
                 }
                 invoices = list.Select(invoice => new InvoiceViewModel
                 {
@@ -81,7 +82,7 @@ namespace StoreManagement.Business.EntityServices
                     Number = invoice.Number,
                     Items = invoice.Items.Select(i => new InvoiceItemViewModel
                     {
-                        ProductName = db.Products.Find(i.ProductId).Name, 
+                        ProductName = db.Set<Product>().Find(i.ProductId).Name, 
                         Price = i.Price,
                         Quantity = i.Quantity,
                         FinalPrice = i.Quantity * i.Price

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Globalization;
 using System.Threading;
+using StoreManagement.Framework.Common;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
@@ -35,6 +36,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         {
             get
             {
+                return ServiceFactory.Create<ICustomerService>();
                 return new ApplicationDbContext().Customers;
             }
         }
@@ -43,6 +45,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         {
             get
             {
+                return ServiceFactory.Create<IProductService>();
                 return new ApplicationDbContext().Products;
             }
         }

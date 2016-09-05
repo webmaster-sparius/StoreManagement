@@ -12,11 +12,6 @@ namespace StoreManagement.Common.EntityServices
     {
         bool CheckNameExist(string name, long? id);
         bool CheckCodeExist(string code, long? id);
-        IEnumerable<Product> FetchAll();
-        IEnumerable<ProductViewModel> FetchViewModels();
-        EditProductViewModel FetchEditViewModel(long? id);
-        void EditByViewModel(EditProductViewModel viewModel);
         void DeleteById(long? id);
-        void CreateByViewModel(AddProductViewModel viewModel);
     }
 }

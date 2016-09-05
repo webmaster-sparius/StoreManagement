@@ -10,6 +10,7 @@ using StoreManagement.Common.Models;
 using System.Configuration;
 using StoreManagement.Framework.App;
 using System.IO;
+using StoreManagement.Framework.Common;
 
 namespace StoreManagement.Web
 {
@@ -17,9 +18,11 @@ namespace StoreManagement.Web
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
+            AppLoader.InitializeApp(Server.MapPath("."));
 
-            using (var db = new ApplicationDbContext())
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Repository>());
+
+            using (var db = new Repository())
             {
                 db.Database.Initialize(force: true);
             }
@@ -29,7 +32,6 @@ namespace StoreManagement.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AppLoader.InitializeApp(Server.MapPath("."));
         }
 
 

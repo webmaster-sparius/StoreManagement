@@ -22,7 +22,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
 
             var service = ServiceFactory.Create<IProductService>();
-            var list = service.FetchViewModels();
+            var list = service.FetchAllAndProject(p => new ProductViewModel
+            {
+                Code = p.Code,
+                Name = p.Name,
+                Price = p.Price,
+                Category = p.Category.Title,
+                Id = p.Id,
+                Description = p.Description
+            });
 
             ViewBag.List = list;
             ViewBag.Type = typeof(Product);
@@ -47,10 +55,20 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-
-            ServiceFactory.Create<IProductService>().CreateByViewModel(viewModel);
-
-            return RedirectToAction("List");
+            using (var db = new Repository())
+            {
+                ServiceFactory.Create<IProductService>()
+                    .Create(new Product
+                    {
+                        Code = viewModel.Code,
+                        CategoryId = viewModel.CategoryId,
+                        Category = db.Set<Category>().Find(viewModel.CategoryId),
+                        Price = viewModel.Price,
+                        Name = viewModel.Name,
+                        Description = viewModel.Description
+                    });
+            }
+           return RedirectToAction("List");
         }
         #endregion
 
@@ -62,7 +80,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            EditProductViewModel viewModel = ServiceFactory.Create<IProductService>().FetchEditViewModel(id);
+            EditProductViewModel viewModel = ServiceFactory.Create<IProductService>()
+                .FetchByIdAndProject(id.Value, a => new EditProductViewModel
+                {
+                    Id = a.Id,
+                    CategoryId = a.CategoryId,
+                    Code = a.Code,
+                    Description = a.Description,
+                    Name = a.Name,
+                    Price = a.Price,
+                    Version = a.Version
+                });
          
                 if (viewModel == null)
                     return HttpNotFound();
@@ -80,7 +108,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
             try {
-                ServiceFactory.Create<IProductService>().EditByViewModel(viewModel);
+                ServiceFactory.Create<IProductService>()
+                    .Save(new Product
+                    {
+                        Id = viewModel.Id,
+                        Name = viewModel.Name,
+                        Code = viewModel.Code,
+                        Description = viewModel.Description,
+                        CategoryId = viewModel.CategoryId,
+                        Version = viewModel.Version,
+                        Price = viewModel.Price
+                    });
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -99,8 +137,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-            var viewModel = ServiceFactory.Create<IProductService>().FetchViewModels()
-                .FirstOrDefault(p => p.Id == id);
+            var viewModel = ServiceFactory.Create<IProductService>().FetchByIdAndProject(id.Value, p => new ProductViewModel
+            {
+               Category = p.Category.Title,
+               Code = p.Code,
+               Description = p.Description,
+               Id = p.Id,
+               Name = p.Name,
+               Price = p.Price 
+            });
             if (viewModel == null)
                 return HttpNotFound();
             return View(viewModel);
