@@ -22,8 +22,11 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         public long CustomerId { get; set; }
 
         [DataType(DataType.Date)]
-        [DisplayName("تاریخ")]
         public DateTime CreatedOn { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayName("تاریخ")]
+        public DateTime CreatedOnString { get; set; }
 
         [DisplayName("قیمت کل")]
         public decimal Price { get; set; }

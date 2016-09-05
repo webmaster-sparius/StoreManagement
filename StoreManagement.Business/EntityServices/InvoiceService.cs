@@ -87,10 +87,12 @@ namespace StoreManagement.Business.EntityServices
                         Quantity = i.Quantity,
                         FinalPrice = i.Quantity * i.Price
                     }).ToList(),
-                    CreatedOn = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date),
+                    CreatedOn = invoice.CreatedOn,
                     FinalPrice = invoice.Items.Sum(item => (item.Quantity * item.Price))
                 }).ToList();
             }
+            foreach (var invoice in invoices)
+                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
             return invoices;
         }
 
