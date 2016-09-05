@@ -175,7 +175,6 @@
     <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
     <Compile Include="Areas\BasicData\Controllers\InvoiceController.cs" />
-    <Compile Include="Class\PersianCulture.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Areas\BasicData\Controllers\ProductController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
