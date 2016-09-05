@@ -23,7 +23,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         public string Customer { get; set; } 
         
         [DisplayName("تاریخ")]
-        public DateTime CreatedOn { get; set; }
+        public string CreatedOn { get; set; }
 
         [DisplayName("قیمت کل")]
         public decimal  FinalPrice{get; set;}

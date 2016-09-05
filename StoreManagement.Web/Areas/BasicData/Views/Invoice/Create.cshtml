@@ -2,7 +2,7 @@
 @using StoreManagement.Web.Areas.BasicData.ViewModels
 @{
     ViewBag.Title = "Invoice";
-
+    var today = PersianDateTime.Now.ToString(PersianDateTimeFormat.Date);
 }
 
 
@@ -26,7 +26,9 @@
             </select>
 
             @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
-            <input id="Date" class="hasDatePicker form-control" name="Date" value="@DateTime.UtcNow.Date" type="text" />
+           <input type="text" id="DateInput" />
+           
+            <button type="button" onclick="PersianDatePicker.Show(DateInput,'@today' );"> انتخاب تاریخ</button>
         </div>
 
          
@@ -50,7 +52,8 @@
 <link type="text/css" rel="stylesheet" href="~/Content/jsgrid.min.css" />
 <link type="text/css" rel="stylesheet" href="~/Content/jsgrid-theme.min.css" />
 
-
+<script type="text/javascript" src="~/Scripts/PersianDatePicker.min.js"></script>
+<link type="text/css" href="~/Content/PersianDatePicker.min.css" rel="stylesheet" />
 
 
 @section css{
@@ -74,10 +77,10 @@
     <script type="text/javascript" src="~/Scripts/jsgrid.min.js"></script>
     <script type="text/javascript">
         var products = [];
-        products.push({Id: 0, Name: "", Price: "0"})
+        products.push({Id: 0, Name: "", Price: 0})
         @foreach (var p in Model.Products)
         {
-            @:products.push({Id: @p.Id, Name: "@p.Name", Price: "@p.Price"});
+            @:products.push({Id: @p.Id, Name: "@p.Name", Price: @p.Price});
                                                                                                 }
         var Items = [];
         function FindProduct(productId){
