@@ -167,8 +167,6 @@
     <Content Include="Content\jsgrid-theme.min.css" />
     <Content Include="Content\jsgrid.css" />
     <Content Include="Content\jsgrid.min.css" />
-    <Content Include="Content\PersianDatePicker.css" />
-    <Content Include="Content\PersianDatePicker.min.css" />
     <Content Include="Content\Styles\Images\1.png" />
     <Content Include="Content\Styles\Images\2.png" />
     <Content Include="Content\Styles\Images\3.png" />
@@ -223,8 +221,6 @@
     <Content Include="Scripts\jsgrid.js" />
     <Content Include="Scripts\jsgrid.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Scripts\PersianDatePicker.js" />
-    <Content Include="Scripts\PersianDatePicker.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\page_edited_warning.js" />

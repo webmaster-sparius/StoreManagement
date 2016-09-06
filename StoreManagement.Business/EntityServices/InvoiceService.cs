@@ -21,7 +21,7 @@ namespace StoreManagement.Business.EntityServices
             {
                 Number = inputs[0],
                 CustomerId = Int32.Parse(inputs[1]),
-                CreatedOn = DateTime.Parse(inputs[2]),
+                CreatedOn = PersianDateTime.Parse(inputs[2]).ToDateTime(),
                 Customer = db.Set<Customer>().Find(Int32.Parse(inputs[1]))
             };
             foreach (var item in items)
@@ -50,6 +50,7 @@ namespace StoreManagement.Business.EntityServices
                     Number = i.Number,
                     Customer = i.Customer.FirstName + " " + i.Customer.LastName,
                     Items = i.Items.Select(ii => new InvoiceItemViewModel
+
                     {
                         ProductName = ii.Product.Name,
                         Price = ii.Price,
@@ -60,6 +61,8 @@ namespace StoreManagement.Business.EntityServices
                     FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
                 });
         }
+            foreach (var invoice in invoices)
+                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
 
         #endregion
     }
