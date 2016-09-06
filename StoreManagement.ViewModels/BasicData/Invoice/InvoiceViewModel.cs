@@ -20,10 +20,12 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         [Timestamp]
         public byte[] Version { get; set; }
         [DisplayName("مشتری")]
-        public string Customer { get; set; } 
-        
-        [DisplayName("تاریخ")]
+        public string Customer { get; set; }
+
         public DateTime CreatedOn { get; set; }
+
+        [DisplayName("تاریخ")]
+        public string CreatedOnString { get; set; }
 
         [DisplayName("قیمت کل")]
         public decimal  FinalPrice{get; set;}
