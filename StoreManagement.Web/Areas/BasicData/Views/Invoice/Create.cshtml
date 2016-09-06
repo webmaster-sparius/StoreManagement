@@ -26,10 +26,9 @@
             </select>
 
             @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
-           <input type="text" id="DateInput" />
-           
-            <button type="button" onclick="PersianDatePicker.Show(DateInput,'@today' );"> انتخاب تاریخ</button>
-        </div>
+            <input type="text" id="DateInput" onclick="PersianDatePicker.Show(this,'@today' );">
+            <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="30px" width="30px" onclick="PersianDatePicker.Show(DateInput,'@today' );" />
+     </div>
 
          
         <hr />
