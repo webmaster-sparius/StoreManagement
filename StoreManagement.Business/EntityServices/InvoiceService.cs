@@ -17,6 +17,16 @@ namespace StoreManagement.Business.EntityServices
     {
 
         #region IInvoiceService
+        public bool CheckNumberExist(string number, long? id)
+        {
+            var db = Repository.Current;
+            var invoices = db.Set<Invoice>();
+            var exist = id.HasValue ?
+                invoices.Any(i => i.Id != id && i.Number == number) :
+                invoices.Any(i => i.Number == number);
+            return exist;
+        }
+
         public void SaveInvoice(Invoice invoice)
         {
             var db = Repository.Current;

@@ -9,6 +9,7 @@ namespace StoreManagement.Common.EntityServices
 {
     public interface IInvoiceService : IEntityService<Invoice>
     {
+        bool CheckNumberExist(string number, long? id);
         void SaveInvoice(Invoice invoice);
         void UpdateInvoice(Invoice invoice);
     }

@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
@@ -17,6 +18,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
 
         [DisplayName("شماره")]
         [Required(ErrorMessage = "شماره فاکتور را وارد کنید.")]
+        [Remote("ExistNumber","Invoice",AdditionalFields="Id" ,ErrorMessage ="فاکتور با این شماره قبلا در سیستم ثبت شده است.", HttpMethod ="POST")]
         public string Number { get; set; }
 
         [DisplayName("مشتری")]
