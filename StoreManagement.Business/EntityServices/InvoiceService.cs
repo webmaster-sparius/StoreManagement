@@ -64,6 +64,8 @@ namespace StoreManagement.Business.EntityServices
                 invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
             return invoices;
         }
+            foreach (var invoice in invoices)
+                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
 
         #endregion
     }
