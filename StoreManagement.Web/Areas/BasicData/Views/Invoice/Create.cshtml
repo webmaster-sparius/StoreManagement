@@ -40,9 +40,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control" type="text" id="CreatedOnString" name="CreatedOnString" data-val="true" data-val-required="تاریخ را وارد کنید"/>
-                <button type="button" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );"> انتخاب تاریخ</button>
-                @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
+                <input type="text" id="CreatedOnString" name="CreatedOnString" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );"  data-val="true" data-val-required="تاریخ را وارد کنید"/>
+                <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="35px" width="35px" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );"> 
+                     @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr />
@@ -59,6 +59,8 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="button" id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
+                <button type="button" id="saveAndNewButton" onclick="SaveAndNew();" class="btn btn-success">  ذخیره و جدید  </button>
+
             </div>
         </div>
     </form>
@@ -222,6 +224,37 @@
                     data: model,
                     success: function(data){
                         document.location = '@Url.Action("List","Invoice")';
+                    },
+                    failure: function(){
+                        alert("ذخیره نشد");
+                    }
+                });
+            }
+            else{
+
+            }
+        }
+        function SaveAndNew(){
+            var inputs=[];
+            $("#invoiceForm div.form-group :input").each(function(){inputs.push($(this).val())});
+            var model = {
+                Number: inputs[0],
+                CustomerId: inputs[1],
+                CreatedOnString: inputs[2],
+                Price: inputs[3],
+                Items: Items
+            };
+            $("#validSummery").empty();
+            if(Items.length == 0){
+                $("<li>کالایی در فاکتور وجود ندارد</li>").appendTo($("#validSummery"));
+            }
+            if($("#invoiceForm").valid() && Items.length != 0){
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create","Invoice")',
+                    data: model,
+                    success: function(data){
+                        document.location = '@Url.Action("Create","Invoice")';
                     },
                     failure: function(){
                         alert("ذخیره نشد");
