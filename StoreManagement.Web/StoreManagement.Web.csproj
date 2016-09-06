@@ -152,6 +152,7 @@
     <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
     <Compile Include="Areas\BasicData\Controllers\InvoiceController.cs" />
+    <Compile Include="Controllers\CometController.cs" />
     <Compile Include="Areas\BasicData\Controllers\ProductController.cs" />
     <Compile Include="Areas\BasicData\Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -271,6 +272,7 @@
     <Folder Include="Areas\BasicData\Models\" />
     <Folder Include="Areas\BasicData\Views\Shared\" />
     <Folder Include="obj\" />
+    <Folder Include="Views\Comet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
