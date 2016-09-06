@@ -132,7 +132,14 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         }
         #endregion
 
-        
+        #region RemoteValidation
+        [HttpPost]
+        public JsonResult ExistNumber(string number, long? id)
+        {
+            var exist = ServiceFactory.Create<IInvoiceService>().CheckNumberExist(number, id);
+            return Json(!exist);
+        }
+        #endregion
 
         public Expression<Func<Invoice, InvoiceViewModel>> GetInvoiceToInvoiceViewModelExpression()
         {
