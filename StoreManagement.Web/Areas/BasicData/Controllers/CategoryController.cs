@@ -46,8 +46,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
-            ServiceFactory.Create<ICategoryService>().CreateByViewModel(viewModel);
-
+            ServiceFactory.Create<ICategoryService>()
+                .Create(new Category { Title = viewModel.Title });
+            
             return RedirectToAction("List");
         }
 
@@ -57,7 +58,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpGet]
         public virtual ActionResult Edit(long id)
         {
-            EditCategoryViewModel viewModel = ServiceFactory.Create<ICategoryService>().FetchEditViewModel(id);
+            EditCategoryViewModel viewModel = ServiceFactory.Create<ICategoryService>().FetchByIdAndProject(id, a => new EditCategoryViewModel
+            {
+                Id = a.Id,
+                Title = a.Title,
+                Version = a.Version
+            });
 
                 if (viewModel == null)
                     return HttpNotFound();
@@ -75,7 +81,13 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
             try
             {
-                ServiceFactory.Create<ICategoryService>().EditByViewModel(viewModel);
+                ServiceFactory.Create<ICategoryService>()
+                    .Save(new Category
+                    {
+                        Id = viewModel.Id,
+                        Title = viewModel.Title,
+                        Version = viewModel.Version
+                    });
             }
             catch (DbUpdateConcurrencyException)
             {

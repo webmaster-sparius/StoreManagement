@@ -1,4 +1,6 @@
-﻿using StoreManagement.Common.Models;
+﻿using StoreManagement.Common.EntityServices;
+using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -42,11 +44,11 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         [DisplayName("گروه")]
         public long CategoryId { get; set; }
 
-        public IQueryable<Category> Categories
+        public IEnumerable<Category> Categories
         {
             get
             {
-                return new ApplicationDbContext().Categories;
+                return ServiceFactory.Create<ICategoryService>().FetchAll();
             }
         }
     }

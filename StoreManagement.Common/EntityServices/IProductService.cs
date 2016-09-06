@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using StoreManagement.Web.Areas.BasicData.ViewModels;
 using StoreManagement.Framework.Common;
 
 namespace StoreManagement.Common.EntityServices
@@ -12,11 +11,5 @@ namespace StoreManagement.Common.EntityServices
     {
         bool CheckNameExist(string name, long? id);
         bool CheckCodeExist(string code, long? id);
-        IEnumerable<Product> FetchAll();
-        IEnumerable<ProductViewModel> FetchViewModels();
-        EditProductViewModel FetchEditViewModel(long? id);
-        void EditByViewModel(EditProductViewModel viewModel);
-        void DeleteById(long? id);
-        void CreateByViewModel(AddProductViewModel viewModel);
     }
 }

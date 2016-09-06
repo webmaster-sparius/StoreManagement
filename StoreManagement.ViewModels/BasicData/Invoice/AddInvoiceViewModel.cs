@@ -7,26 +7,29 @@ using System.Linq;
 using System.Web;
 using System.Globalization;
 using System.Threading;
+using StoreManagement.Framework.Common;
+using StoreManagement.Common.EntityServices;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
     public class AddInvoiceViewModel
     {
         [DisplayName("شماره فاکتور")]
-        [Required(ErrorMessage ="شماره فاکتور نمیتواند خالی باشد.")]
+        [Required(ErrorMessage ="شماره فاکتور را وارد کنید.")]
         [MaxLength(50)]
         public string Number { get; set; }
 
         [DisplayName("مشتری")]
-        //[Required(ErrorMessage = "  مشتری را انتخاب کنید.")]
+        [Required(ErrorMessage = "  مشتری را انتخاب کنید.")]
         public long CustomerId { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime CreatedOn { get; set; }
 
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "تاریخ را وارد کنید.")]
         [DisplayName("تاریخ")]
-        public DateTime CreatedOnString { get; set; }
+        public string CreatedOnString { get; set; }
 
         [DisplayName("قیمت کل")]
         public decimal Price { get; set; }
@@ -34,19 +37,19 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
      
         public ICollection<InvoiceItem> Items { get; set; }
 
-        public IQueryable<Customer> Customers
+        public IEnumerable<Customer> Customers
         {
             get
             {
-                return new ApplicationDbContext().Customers;
+                return ServiceFactory.Create<ICustomerService>().FetchAll();
             }
         }
 
-        public IQueryable<Product> Products
+        public IEnumerable<Product> Products
         {
             get
             {
-                return new ApplicationDbContext().Products;
+                return ServiceFactory.Create<IProductService>().FetchAll();
             }
         }
     }
