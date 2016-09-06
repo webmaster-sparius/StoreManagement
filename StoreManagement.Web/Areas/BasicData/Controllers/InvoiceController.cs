@@ -73,6 +73,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var viewModel = ServiceFactory.Create<IInvoiceService>()
                 .FetchByIdAndProject(id.Value, GetInvoiceToInvoiceViewModelExpression());
+            viewModel.CreatedOnString = new PersianDateTime(viewModel.CreatedOn).ToString(PersianDateTimeFormat.Date);
             if (viewModel == null)
                 return HttpNotFound();
             return View(viewModel);
@@ -130,6 +131,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             return RedirectToAction("List");
         }
         #endregion
+
+        
 
         public Expression<Func<Invoice, InvoiceViewModel>> GetInvoiceToInvoiceViewModelExpression()
         {
