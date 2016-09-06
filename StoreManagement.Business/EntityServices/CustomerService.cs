@@ -13,43 +13,26 @@ namespace StoreManagement.Business.EntityServices
     {
         public bool CheckCustomerExist(string firstName, string lastName, long? Id)
         {
-            using (var db = new Repository())
-            {
-                var customers = db.Set<Customer>();
+            var db = Repository.Current;
+            var customers = db.Set<Customer>();
 
-                var exist = Id.HasValue ?
-                    customers.Any(a => a.Id != Id && a.LastName == lastName && a.FirstName == firstName) :
-                    customers.Any(a => a.LastName == lastName && a.FirstName == firstName);
-                return exist;
-            }
-        }
-
-        public IEnumerable<Customer> FetchAll()
-        {
-            List<Customer> customers = null;
-            using (var db = new Repository())
-            {
-                customers = db.Set<Customer>().ToList();
-            }
-            return customers;
+            var exist = Id.HasValue ?
+                customers.Any(a => a.Id != Id && a.LastName == lastName && a.FirstName == firstName) :
+                customers.Any(a => a.LastName == lastName && a.FirstName == firstName);
+            return exist;
         }
 
         public void DeleteById(long? id)
         {
-            using (var db = new Repository())
+            var db = Repository.Current;
+            var customer = new Customer { Id = id.Value };
+            var temp = db.Set<Customer>().Find(id);
+            if (temp != null)
             {
-                var customer = new Customer { Id = id.Value };
-                var temp = db.Set<Customer>().Find(id);
-                if (temp != null)
-                {
-                    db.Set<Customer>().Remove(temp);
-                    db.SaveChanges();
-                }
-
+                db.Set<Customer>().Remove(temp);
+                db.SaveChanges();
             }
+
         }
-
-
-
     }
 }

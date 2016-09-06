@@ -3,15 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using StoreManagement.Web.Areas.BasicData.ViewModels;
+using StoreManagement.Framework.Common;
 
 namespace StoreManagement.Common.EntityServices
 {
-    public interface IInvoiceService
+    public interface IInvoiceService : IEntityService<Invoice>
     {
-        IEnumerable<Invoice> FetchAll();
         void Create(List<string> inputs, List<InvoiceItem> items);
-        IEnumerable<InvoiceViewModel> FetchViewModels();
-        void DeleteById(long id);
     }
 }

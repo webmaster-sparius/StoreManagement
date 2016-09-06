@@ -55,20 +55,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-            using (var db = new Repository())
-            {
-                ServiceFactory.Create<IProductService>()
-                    .Create(new Product
-                    {
-                        Code = viewModel.Code,
-                        CategoryId = viewModel.CategoryId,
-                        Category = db.Set<Category>().Find(viewModel.CategoryId),
-                        Price = viewModel.Price,
-                        Name = viewModel.Name,
-                        Description = viewModel.Description
-                    });
-            }
-           return RedirectToAction("List");
+            ServiceFactory.Create<IProductService>()
+                .Create(new Product
+                {
+                    Code = viewModel.Code,
+                    CategoryId = viewModel.CategoryId,
+                    Price = viewModel.Price,
+                    Name = viewModel.Name,
+                    Description = viewModel.Description
+                });
+
+            return RedirectToAction("List");
         }
         #endregion
 
@@ -91,11 +88,11 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                     Price = a.Price,
                     Version = a.Version
                 });
-         
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
-            
+
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
+
         }
 
         [HttpPost]
@@ -107,7 +104,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 ModelState.AddModelError("", "فیلدهای مورد نظر را وارد کنید.");
                 return View(viewModel);
             }
-            try {
+            try
+            {
                 ServiceFactory.Create<IProductService>()
                     .Save(new Product
                     {
@@ -139,12 +137,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
             var viewModel = ServiceFactory.Create<IProductService>().FetchByIdAndProject(id.Value, p => new ProductViewModel
             {
-               Category = p.Category.Title,
-               Code = p.Code,
-               Description = p.Description,
-               Id = p.Id,
-               Name = p.Name,
-               Price = p.Price 
+                Category = p.Category.Title,
+                Code = p.Code,
+                Description = p.Description,
+                Id = p.Id,
+                Name = p.Name,
+                Price = p.Price
             });
             if (viewModel == null)
                 return HttpNotFound();

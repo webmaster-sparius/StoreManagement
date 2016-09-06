@@ -16,7 +16,23 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            var list = ServiceFactory.Create<IInvoiceService>().FetchViewModels();
+            var list = ServiceFactory.Create<IInvoiceService>()
+                .FetchAllAndProject(i => new InvoiceViewModel
+                {
+                    Id = i.Id,
+                    Number = i.Number,
+                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
+                    Items = i.Items.Select(ii => new InvoiceItemViewModel
+                    {
+                        ProductName = ii.Product.Name,
+                        Price = ii.Price,
+                        Quantity = ii.Quantity,
+                        FinalPrice = ii.Quantity * ii.Price
+                    }).ToList(),
+                    CreatedOn = i.CreatedOn,
+                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
+                });
+            //var list = ServiceFactory.Create<IInvoiceService>().FetchViewModels();
 
             ViewBag.Type = typeof(Invoice);
             ViewBag.List = list;
@@ -51,8 +67,22 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         {
             if(id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            var viewModel = ServiceFactory.Create<IInvoiceService>().FetchViewModels()
-                .FirstOrDefault(i => i.Id == id);
+            var viewModel = ServiceFactory.Create<IInvoiceService>()
+                .FetchByIdAndProject(id.Value, i => new InvoiceViewModel
+                {
+                    Id = i.Id,
+                    Number = i.Number,
+                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
+                    Items = i.Items.Select(ii => new InvoiceItemViewModel
+                    {
+                        ProductName = ii.Product.Name,
+                        Price = ii.Price,
+                        Quantity = ii.Quantity,
+                        FinalPrice = ii.Quantity * ii.Price
+                    }).ToList(),
+                    CreatedOn = i.CreatedOn,
+                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
+                });
             if (viewModel == null)
                 return HttpNotFound();
             return View(viewModel);

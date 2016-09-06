@@ -5,114 +5,62 @@ using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace StoreManagement.Business.EntityServices
 {
-    public class InvoiceService : IInvoiceService
+    public class InvoiceService : EntityService<Invoice>, IInvoiceService
     {
         #region IInvoiceService
-        public IEnumerable<Invoice> FetchAll()
-        {
-            List<Invoice> Invoices;
-            using (var db = new Repository())
-            {
-                Invoices = db.Set<Invoice>().ToList();
-                List<InvoiceItem> InvoiceItems = db.Set<InvoiceItem>().ToList();
-                foreach (var invoice in Invoices)
-                {
-                    invoice.Customer = db.Set<Customer>().Find(invoice.CustomerId);
-                }
-            }
-            return Invoices;
-        }
-
         public void Create(List<string> inputs, List<InvoiceItem> items)
         {
-            using (var db = new Repository())
+            var db = Repository.Current;
+            var invoice = new Invoice
             {
-                var invoice = new Invoice
+                Number = inputs[0],
+                CustomerId = Int32.Parse(inputs[1]),
+                CreatedOn = DateTime.Parse(inputs[2]),
+                Customer = db.Set<Customer>().Find(Int32.Parse(inputs[1]))
+            };
+            foreach (var item in items)
+            {
+                var invoiceItem = new InvoiceItem
                 {
-                    Number = inputs[0],
-                    CustomerId = Int32.Parse(inputs[1]),
-                    CreatedOn = DateTime.Parse(inputs[2]),
-                    Customer = db.Set<Customer>().Find(Int32.Parse(inputs[1]))
+                    ProductId = item.ProductId,
+                    Price = item.Price,
+                    Quantity = item.Quantity,
+                    Product = db.Set<Product>().Find(item.ProductId),
+                    Invoice = invoice
                 };
-                foreach (var item in items)
-                {
-                    var invoiceItem = new InvoiceItem
-                    {
-                        ProductId = item.ProductId,
-                        Price = item.Price,
-                        Quantity = item.Quantity,
-                        Product = db.Set<Product>().Find(item.ProductId),
-                        Invoice = invoice
-                    };
-                    db.Set<InvoiceItem>().Add(invoiceItem);
-                    invoice.Items.Add(invoiceItem);
-                }
-                db.Set<Invoice>().Add(invoice);
-                db.SaveChanges();
+                db.Set<InvoiceItem>().Add(invoiceItem);
+                invoice.Items.Add(invoiceItem);
             }
+            db.Set<Invoice>().Add(invoice);
+            db.SaveChanges();
         }
 
-        public IEnumerable<InvoiceViewModel> FetchViewModels()
+        public IList<InvoiceViewModel> FetchViewModels()
         {
-            List<InvoiceViewModel> invoices;
-            using (var db = new Repository())
-            {
-                List<Invoice> list = db.Set<Invoice>().ToList();
-                var items = db.Set<InvoiceItem>().ToList();
-                foreach (var invoice in list)
+            return FetchAllAndProject(i =>
+                new InvoiceViewModel
                 {
-                    foreach (var item in items)
+                    Id = i.Id,
+                    Number = i.Number,
+                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
+                    Items = i.Items.Select(ii => new InvoiceItemViewModel
                     {
-                        if (item.InvoiceId == invoice.Id)
-                        {
-                            invoice.Items.Add(item);
-                        }
-                    }
-                    invoice.Customer = db.Set<Customer>().Find(invoice.CustomerId);
-                }
-                invoices = list.Select(invoice => new InvoiceViewModel
-                {
-                    Id = invoice.Id,
-                    Customer = invoice.Customer.FirstName + " " + invoice.Customer.LastName,
-                    Number = invoice.Number,
-                    Items = invoice.Items.Select(i => new InvoiceItemViewModel
-                    {
-                        ProductName = db.Set<Product>().Find(i.ProductId).Name, 
-                        Price = i.Price,
-                        Quantity = i.Quantity,
-                        FinalPrice = i.Quantity * i.Price
+                        ProductName = ii.Product.Name,
+                        Price = ii.Price,
+                        Quantity = ii.Quantity,
+                        FinalPrice = ii.Quantity * ii.Price
                     }).ToList(),
-                    CreatedOn = invoice.CreatedOn,
-                    FinalPrice = invoice.Items.Sum(item => (item.Quantity * item.Price))
-                }).ToList();
-            }
-            return invoices;
+                    CreatedOn = i.CreatedOn,
+                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
+                });
         }
 
-        public void DeleteById(long id)
-        {
-            ////////////////////////
-            using (var db = new ApplicationDbContext())
-            {
-                var product = new Invoice { Id = id };
-
-                //db.Entry<Product>(product).State = System.Data.Entity.EntityState.Deleted;      // jeddan chera :(
-
-                var temp = db.Invoices.Find(id);
-                if (temp != null)
-                {
-                    db.Invoices.Remove(temp);
-                    //db.Entry(temp).CurrentValues.SetValues( ... < isDeleted = true > ... );
-                    db.SaveChanges();
-                }
-            }
-            /////////////////////////
-        }
         #endregion
     }
 }

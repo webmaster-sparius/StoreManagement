@@ -1,4 +1,5 @@
 ﻿using StoreManagement.Common.Models;
+using StoreManagement.Framework.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,17 +35,16 @@ namespace StoreManagement.Web.Controllers
         public virtual ActionResult Search(string text)
         {
             List<Category> categories;
-            using (var db = new ApplicationDbContext())
-            {
-                categories = db.Categories.ToList();
-            }
+            var db = Repository.Current;
+            categories = db.Set<Category>().ToList();
 
             ViewData["categories"] = categories;
             if (string.IsNullOrEmpty(text))
             {
                 ViewData["searched"] = "";
             }
-            else {
+            else
+            {
                 ViewData["searched"] = text;
             }
             return View();
@@ -71,13 +71,11 @@ namespace StoreManagement.Web.Controllers
 
             IQueryable<Product> products;
 
-            using (var db = new ApplicationDbContext())
-            {
-                products = db.Products.Where(p => p.Name == title);
+            var db = Repository.Current;
+                products = db.Set<Product>().Where(p => p.Name == title);
 
                 ViewData["search_result"] = products.ToList();
-            }
-
+        
             return PartialView("_ResultPView");
         }
 

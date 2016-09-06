@@ -8,6 +8,7 @@ using System.Web;
 using System.Globalization;
 using System.Threading;
 using StoreManagement.Framework.Common;
+using StoreManagement.Common.EntityServices;
 
 namespace StoreManagement.Web.Areas.BasicData.ViewModels
 {
@@ -32,21 +33,19 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
      
         public ICollection<InvoiceItem> Items { get; set; }
 
-        public IQueryable<Customer> Customers
+        public IEnumerable<Customer> Customers
         {
             get
             {
-                return ServiceFactory.Create<ICustomerService>();
-                return new ApplicationDbContext().Customers;
+                return ServiceFactory.Create<ICustomerService>().FetchAll();
             }
         }
 
-        public IQueryable<Product> Products
+        public IEnumerable<Product> Products
         {
             get
             {
-                return ServiceFactory.Create<IProductService>();
-                return new ApplicationDbContext().Products;
+                return ServiceFactory.Create<IProductService>().FetchAll();
             }
         }
     }

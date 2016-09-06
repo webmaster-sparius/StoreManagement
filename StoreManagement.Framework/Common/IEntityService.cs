@@ -12,9 +12,10 @@ namespace StoreManagement.Framework.Common
     {
         TEntity FetchById(long id);
         TResult FetchByIdAndProject<TResult>(long id, Expression<Func<TEntity, TResult>> projection);
-        IEnumerable<TEntity> FetchAll();
+        IList<TEntity> FetchAll();
         void Save(TEntity entity);
         void Create(TEntity entity);
-        IEnumerable<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection);
+        IList<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection);
+        void DeleteById(long id);
     }
 }

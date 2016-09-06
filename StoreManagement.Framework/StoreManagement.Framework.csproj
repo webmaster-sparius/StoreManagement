@@ -55,6 +55,7 @@
     <Compile Include="Common\ComponentInfo.cs" />
     <Compile Include="Common\EntityInfo.cs" />
     <Compile Include="Common\IEntityService.cs" />
+    <Compile Include="Common\IRequestRepositoryProvider.cs" />
     <Compile Include="Common\Repository.cs" />
     <Compile Include="Common\EntityService.cs" />
     <Compile Include="Common\ServiceFactory.cs" />
@@ -65,7 +66,9 @@
     <Compile Include="UI\ShellLink.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

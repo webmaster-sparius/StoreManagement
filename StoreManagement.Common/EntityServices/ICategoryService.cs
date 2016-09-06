@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using StoreManagement.Web.Areas.BasicData.ViewModels;
 
 namespace StoreManagement.Common.EntityServices
 {
@@ -13,6 +12,5 @@ namespace StoreManagement.Common.EntityServices
     {
         bool CheckTitleExist(string title, long? id);
 		IEnumerable<Category> FetchByTitle(string title);
-        void DeleteById(long id);
     }
 }

@@ -32,58 +32,55 @@ namespace StoreManagement.Framework.Common
         //}
         public TEntity FetchById(long id)
         {
-            using (var repository = new Repository())
-            {
-                return repository.Set<TEntity>().
-                    Where(e => e.Id == id).
-                    FirstOrDefault();
-            }
+            var db = Repository.Current;
+            return db.Set<TEntity>().
+                Where(e => e.Id == id).
+                FirstOrDefault();
         }
 
         public TResult FetchByIdAndProject<TResult>(long id, Expression<Func<TEntity, TResult>> projection)
         {
-            using (var repository = new Repository())
-            {
-                return repository.Set<TEntity>().
-                    Where(e => e.Id == id).
-                    Select(projection).
-                    FirstOrDefault();
-            }
+            var db = Repository.Current;
+            return db.Set<TEntity>().
+                Where(e => e.Id == id).
+                Select(projection).
+                FirstOrDefault();
         }
-        public IEnumerable<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection)
+        public IList<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection)
         {
-            using (var repository = new Repository())
-            {
-                return repository.Set<TEntity>().
-                    Select(projection).
-                    ToList();
-            }
+            var db = Repository.Current;
+            return db.Set<TEntity>().
+                Select(projection).
+                ToList();
         }
 
-        public IEnumerable<TEntity> FetchAll()
+        public IList<TEntity> FetchAll()
         {
-            using (var db = new Repository()) 
-            {
-                return db.Set<TEntity>().ToList();
-            }
+            var db = Repository.Current;
+            return db.Set<TEntity>().ToList();
         }
 
         public void Save(TEntity entity)
         {
-            using (var db = new Repository())
-            {
-                db.Entry<TEntity>(entity).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
-            }
+            var db = Repository.Current;
+            db.Entry<TEntity>(entity).State = System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
         }
 
         public void Create(TEntity entity)
         {
-            using (var db = new Repository())
-            {
-                db.Set<TEntity>().Add(entity);
-                db.SaveChanges();
-            }
+            var db = Repository.Current;
+            db.Set<TEntity>().Add(entity);
+            db.SaveChanges();
+        }
+
+        public void DeleteById(long id)
+        {
+            var db = Repository.Current;
+            var entity = db.Set<TEntity>().Find(id);
+            if (entity == null)
+                throw new InvalidOperationException("ID does not found.");
+            db.Set<TEntity>().Remove(entity);
         }
     }
 }

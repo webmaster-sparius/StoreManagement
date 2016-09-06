@@ -10,9 +10,15 @@ namespace StoreManagement.Framework.Common
 {
     public class Repository : DbContext
     {
-        public Repository() : base("StoreManagementEF")
+        private Repository() : base("StoreManagementEF")
         {
         }
+
+        public static Repository Create()
+        {
+            return new Repository();
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -28,7 +34,14 @@ namespace StoreManagement.Framework.Common
                         .Invoke(modelBuilder, new object[] { });
                 }
             }
+        }
 
+        public static Repository Current
+        {
+            get
+            {
+                return ServiceFactory.Create<IRequestRepositoryProvider>().Repository;
+            }
         }
     }
 }
