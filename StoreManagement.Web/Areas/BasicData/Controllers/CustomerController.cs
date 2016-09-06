@@ -36,18 +36,9 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-            /*
-            using (var db = new ApplicationDbContext())
-            {
-                var customers = db.Customers.Select(customer => new CustomerViewModel { Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName, PhoneNumber = customer.PhoneNumber })
-                    .ToList();
-                ViewBag.List = customers;
-                ViewBag.Type = typeof(Customer);
-                return View("EntityList");
-            }
-            */
             var customers = ServiceFactory.Create<ICustomerService>().FetchAll()
-                .Select(customer => new CustomerViewModel {
+                .Select(customer => new CustomerViewModel
+                {
                     Id = customer.Id,
                     FirstName = customer.FirstName,
                     LastName = customer.LastName,
@@ -78,13 +69,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
-            ServiceFactory.Create<ICustomerService>().CreateByViewModel(viewModel);
+            ServiceFactory.Create<ICustomerService>()
+                .Create(new Customer { FirstName = viewModel.FirstName, LastName = viewModel.LastName, PhoneNumber = viewModel.PhoneNumber });
 
             return RedirectToAction("List");
         }
         #endregion
 
         #region Edit
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public virtual ActionResult Edit(EditCustomerViewModel viewModel)
@@ -96,7 +89,15 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             }
             try
             {
-                ServiceFactory.Create<ICustomerService>().EditByViewModel(viewModel);
+                ServiceFactory.Create<ICustomerService>()
+                    .Save(new Customer
+                    {
+                        FirstName = viewModel.FirstName,
+                        LastName = viewModel.LastName,
+                        PhoneNumber = viewModel.PhoneNumber,
+                        Id = viewModel.Id,
+                        Version = viewModel.Version
+                    });
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -109,10 +110,17 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         [HttpGet]
         public virtual ActionResult Edit(long id)
         {
-            EditCustomerViewModel viewModel = ServiceFactory.Create<ICustomerService>().FetchEditViewModel(id);
-                if (viewModel == null)
-                    return HttpNotFound();
-                return View(viewModel);
+            EditCustomerViewModel viewModel = ServiceFactory.Create<ICustomerService>().FetchByIdAndProject(id, i => new EditCustomerViewModel
+            {
+                FirstName = i.FirstName,
+                Id = i.Id,
+                LastName = i.LastName,
+                PhoneNumber = i.PhoneNumber,
+                Version = i.Version
+            });
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
         }
         #endregion
 
@@ -122,7 +130,8 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var viewModel = ServiceFactory.Create<ICustomerService>().FetchAll()
-                .Select(v => new CustomerViewModel {
+                .Select(v => new CustomerViewModel
+                {
                     Id = v.Id,
                     FirstName = v.FirstName,
                     LastName = v.LastName,
@@ -136,7 +145,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         #region Delete
 
-        public virtual ActionResult Delete(long id)         
+        public virtual ActionResult Delete(long id)
         {
             ServiceFactory.Create<ICustomerService>().DeleteById(id);
             return RedirectToAction("List");
@@ -151,6 +160,23 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             var exist = ServiceFactory.Create<ICustomerService>().CheckCustomerExist(firstName, lastName, Id);
             return Json(!exist);
         }
+        #endregion
+
+        #region Service Communication
+
+        public EditCustomerViewModel FetchEditViewModel(long id)
+        {
+            var svc = ServiceFactory.Create<ICustomerService>();
+            return svc.FetchByIdAndProject(id, a => new EditCustomerViewModel
+            {
+                Id = a.Id,
+                FirstName = a.FirstName,
+                LastName = a.LastName,
+                PhoneNumber = a.PhoneNumber,
+                Version = a.Version
+            });
+        }
+
         #endregion
     }
 }

@@ -10,6 +10,8 @@ using StoreManagement.Common.Models;
 using System.Configuration;
 using StoreManagement.Framework.App;
 using System.IO;
+using StoreManagement.Framework.Common;
+using System.Linq.Expressions;
 
 namespace StoreManagement.Web
 {
@@ -17,21 +19,49 @@ namespace StoreManagement.Web
     {
         protected void Application_Start()
         {
-            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<ApplicationDbContext>());
+            AppLoader.InitializeApp(Server.MapPath("."));
 
-            using (var db = new ApplicationDbContext())
-            {
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<Repository>());
+
+            using (var db = Repository.Create())
                 db.Database.Initialize(force: true);
-            }
-
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            AppLoader.InitializeApp(Server.MapPath("."));
+        }
+        protected void Application_BeginRequest(object sender, EventArgs e)
+        {
+            RequestRepositoryProvider.CreateRequestRepository();
         }
 
+        protected void Application_EndRequest(object sender, EventArgs e)
+        {
+            RequestRepositoryProvider.GetRequestRepository().Dispose();
+        }
+    }
 
+    internal class RequestRepositoryProvider : IRequestRepositoryProvider
+    {
+        private static string _requestRepositoryKey = "HttpContextRequestLevelRepository";
+
+        public Repository Repository
+        {
+            get
+            {
+                return GetRequestRepository();
+            }
+        }
+
+        internal static void CreateRequestRepository()
+        {
+            HttpContext.Current.Items[_requestRepositoryKey] = Repository.Create();
+        }
+
+        internal static Repository GetRequestRepository()
+        {
+            return (Repository)HttpContext.Current.Items[_requestRepositoryKey];
+        }
     }
 }

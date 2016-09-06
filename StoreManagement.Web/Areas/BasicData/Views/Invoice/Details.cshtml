@@ -26,11 +26,11 @@
         </dd>
 
         <dt>
-            @Html.LabelFor(model => model.CreatedOn, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
         </dt>
 
         <dd>
-            @Html.EditorFor(model => model.CreatedOn, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
+            @Html.EditorFor(model => model.CreatedOnString, new { htmlAttributes = new { @class = "form-control", @readonly = "readonly" } })
         </dd>
     </dl>
     <hr />

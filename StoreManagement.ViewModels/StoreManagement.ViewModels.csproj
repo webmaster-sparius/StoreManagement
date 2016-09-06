@@ -86,8 +86,10 @@
     <Compile Include="BasicData\Customer\CustomerViewModel.cs" />
     <Compile Include="BasicData\Customer\EditCustomerViewModel.cs" />
     <Compile Include="BasicData\InvoiceItem\AddInvoiceItemViewModel.cs" />
+    <Compile Include="BasicData\InvoiceItem\EditInvoiceItemViewModel.cs" />
     <Compile Include="BasicData\InvoiceItem\InvoiceItemViewModel.cs" />
     <Compile Include="BasicData\Invoice\AddInvoiceViewModel.cs" />
+    <Compile Include="BasicData\Invoice\EditInvoiceViewModel.cs" />
     <Compile Include="BasicData\Invoice\InvoiceViewModel.cs" />
     <Compile Include="BasicData\Product\AddProductViewModel.cs" />
     <Compile Include="BasicData\Product\EditProductViewModel.cs" />
@@ -95,6 +97,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\StoreManagement.Common\StoreManagement.Common.csproj">
+      <Project>{0d346c50-970b-4b49-a18c-fb43b0e68e5f}</Project>
+      <Name>StoreManagement.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\StoreManagement.Framework\StoreManagement.Framework.csproj">
       <Project>{a51cb7be-a9a9-424c-9cf1-16c29688f6f8}</Project>
       <Name>StoreManagement.Framework</Name>
