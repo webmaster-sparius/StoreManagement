@@ -9,6 +9,7 @@ namespace StoreManagement.Common.EntityServices
 {
     public interface IInvoiceService : IEntityService<Invoice>
     {
-        void Create(List<string> inputs, List<InvoiceItem> items);
+        void SaveInvoice(Invoice invoice);
+        void UpdateInvoice(Invoice invoice);
     }
 }

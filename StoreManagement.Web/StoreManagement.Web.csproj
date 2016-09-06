@@ -49,6 +49,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="PersianDateTime, Version=1.1.5082.36395, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PersianDateTime.1.1.5082.36395\lib\net40\PersianDateTime.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -148,7 +152,6 @@
     <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
     <Compile Include="Areas\BasicData\Controllers\InvoiceController.cs" />
-    <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Areas\BasicData\Controllers\ProductController.cs" />
     <Compile Include="Areas\BasicData\Controllers\CategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -204,6 +207,7 @@
     <Content Include="Areas\BasicData\Views\Invoice\Create.cshtml" />
     <Content Include="Areas\BasicData\Views\Invoice\Details.cshtml" />
     <Content Include="Areas\BasicData\Views\Invoice\Date.cshtml" />
+    <Content Include="Areas\BasicData\Views\Invoice\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.rtl.min.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
@@ -221,6 +225,9 @@
     <Content Include="Scripts\jsgrid.js" />
     <Content Include="Scripts\jsgrid.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\npm.js" />
+    <Content Include="Scripts\PersianDatePicker.js" />
+    <Content Include="Scripts\PersianDatePicker.min.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\page_edited_warning.js" />

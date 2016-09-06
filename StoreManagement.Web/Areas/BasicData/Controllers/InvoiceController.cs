@@ -5,6 +5,7 @@ using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
@@ -17,22 +18,11 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         public virtual ActionResult List()
         {
             var list = ServiceFactory.Create<IInvoiceService>()
-                .FetchAllAndProject(i => new InvoiceViewModel
-                {
-                    Id = i.Id,
-                    Number = i.Number,
-                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
-                    Items = i.Items.Select(ii => new InvoiceItemViewModel
-                    {
-                        ProductName = ii.Product.Name,
-                        Price = ii.Price,
-                        Quantity = ii.Quantity,
-                        FinalPrice = ii.Quantity * ii.Price
-                    }).ToList(),
-                    CreatedOn = i.CreatedOn,
-                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
-                });
-            //var list = ServiceFactory.Create<IInvoiceService>().FetchViewModels();
+                .FetchAllAndProject(GetInvoiceToInvoiceViewModelExpression()).ToList();
+
+            foreach (var invoice in list)
+                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
+
 
             ViewBag.Type = typeof(Invoice);
             ViewBag.List = list;
@@ -47,42 +37,42 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         public ActionResult Create()
         {
             AddInvoiceViewModel viewModel = new AddInvoiceViewModel();
-           // viewModel.CreatedOn = DateTime.Now;
+            // viewModel.CreatedOn = DateTime.Now;
             return View(viewModel);
         }
-        
+
         [HttpPost]
-        
-        public void  Create(List<string> inputs, List<InvoiceItem> items)
+
+        public void Create(AddInvoiceViewModel viewModel)
         {
-            if (inputs != null && items != null)
+            var invoice = new Invoice
             {
-                ServiceFactory.Create<IInvoiceService>().Create(inputs, items);
+                Number = viewModel.Number,
+                CustomerId = viewModel.CustomerId,
+                CreatedOn = PersianDateTime.Parse(viewModel.CreatedOnString).ToDateTime(),
+                Items = new List<InvoiceItem>()
+            };
+            foreach (var item in viewModel.Items)
+            {
+                var invoiceItem = new InvoiceItem
+                {
+                    ProductId = item.ProductId,
+                    Price = item.Price,
+                    Quantity = item.Quantity
+                };
+                invoice.Items.Add(invoiceItem);
             }
+            ServiceFactory.Create<IInvoiceService>().SaveInvoice(invoice);
         }
         #endregion
 
         #region Details
         public ActionResult Details(long? id)
         {
-            if(id == null)
+            if (id == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             var viewModel = ServiceFactory.Create<IInvoiceService>()
-                .FetchByIdAndProject(id.Value, i => new InvoiceViewModel
-                {
-                    Id = i.Id,
-                    Number = i.Number,
-                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
-                    Items = i.Items.Select(ii => new InvoiceItemViewModel
-                    {
-                        ProductName = ii.Product.Name,
-                        Price = ii.Price,
-                        Quantity = ii.Quantity,
-                        FinalPrice = ii.Quantity * ii.Price
-                    }).ToList(),
-                    CreatedOn = i.CreatedOn,
-                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
-                });
+                .FetchByIdAndProject(id.Value, GetInvoiceToInvoiceViewModelExpression());
             if (viewModel == null)
                 return HttpNotFound();
             return View(viewModel);
@@ -90,16 +80,46 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #endregion
 
         #region Edit
+        [HttpGet]
         public ActionResult Edit(long? id)
         {
-            return View("Impossible");
-        }
-        #endregion
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-        #region Impossible
-        public ActionResult Impossible(long? id)
+            EditInvoiceViewModel viewModel = ServiceFactory.Create<IInvoiceService>().
+                FetchByIdAndProject(id.Value, GetInvoiceToEditInvoiceViewModelExpression());
+            viewModel.CreatedOnString = new PersianDateTime(viewModel.CreatedOn).ToString(PersianDateTimeFormat.Date);
+
+            if (viewModel == null)
+                return HttpNotFound();
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public void Edit(EditInvoiceViewModel viewModel)
         {
-            return View("Impossible");
+            var invoice = new Invoice
+            {
+                Id = viewModel.Id,
+                Number = viewModel.Number,
+                CustomerId = viewModel.CustomerId,
+                CreatedOn = PersianDateTime.Parse(viewModel.CreatedOnString).ToDateTime(),
+                Version = viewModel.Version
+            };
+            invoice.Items = new List<InvoiceItem>();
+            foreach (var item in viewModel.Items)
+            {
+                var invoiceItem = new InvoiceItem
+                {
+                    Id = item.Id,
+                    ProductId = item.ProductId,
+                    Price = item.Price,
+                    Quantity = item.Quantity,
+                    InvoiceId = item.InvoiceId
+                };
+                invoice.Items.Add(invoiceItem);
+            }
+            ServiceFactory.Create<IInvoiceService>().UpdateInvoice(invoice);
         }
         #endregion
 
@@ -110,5 +130,45 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             return RedirectToAction("List");
         }
         #endregion
+
+        public Expression<Func<Invoice, InvoiceViewModel>> GetInvoiceToInvoiceViewModelExpression()
+        {
+            return i => new InvoiceViewModel
+            {
+                Id = i.Id,
+                Number = i.Number,
+                Customer = i.Customer.FirstName + " " + i.Customer.LastName,
+                Items = i.Items.Select(ii => new InvoiceItemViewModel
+                {
+                    ProductName = ii.Product.Name,
+                    Price = ii.Price,
+                    Quantity = ii.Quantity,
+                    FinalPrice = ii.Quantity * ii.Price
+                }).ToList(),
+                CreatedOn = i.CreatedOn,
+                FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
+            };
+        }
+        public Expression<Func<Invoice, EditInvoiceViewModel>> GetInvoiceToEditInvoiceViewModelExpression()
+        {
+            return invoice => new EditInvoiceViewModel
+            {
+                Id = invoice.Id,
+                Version = invoice.Version,
+                CreatedOn = invoice.CreatedOn,
+                CustomerId = invoice.CustomerId,
+                Number = invoice.Number,
+                Items = invoice.Items
+                    .Select(item => new EditInvoiceItemViewModel
+                    {
+                        Id = item.Id,
+                        ProductId = item.ProductId,
+                        Price = item.Price,
+                        Quantity = item.Quantity,
+                        InvoiceId = invoice.Id
+                    }).ToList()
+            };
+        }
+
     }
 }

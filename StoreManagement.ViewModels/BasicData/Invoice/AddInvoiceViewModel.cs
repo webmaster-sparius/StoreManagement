@@ -15,20 +15,21 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
     public class AddInvoiceViewModel
     {
         [DisplayName("شماره فاکتور")]
-        [Required(ErrorMessage ="شماره فاکتور نمیتواند خالی باشد.")]
+        [Required(ErrorMessage ="شماره فاکتور را وارد کنید.")]
         [MaxLength(50)]
         public string Number { get; set; }
 
         [DisplayName("مشتری")]
-        //[Required(ErrorMessage = "  مشتری را انتخاب کنید.")]
+        [Required(ErrorMessage = "  مشتری را انتخاب کنید.")]
         public long CustomerId { get; set; }
 
         [DataType(DataType.Date)]
         public DateTime CreatedOn { get; set; }
 
         [DataType(DataType.Date)]
+        [Required(ErrorMessage = "تاریخ را وارد کنید.")]
         [DisplayName("تاریخ")]
-        public DateTime CreatedOnString { get; set; }
+        public string CreatedOnString { get; set; }
 
         [DisplayName("قیمت کل")]
         public decimal Price { get; set; }

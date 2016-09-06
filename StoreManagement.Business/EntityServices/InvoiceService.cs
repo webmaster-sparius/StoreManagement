@@ -1,4 +1,5 @@
-﻿using StoreManagement.Common.EntityServices;
+﻿
+using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
@@ -8,64 +9,31 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.ModelBinding;
 
 namespace StoreManagement.Business.EntityServices
 {
     public class InvoiceService : EntityService<Invoice>, IInvoiceService
     {
+
         #region IInvoiceService
-        public void Create(List<string> inputs, List<InvoiceItem> items)
+        public void SaveInvoice(Invoice invoice)
         {
             var db = Repository.Current;
-            var invoice = new Invoice
-            {
-                Number = inputs[0],
-                CustomerId = Int32.Parse(inputs[1]),
-                CreatedOn = PersianDateTime.Parse(inputs[2]).ToDateTime(),
-                Customer = db.Set<Customer>().Find(Int32.Parse(inputs[1]))
-            };
-            foreach (var item in items)
-            {
-                var invoiceItem = new InvoiceItem
-                {
-                    ProductId = item.ProductId,
-                    Price = item.Price,
-                    Quantity = item.Quantity,
-                    Product = db.Set<Product>().Find(item.ProductId),
-                    Invoice = invoice
-                };
-                db.Set<InvoiceItem>().Add(invoiceItem);
-                invoice.Items.Add(invoiceItem);
-            }
             db.Set<Invoice>().Add(invoice);
             db.SaveChanges();
         }
 
-        public IList<InvoiceViewModel> FetchViewModels()
+        public void UpdateInvoice(Invoice invoice)
         {
-            var invoices = FetchAllAndProject(i =>
-                new InvoiceViewModel
-                {
-                    Id = i.Id,
-                    Number = i.Number,
-                    Customer = i.Customer.FirstName + " " + i.Customer.LastName,
-                    Items = i.Items.Select(ii => new InvoiceItemViewModel
-
-                    {
-                        ProductName = ii.Product.Name,
-                        Price = ii.Price,
-                        Quantity = ii.Quantity,
-                        FinalPrice = ii.Quantity * ii.Price
-                    }).ToList(),
-                    CreatedOn = i.CreatedOn,
-                    FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
-                });
-            foreach (var invoice in invoices)
-                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
-            return invoices;
+            var db = Repository.Current;
+                db.Entry(invoice).State = System.Data.Entity.EntityState.Modified;
+            foreach (var item in invoice.Items)
+                db.Entry(item).State = item.Id == 0 ?
+                    System.Data.Entity.EntityState.Added :
+                    System.Data.Entity.EntityState.Modified;
+            db.SaveChanges();
         }
-            foreach (var invoice in invoices)
-                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
 
         #endregion
     }
