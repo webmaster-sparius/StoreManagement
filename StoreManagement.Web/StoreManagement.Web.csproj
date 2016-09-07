@@ -211,6 +211,7 @@
     <Content Include="Areas\BasicData\Views\Invoice\Edit.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\bootstrap.rtl.min.js" />
+    <Content Include="Scripts\comet-notifications.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
