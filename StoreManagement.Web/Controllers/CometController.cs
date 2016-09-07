@@ -226,7 +226,7 @@ namespace StoreManagement.Web.Controllers
                     var temp = ServiceFactory.Create<IInvoiceService>().
                                 FetchByIdAndProject(mid, new InvoiceController().
                                 GetInvoiceToInvoiceViewModelExpression());
-                    ViewBag.Type = typeof(Invoice);
+                    ViewBag.Type = typeof(Invoice); 
                     ViewBag.Entity = temp;
                     pvs.Add(PartialView("_CometPartial", temp));
                 }
