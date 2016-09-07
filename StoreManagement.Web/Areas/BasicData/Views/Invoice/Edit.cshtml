@@ -47,8 +47,9 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control" data-val="true" data-val-required="تاریخ را وارد کنید." type="text" id="CreatedOnString" name="CreatedOnString" value="@date"/>
-                <button type="button" onclick="PersianDatePicker.Show(CreatedOnString,'@date' );"> انتخاب تاریخ</button>
+                <input data-val="true" data-val-required="تاریخ را وارد کنید." type="text" id="CreatedOnString" name="CreatedOnString" value="@date"/>
+                <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="35px" width="35px" onclick="PersianDatePicker.Show(CreatedOnString,'@date' );">
+
                 @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
                 
             </div>
