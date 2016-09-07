@@ -196,6 +196,7 @@ namespace StoreManagement.Web.Controllers
 
                 ViewBag.Type = typeof(Category);
                 ViewBag.EntityList = categoryVms;
+                res = PartialView("_CometAddResult", categoryVms);
 
             }
 
