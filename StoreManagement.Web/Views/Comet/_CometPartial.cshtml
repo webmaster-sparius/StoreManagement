@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+@using System.Collections.Generic;
+@using StoreManagement.Framework.MetaData;
+
+@{
+    Type entityType = ViewBag.Type;
+    Type viewModelType = MetaDataService.GetEntityInfo(entityType).DefaultViewModelType;
+    string entityName = MetaDataHelper.GetDisplayName(viewModelType);
+    var properties = MetaDataService.GetTypeDisplayProperties(viewModelType);
+    var entity = ViewBag.Entity;
+    var e_id = entity.Id;
+}
+
+
+<tr id="tr_@e_id">
+    @foreach (var propInfo in properties)
+            {
+        <td>
+            @viewModelType.GetProperty(propInfo.Item1).GetValue(entity)
+        </td>
+    }
+    <td>
+
+        <div>
+            @Html.ActionLink("جزئیات", "Details", new { Id = entity.Id }, new { @class = "btn btn-info btn-xs" })
+            @Html.ActionLink("ویرایش", "Edit", new { Id = entity.Id }, new { @class = "btn btn-warning btn-xs" })
+            <button onclick="delete_by_ajax(@e_id); " type="button" class="btn btn-danger btn-xs"> حذف  </button>
+        </div>
+
+    </td>
+</tr>

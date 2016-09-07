@@ -266,13 +266,14 @@
     <Content Include="Views\Shared\EntityList.cshtml" />
     <Content Include="Views\Home\_EditedDiv.cshtml" />
     <Content Include="Areas\BasicData\Views\Invoice\Impossible.cshtml" />
+    <Content Include="Views\Comet\_CometPartial.cshtml" />
+    <Content Include="Views\Comet\_CometAddResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\BasicData\Models\" />
     <Folder Include="Areas\BasicData\Views\Shared\" />
     <Folder Include="obj\" />
-    <Folder Include="Views\Comet\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

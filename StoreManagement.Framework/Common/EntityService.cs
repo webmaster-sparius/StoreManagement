@@ -81,6 +81,7 @@ namespace StoreManagement.Framework.Common
             if (entity == null)
                 throw new InvalidOperationException("ID does not found.");
             db.Set<TEntity>().Remove(entity);
+            db.SaveChanges();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
 using System.Net;
+using StoreManagement.Web.Controllers;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
@@ -46,8 +47,12 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 return View(viewModel);
             }
 
+            var categ = new Category { Title = viewModel.Title };
+
             ServiceFactory.Create<ICategoryService>()
-                .Create(new Category { Title = viewModel.Title });
+                .Create(categ);
+
+            CometController.SetAddNotif("Category", categ.Id);
             
             return RedirectToAction("List");
         }

@@ -1,0 +1,12 @@
+﻿@{
+    Layout = null;
+}
+
+@{ 
+    var entityList = ViewBag.EntityList;
+}
+
+@foreach(var entity in entityList)
+{
+    Html.RenderPartial()
+}
