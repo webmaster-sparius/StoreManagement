@@ -14,15 +14,15 @@ namespace StoreManagement.Web.Controllers
             return View();
         }
 
-        private static Dictionary<int, DateTime> lastAddNotif;      // the int is the client_id
+        //private static Dictionary<int, DateTime> lastAddNotif;      // the int is the client_id
 
-        private static List<Tuple<??? , DateTime>> addNotifList;
+        //private static List<Tuple<??? , DateTime>> addNotifList;
 
 
-        public PartialViewResult NotifyOnAdd(int client_id, string entity_name)
-        {
+        //public PartialViewResult NotifyOnAdd(int client_id, string entity_name)
+        //{
 
-        }
+     //   }
 
     }
 }
