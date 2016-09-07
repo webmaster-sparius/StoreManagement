@@ -25,7 +25,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", autofocus="autofocus" } })
                 @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -47,13 +47,13 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input class="form-control" data-val="true" data-val-required="تاریخ را وارد کنید." type="text" id="CreatedOnString" name="CreatedOnString" value="@date"/>
-                <button type="button" onclick="PersianDatePicker.Show(CreatedOnString,'@date' );"> انتخاب تاریخ</button>
+                <input class="form-inline text-box single-line" data-val="true" data-val-required="تاریخ را وارد کنید." type="text" id="CreatedOnString" name="CreatedOnString" value="@date" />
+                <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="35px" width="35px" onclick="PersianDatePicker.Show(CreatedOnString,'@date' );">
                 @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
-                
+
             </div>
         </div>
-        <hr/>
+        <hr />
         <div id="jsGrid">
 
         </div>
@@ -100,7 +100,7 @@
         @foreach (var p in Model.Products)
         {
             @:products.push({Id: @p.Id, Name: "@p.Name", Price: "@p.Price"});
-                                                                                                                }
+                                                                                                                        }
         var Items = [];
         @foreach(var item in Model.Items)
         {
@@ -124,6 +124,15 @@
             }
         }
 
+        function DoWhenHittingEnter($result,job){
+            $result.on("keydown",function(e){
+                if(e.which == 13){
+                    $("#jsGrid").jsGrid(job);
+                    return false;
+                }
+            });
+        }
+
 
         $("#jsGrid").jsGrid({
             width: "100%",
@@ -143,6 +152,7 @@
                     item.Price = prod.Price;
                     item.priceAll = item.Price * item.Quantity;
                     item.InvoiceId = @Model.Id;
+                    $("#jsGrid").jsGrid("clearInsert");
                     return item;
                 }
             },
@@ -192,16 +202,57 @@
                             }
                         },
                         message: "کالا را انتخاب کنید."
+                    },
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.select.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.select.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
                     }
                 },
                 { name: "Quantity", title:"تعداد", type: "number",validate: {
                     validator: "range",
                     message:  "تعداد کالا باید بین 1 تا 100 باشد." ,
                     param: [1,100],
-                    width: 60 }},
+                    width: 60 },
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }
+                },
 
-                { name: "Price",title: "فی", type: "number", width: 100},
-                { name: "priceAll", title: "قیمت", type: "number", width: 100 },
+                { name: "Price",title: "فی", type: "number", width: 100,
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }},
+                { name: "priceAll", title: "قیمت", type: "number", width: 100,
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }},
                 { type: "control" ,modeSwitchButton: false, editButton: false }
             ]
         });
@@ -226,10 +277,18 @@
                     type: 'POST',
                     url: '/basicdata/invoice/edit',
                     data: model,
-                    success: function(){
-                        document.location='@Url.Action("List","Invoice")';
+                    dataType: 'Json',
+                    success: function(data){
+                        if(data.success === true){
+                            alert("ذخیره شد");
+                            document.location='@Url.Action("List","Invoice")';
+                        }
+                        else{
+                            $("#validSummery").empty();
+                            $("<li>این فاکتور قبلا در سیستم توسط فرد دیگری ویرایش شده است.صفحه را رفرش کنید</li>").appendTo($("#validSummery")); 
+                        }
                     },
-                    failure: function(){
+                    failure: function(data){
                         alert("ذخیره نشد");
                     }
                 });

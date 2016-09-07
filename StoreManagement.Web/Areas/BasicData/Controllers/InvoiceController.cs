@@ -4,6 +4,7 @@ using StoreManagement.Framework.Common;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -97,7 +98,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         }
 
         [HttpPost]
-        public void Edit(EditInvoiceViewModel viewModel)
+        public JsonResult Edit(EditInvoiceViewModel viewModel)
         {
             var invoice = new Invoice
             {
@@ -120,7 +121,16 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 };
                 invoice.Items.Add(invoiceItem);
             }
-            ServiceFactory.Create<IInvoiceService>().UpdateInvoice(invoice);
+            try
+            {
+                ServiceFactory.Create<IInvoiceService>().UpdateInvoice(invoice);
+                return Json(new { success = true });
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+               // ModelState.AddModelError("", "این فاکتور قبلا در سیستم توسط فرد دیگری ویرایش شده است.صفحه را رفرش کنید.");
+                return Json(new { success = false});
+            }
         }
         #endregion
 

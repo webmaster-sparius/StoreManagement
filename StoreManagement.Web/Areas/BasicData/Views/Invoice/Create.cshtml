@@ -12,7 +12,7 @@
     <form class="form-horizontal" id="invoiceForm">
         @Html.AntiForgeryToken()
 
-        <hr/>
+        <hr />
         <div class="validation-summary-errors text-danger" id="validSummery">
             <ul></ul>
         </div>
@@ -20,7 +20,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Number, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Number, new { htmlAttributes = new { @class = "form-control", tabindex = "<tr>", autofocus = "autofocus" } })
                 @Html.ValidationMessageFor(model => model.Number, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -30,7 +30,7 @@
                 <select id="CustomerId" class="form-control" data-val="true"
                         data-val-required="مشتری را انتخاب کنید" name="CustomerId">
                     @foreach (var c in Model.Customers)
-            {
+                    {
                         <option value="@c.Id">  @c.FirstName @c.LastName  </option>
                     }
                 </select>
@@ -40,22 +40,21 @@
         <div class="form-group">
             @Html.LabelFor(model => model.CreatedOnString, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <input type="text" id="CreatedOnString" name="CreatedOnString" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );"  data-val="true" data-val-required="تاریخ را وارد کنید"/>
-                <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="35px" width="35px" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );"> 
-                     @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
+                <input class="form-inline text-box single-line" type="text" id="CreatedOnString" name="CreatedOnString" onclick="PersianDatePicker.Show(CreatedOnString,'@today' );" onfocus="PersianDatePicker.Show(CreatedOnString,'@today' );" data-val="true" data-val-required="تاریخ را وارد کنید" />
+                <img src="https://sonomalibrary.org/sites/default/files/calendar.png" height="35px" width="35px" onclick="PersianDatePicker.Show(CreatedOnString,'@today');">
+                @Html.ValidationMessageFor(model => model.CreatedOnString, "", new { @class = "text-danger" })
             </div>
         </div>
         <hr />
         <div id="jsGrid">
 
         </div>
+        <br/>
         <div class="form-group">
             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", id = "text" } })
-            </div>
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", id = "text" } })
         </div>
-        <br />
+        
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <button type="button" id="saveButton" onclick="save_js();" class="btn btn-success">  ذخیره  </button>
@@ -90,10 +89,9 @@
     <script type="text/javascript">
         var products = [];
         products.push({Id: 0, Name: "", Price: 0})
-        @foreach (var p in Model.Products)
-        {
+        @foreach (var p in Model.Products){
             @:products.push({Id: @p.Id, Name: "@p.Name", Price: @p.Price});
-                                                                                                                                                        }
+                }
         var Items = [];
         function FindProduct(productId){
             var prod = products.find(function(p)
@@ -120,6 +118,15 @@
                 $('#text').val(sum.toString());
             }
         }
+        function DoWhenHittingEnter($result,job){
+            $result.on("keydown",function(e){
+                if(e.which == 13){
+                    $("#jsGrid").jsGrid(job);
+                    return false;
+                }
+            });
+        }
+
 
 
         $("#jsGrid").jsGrid({
@@ -127,8 +134,7 @@
             height: "400px",
 
             editing: true,
-            sorting: true,
-            paging: true,
+            selecting: true,
 
             noDataContent: function(){
                 if($("#jsGrid").jsGrid("option","inserting") == false)
@@ -141,6 +147,7 @@
                    var prod = FindProduct(item.ProductId);
                    item.Price = prod.Price;
                    item.priceAll = item.Price * item.Quantity;
+                   $("#jsGrid").jsGrid("clearInsert");
                    return item;
                }
            },
@@ -176,6 +183,8 @@
                     $("#text").val("0");
             },
 
+
+
             data: Items,
 
             invalidMessage:"",
@@ -188,19 +197,64 @@
                             }
                         },
                         message: "کالا را انتخاب کنید."
+                    },
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.select.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.select.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
                     }
                 },
                 { name: "Quantity", title:"تعداد", type: "number",validate: {
                     validator: "range",
                     message:  "تعداد کالا باید بین 1 تا 100 باشد." ,
                     param: [1,100],
-                    width: 60 }},
+                    width: 60 },
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }
+                },
 
-                { name: "Price",title: "فی", type: "number", width: 100},
-                { name: "priceAll", title: "قیمت", type: "number", width: 100 },
-                { type: "control" ,modeSwitchButton: false, editButton: false }
+
+                { name: "Price",title: "فی", type: "number", width: 100,
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }
+                },
+                { name: "priceAll", title: "قیمت", type: "number", width: 100,
+                    editTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.editTemplate.call(this, value);
+                        DoWhenHittingEnter($result,"updateItem");
+                        return $result;
+                    },
+                    insertTemplate: function(value){
+                        var $result = jsGrid.fields.number.prototype.insertTemplate.call(this,value);
+                        DoWhenHittingEnter($result,"insertItem");
+                        return $result;
+                    }
+                },
+                { type: "control" ,modeSwitchButton: false, editButton: false}
             ]
         });
+
 
 
         function save_js(){
@@ -223,6 +277,7 @@
                     url: '@Url.Action("Create","Invoice")',
                     data: model,
                     success: function(data){
+                        alert("ذخیره شد");
                         document.location = '@Url.Action("List","Invoice")';
                     },
                     failure: function(){
@@ -254,6 +309,7 @@
                     url: '@Url.Action("Create","Invoice")',
                     data: model,
                     success: function(data){
+                        alert("ذخیره شد");
                         document.location = '@Url.Action("Create","Invoice")';
                     },
                     failure: function(){

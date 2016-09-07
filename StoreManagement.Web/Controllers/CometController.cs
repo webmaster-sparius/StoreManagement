@@ -9,7 +9,7 @@ namespace StoreManagement.Web.Controllers
     public class CometController : Controller
     {
         // GET: Comet
-        public ActionResult Index()
+       /* public ActionResult Index()
         {
             return View();
         }
@@ -22,7 +22,7 @@ namespace StoreManagement.Web.Controllers
         public PartialViewResult NotifyOnAdd(int client_id, string entity_name)
         {
 
-        }
+        }*/
 
     }
 }
