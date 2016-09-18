@@ -28,7 +28,7 @@ namespace StoreManagement.Business.EntityServices
         public IEnumerable<Category> FetchByTitle(string title)
         {
             var db = Repository.Current;
-            return db.Set<Category>().Where(a => a.Title == title).ToList();
+            return db.Set<Category>().Where(a => a.Title.IndexOf(title) >= 0).ToList();
         }
 
         public void CreateByViewModel(AddCategoryViewModel viewModel)

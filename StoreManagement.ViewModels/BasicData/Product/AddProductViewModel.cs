@@ -39,7 +39,7 @@ namespace StoreManagement.Web.Areas.BasicData.ViewModels
         {
             get
             {
-                return ServiceFactory.Create<ICategoryService>().FetchAll();
+                return ServiceFactory.Create<ICategoryService>().FetchAll().ToList();
             }
         }
     }

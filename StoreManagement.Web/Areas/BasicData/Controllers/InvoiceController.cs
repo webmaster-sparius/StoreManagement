@@ -1,6 +1,7 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
+using StoreManagement.ViewModels;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,7 +32,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                     }).ToList(),
                     CreatedOn = i.CreatedOn,
                     FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
-                });
+                }).ToList();
             //var list = ServiceFactory.Create<IInvoiceService>().FetchViewModels();
 
             ViewBag.Type = typeof(Invoice);
@@ -108,6 +109,33 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         {
             ServiceFactory.Create<IInvoiceService>().DeleteById(id);
             return RedirectToAction("List");
+        }
+        #endregion
+
+        #region Search
+        public ActionResult Search(InvoiceViewModel viewModel)
+        {
+            var dic = ControllerHelper.QueryStringToDictionary(Request.Url.Query);
+            var list = ServiceFactory.Create<IInvoiceService>().SearchByFilter(dic).Select(i => new InvoiceViewModel
+            {
+                Id = i.Id,
+                Number = i.Number,
+                Customer = i.Customer.FirstName + " " + i.Customer.LastName,
+                Items = i.Items.Select(ii => new InvoiceItemViewModel
+                {
+                    ProductName = ii.Product.Name,
+                    Price = ii.Price,
+                    Quantity = ii.Quantity,
+                    FinalPrice = ii.Quantity * ii.Price
+                }).ToList(),
+                CreatedOn = i.CreatedOn,
+                FinalPrice = i.Items.Sum(ii => ii.Quantity * ii.Price)
+            });
+            ViewBag.Type = typeof(Invoice);
+            ViewBag.List = list;
+
+            ViewBag.RowsAffected = list.Count();
+            return View("EntityList");
         }
         #endregion
     }

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Data.Entity;
 using System.Text;
 using System.Threading.Tasks;
+using StoreManagement.ViewModels;
 
 namespace StoreManagement.Business.EntityServices
 {
@@ -50,7 +51,6 @@ namespace StoreManagement.Business.EntityServices
                     Number = i.Number,
                     Customer = i.Customer.FirstName + " " + i.Customer.LastName,
                     Items = i.Items.Select(ii => new InvoiceItemViewModel
-
                     {
                         ProductName = ii.Product.Name,
                         Price = ii.Price,
@@ -62,11 +62,10 @@ namespace StoreManagement.Business.EntityServices
                 });
             foreach (var invoice in invoices)
                 invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
-            return invoices;
+            return invoices.ToList();
         }
-            foreach (var invoice in invoices)
-                invoice.CreatedOnString = new PersianDateTime(invoice.CreatedOn).ToString(PersianDateTimeFormat.Date);
 
         #endregion
+
     }
 }

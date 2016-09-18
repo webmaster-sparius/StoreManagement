@@ -27,5 +27,11 @@ namespace StoreManagement.Common.Models
         public virtual ICollection<Product> Products { get; set; }
 
         #endregion
+        public override string ToString()
+        {
+            return this.Title;
+        }
+
     }
+
 }

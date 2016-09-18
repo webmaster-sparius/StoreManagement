@@ -10,6 +10,8 @@ using System.Net;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
 using StoreManagement.Common.EntityServices;
+using StoreManagement.ViewModels;
+using System.Collections.Specialized;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
@@ -19,8 +21,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
         #region List
         public virtual ActionResult List()
         {
-
-
             var service = ServiceFactory.Create<IProductService>();
             var list = service.FetchAllAndProject(p => new ProductViewModel
             {
@@ -35,7 +35,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             ViewBag.List = list;
             ViewBag.Type = typeof(Product);
             return View("EntityList");
-            //}
         }
         #endregion
 
@@ -174,6 +173,27 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
             var exist = ServiceFactory.Create<IProductService>().CheckNameExist(name, Id);
             return Json(!exist);
         }
+        #endregion
+
+        #region Search
+        public ActionResult Search(ProductViewModel viewModel)
+        {
+            var dic = ControllerHelper.QueryStringToDictionary(Request.Url.Query);
+            var list = ServiceFactory.Create<IProductService>().SearchByFilter(dic).Select(p => new ProductViewModel
+            {
+                Id = p.Id,
+                Code = p.Code,
+                Category = p.Category.Title,
+                Description = p.Description,
+                Name = p.Name,
+                Price = p.Price
+            }).ToList();
+            ViewBag.Type = typeof(Product);
+            ViewBag.List = list;
+            ViewBag.RowsAffected = list.Count();
+            return View("EntityList");
+        }
+
         #endregion
     }
 }

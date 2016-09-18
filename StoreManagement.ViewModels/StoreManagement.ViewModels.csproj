@@ -93,6 +93,7 @@
     <Compile Include="BasicData\Product\EditProductViewModel.cs" />
     <Compile Include="BasicData\Product\ProductViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="BasicData\ViewModelUtility.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\StoreManagement.Common\StoreManagement.Common.csproj">

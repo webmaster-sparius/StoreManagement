@@ -1,6 +1,7 @@
 ﻿using StoreManagement.Common.EntityServices;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
+using StoreManagement.ViewModels;
 using StoreManagement.Web.Areas.BasicData.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -175,6 +176,25 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
                 PhoneNumber = a.PhoneNumber,
                 Version = a.Version
             });
+        }
+
+        #endregion
+
+        #region Search
+        public ActionResult Search(CustomerViewModel viewModel)
+        {
+            var dic = ControllerHelper.QueryStringToDictionary(Request.Url.Query);
+            var list = ServiceFactory.Create<ICustomerService>().SearchByFilter(dic).Select(c => new CustomerViewModel
+            {
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                PhoneNumber = c.PhoneNumber,
+                Id = c.Id
+            });
+            ViewBag.Type = typeof(Customer);
+            ViewBag.List = list;
+            ViewBag.RowsAffected = list.Count();
+            return View("EntityList");
         }
 
         #endregion

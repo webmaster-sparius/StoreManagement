@@ -10,6 +10,36 @@ namespace StoreManagement.Framework.Common
     public class EntityService<TEntity> : IEntityService<TEntity>
         where TEntity : BaseEntity
     {
+        private static Expression IndexOfPredicateGenerator(Expression pe, string value)
+        {
+            Expression left = Expression.Call(pe, typeof(string).GetMethod("IndexOf", new Type[] { typeof(string) }), Expression.Constant(value));
+            Expression right = Expression.Constant(0);
+            Expression predicate = Expression.GreaterThanOrEqual(left, right);
+            return predicate;
+        }
+
+        private static Expression CreateFieldSearchExpression(Expression expression, string fieldName, string value)
+        {
+            return IndexOfPredicateGenerator(
+                Expression.Call(
+                    Expression.Property(expression, fieldName),
+                    typeof(object).GetMethod("ToString")),
+                value);
+        }
+
+        public IQueryable<TEntity> SearchByFilter(Dictionary<string, string> searchPredicates)
+        {
+            ParameterExpression param = Expression.Parameter (typeof(TEntity), "e");
+            Expression ex = Expression.Constant(true);
+            foreach(var keyVal in searchPredicates)
+            {
+                if (string.IsNullOrWhiteSpace(keyVal.Value))
+                    continue;
+                ex = Expression.And(ex, CreateFieldSearchExpression(param, keyVal.Key, keyVal.Value));
+            }
+            return FetchAll().Where(Expression.Lambda<Func<TEntity, bool>>(ex, param));
+        }
+
 
         //public virtual IEnumerable<TEntity> SearchByFilter(TViewModel viewModel)
         //{
@@ -46,18 +76,18 @@ namespace StoreManagement.Framework.Common
                 Select(projection).
                 FirstOrDefault();
         }
-        public IList<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection)
+
+        public IQueryable<TResult> FetchAllAndProject<TResult>(Expression<Func<TEntity, TResult>> projection)
         {
             var db = Repository.Current;
             return db.Set<TEntity>().
-                Select(projection).
-                ToList();
+                Select(projection);
         }
 
-        public IList<TEntity> FetchAll()
+        public IQueryable<TEntity> FetchAll()
         {
             var db = Repository.Current;
-            return db.Set<TEntity>().ToList();
+            return db.Set<TEntity>();
         }
 
         public void Save(TEntity entity)
@@ -81,7 +111,9 @@ namespace StoreManagement.Framework.Common
             if (entity == null)
                 throw new InvalidOperationException("ID does not found.");
             db.Set<TEntity>().Remove(entity);
+            db.SaveChanges();
         }
+ 
     }
 }
 

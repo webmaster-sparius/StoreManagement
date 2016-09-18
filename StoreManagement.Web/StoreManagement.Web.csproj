@@ -146,6 +146,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\BasicData\BasicDataAreaRegistration.cs" />
     <Compile Include="Areas\BasicData\BasicDataComponentInfo.cs" />
+    <Compile Include="Areas\BasicData\Controllers\ControllerHelper.cs" />
     <Compile Include="Areas\BasicData\Controllers\CustomerController.cs" />
     <Compile Include="Areas\BasicData\Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\InvoiceController.cs" />

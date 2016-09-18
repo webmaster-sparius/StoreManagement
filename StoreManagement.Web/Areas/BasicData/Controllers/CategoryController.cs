@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using StoreManagement.Common.Models;
 using StoreManagement.Framework.Common;
 using System.Net;
+using StoreManagement.ViewModels;
 
 namespace StoreManagement.Web.Areas.BasicData.Controllers
 {
@@ -19,7 +20,7 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         public ActionResult List()
         {
-            var list = ServiceFactory.Create<ICategoryService>().FetchAll().
+            var list = ServiceFactory.Create<ICategoryService>().FetchAll().ToList().
                 Select(c => CategoryViewModel.FromModel(c));
             ViewBag.Type = typeof(Category);
             ViewBag.List = list;
@@ -48,7 +49,6 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
             ServiceFactory.Create<ICategoryService>()
                 .Create(new Category { Title = viewModel.Title });
-            
             return RedirectToAction("List");
         }
 
@@ -128,9 +128,10 @@ namespace StoreManagement.Web.Areas.BasicData.Controllers
 
         #region Search
         [HttpGet]
-        public ActionResult Search(string title)
+        public ActionResult Search(CategoryViewModel viewModel)
         {
-            var list = ServiceFactory.Create<ICategoryService>().FetchByTitle(title).Select(c => CategoryViewModel.FromModel(c));
+            var dic = ControllerHelper.QueryStringToDictionary(Request.Url.Query);
+            var list = ServiceFactory.Create<ICategoryService>().SearchByFilter(dic).ToList().Select(c => CategoryViewModel.FromModel(c));        
             ViewBag.Type = typeof(Category);
             ViewBag.List = list;
             ViewBag.RowsAffected = list.Count();
